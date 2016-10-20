@@ -6,6 +6,5 @@ target/*
 /target
 .idea/*
 *.zip
-FERP/
 FERP.iml
 derby.log
