@@ -1,0 +1,11 @@
+gnore case #
+.DS_Store
+.DS_Store?
+._
+target/*
+/target
+.idea/*
+*.zip
+FERP/
+FERP.iml
+derby.log
