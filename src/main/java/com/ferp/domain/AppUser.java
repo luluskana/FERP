@@ -1,26 +1,42 @@
 package com.ferp.domain;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  * Created by apichat on 20/10/2559.
  */
 @Entity
-@Table(name="APP_USER")
+@Table(name="App_User")
 public class AppUser implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name="id")
     private Long id;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy hh:mm:ss")
+    @Column(name="createDate")
+    private Date createDate;
+
+    @Column(name="createBy")
+    private String createBy;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy hh:mm:ss")
+    @Column(name="updateDate")
+    private Date updateDate;
+
+    @Column(name="updateBy")
+    private String updateBy;
 
     @Column(name="username", unique = true)
     private String username;
@@ -33,9 +49,6 @@ public class AppUser implements Serializable {
 
     @Column(name="department")
     private String department;
-
-    @Column(name="departmentCode")
-    private String departmentCode;
 
     @Column(name="emailAddress")
     private String emailAddress;
@@ -50,12 +63,48 @@ public class AppUser implements Serializable {
     @Column(name="roleName")
     private String roleName;
 
+    @OrderBy("createDate")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "appUser")
+    private Set<LogHistory> LogHistorys = new HashSet<LogHistory>();
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
     }
 
     public String getUsername() {
@@ -90,14 +139,6 @@ public class AppUser implements Serializable {
         this.department = department;
     }
 
-    public String getDepartmentCode() {
-        return departmentCode;
-    }
-
-    public void setDepartmentCode(String departmentCode) {
-        this.departmentCode = departmentCode;
-    }
-
     public String getEmailAddress() {
         return emailAddress;
     }
@@ -130,4 +171,11 @@ public class AppUser implements Serializable {
         this.roleName = roleName;
     }
 
+    public Set<LogHistory> getLogHistorys() {
+        return LogHistorys;
+    }
+
+    public void setLogHistorys(Set<LogHistory> logHistorys) {
+        LogHistorys = logHistorys;
+    }
 }

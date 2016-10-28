@@ -6,4 +6,8 @@
     <definition name="home" extends="layout.bootstrap">
         <put-attribute name="body" value="/WEB-INF/views/home.jsp" />
     </definition>
+
+    <definition name="login" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/login.jsp" />
+    </definition>
 </tiles-definitions>
