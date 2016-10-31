@@ -14,7 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * Created by apichat on 20/10/2559.
  */
 @Entity
-@Table(name="App_User")
+@Table(name="APP_USER")
 public class AppUser implements Serializable {
 
     @Id

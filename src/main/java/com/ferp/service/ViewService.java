@@ -31,4 +31,8 @@ public class ViewService {
         }
         model.addObject("logout", "on");
     }
+
+    public void addViewFindAllAppUser(ModelAndView model) {
+        model.addObject("appUsers", appUserService.findAll());
+    }
 }
