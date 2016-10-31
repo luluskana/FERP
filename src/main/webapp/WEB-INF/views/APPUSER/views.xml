@@ -6,4 +6,12 @@
     <definition name="APPUSER/create" extends="layout.bootstrap">
         <put-attribute name="body" value="/WEB-INF/views/APPUSER/create.jsp" />
     </definition>
+
+    <definition name="APPUSER/list" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/APPUSER/list.jsp" />
+    </definition>
+
+    <definition name="APPUSER/update" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/APPUSER/update.jsp" />
+    </definition>
 </tiles-definitions>

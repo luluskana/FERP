@@ -10,7 +10,7 @@ import java.util.Date;
  * Created by apichat on 10/26/2016 AD.
  */
 @Entity
-@Table(name="Log_History")
+@Table(name="LOG_HISTORY")
 public class LogHistory implements Serializable {
 
     @Id

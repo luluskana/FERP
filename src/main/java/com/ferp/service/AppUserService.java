@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+
 /**
  * Created by apichat on 10/26/2016 AD.
  */
@@ -45,6 +48,15 @@ public class AppUserService {
     public AppUser findById(Long id) {
         try {
             return appUserDao.findById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<AppUser> findAll() {
+        try {
+            return appUserDao.findAll();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

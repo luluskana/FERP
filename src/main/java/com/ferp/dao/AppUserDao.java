@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Created by apichat on 10/26/2016 AD.
@@ -37,5 +38,10 @@ public class AppUserDao {
 
     public AppUser findById(Long id) {
         return entityManager.find(AppUser.class, id);
+    }
+
+    public List<AppUser> findAll() {
+        Criteria c = ((Session) entityManager.getDelegate()).createCriteria(AppUser.class);
+        return c.list();
     }
 }
