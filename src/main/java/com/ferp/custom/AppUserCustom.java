@@ -1,6 +1,7 @@
-package com.ferp.service;
+package com.ferp.custom;
 
 import com.ferp.domain.AppUser;
+import com.ferp.service.AppUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,12 @@ import java.security.Principal;
 import java.util.Date;
 
 /**
- * Created by apichat on 10/31/2016 AD.
+ * Created by apichat on 11/1/2016 AD.
  */
 @Service
-public class CustomService {
+public class AppUserCustom {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(CustomService.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(AppUserCustom.class);
 
     @Autowired
     private AppUserService appUserService;
