@@ -1,6 +1,5 @@
 package com.ferp.web;
 
-import com.ferp.custom.AppUserCustom;
 import com.ferp.domain.AppUser;
 import com.ferp.service.AppUserService;
 import org.slf4j.Logger;
@@ -26,17 +25,13 @@ public class AppUserJsonController {
     @Autowired
     private AppUserService appUserService;
 
-    @Autowired
-    private AppUserCustom appUserCustom;
-
     @RequestMapping(value = "/appuser/create", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public ResponseEntity<String> appUserCreate(MultipartHttpServletRequest multipartHttpServletRequest) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         try {
-            AppUser appUser = appUserCustom.validateCreateAppUser(multipartHttpServletRequest);
-            appUserService.create(appUser);
+            appUserService.create(multipartHttpServletRequest);
             return new ResponseEntity<String>("{\"process\":\"success\"}", headers, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>("{\"process\":\"fail\"}", headers, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -49,8 +44,7 @@ public class AppUserJsonController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         try {
-            AppUser appUser = appUserCustom.validateUpdateAppUser(multipartHttpServletRequest);
-            appUserService.update(appUser);
+            appUserService.update(multipartHttpServletRequest);
             return new ResponseEntity<String>("{\"process\":\"success\"}", headers, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>("{\"process\":\"fail\"}", headers, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -20,7 +20,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#">FA Management</a></li>
                         <li class="divider"></li>
-                        <li><a href="#">Material Management</a></li>
+                        <li><a href="${home}mtms">Material Management</a></li>
                         <li class="divider"></li>
                         <li><a href="#">Canon Barcode Compare</a></li>
                     </ul>

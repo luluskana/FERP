@@ -10,7 +10,7 @@
         <div class="col-sm-12 well" align="center">
             <h4><label>All User</label></h4>
             <fieldset>
-                <table id="example" class="table table-striped table-hover">
+                <table id="appuserList" class="table table-striped table-hover">
                     <thead>
                     <tr>
                         <th>Username</th>
@@ -53,6 +53,6 @@
 </div>
 <script>
     $(document).ready(function() {
-        $('#example').DataTable();
+        $('#appuserList').DataTable();
     } );
 </script>

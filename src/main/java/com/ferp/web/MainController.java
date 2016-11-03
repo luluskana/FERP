@@ -20,7 +20,6 @@ import java.security.Principal;
  * Created by apichat on 20/10/2559.
  */
 @Controller
-@EnableAutoConfiguration(exclude=ErrorMvcAutoConfiguration.class)
 public class MainController {
 
     private final Logger logger = LoggerFactory.getLogger(MainController.class);

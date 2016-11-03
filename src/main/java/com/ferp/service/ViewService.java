@@ -1,6 +1,8 @@
 package com.ferp.service;
 
+import com.ferp.dao.MaterialTypeDao;
 import com.ferp.domain.AppUser;
+import com.ferp.domain.MaterialType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,6 +17,9 @@ public class ViewService {
 
     @Autowired
     private AppUserService appUserService;
+
+    @Autowired
+    private MaterialTypeDao materialTypeDao;
 
     public void addLogin(ModelAndView model) {
         model.addObject("login", "on");
@@ -34,5 +39,13 @@ public class ViewService {
 
     public void addViewFindAllAppUser(ModelAndView model) {
         model.addObject("appUsers", appUserService.findAll());
+    }
+
+    public void addMaterialTypes(ModelAndView model) {
+        model.addObject("materialTypes",materialTypeDao.findAllMaterialType());
+    }
+
+    public void addMaterialType(ModelAndView model, Long id) {
+        model.addObject("materialType",materialTypeDao.findById(id));
     }
 }

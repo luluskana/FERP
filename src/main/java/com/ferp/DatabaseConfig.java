@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -72,6 +73,16 @@ public class DatabaseConfig {
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
+    }
+
+    @Bean(name = "jdbcFileDatabase")
+    public JdbcTemplate jdbcTemplate() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(env.getProperty("db.file.driver"));
+        dataSource.setUrl(env.getProperty("db.file.url"));
+        dataSource.setUsername(env.getProperty("db.file.username"));
+        dataSource.setPassword(env.getProperty("db.file.password"));
+        return new JdbcTemplate(dataSource);
     }
 
 }
