@@ -1,5 +1,6 @@
 package com.ferp.web;
 
+import com.ferp.MultipartHttpServletRequestWrapper;
 import com.ferp.dao.AppUserDao;
 import com.ferp.domain.AppUser;
 import com.ferp.service.AppUserService;
@@ -40,17 +41,16 @@ public class AppUserControllerTests extends AbstractTestController {
     @Test
     public void appUserUpdatePage() throws Exception {
 
-        AppUser appUser = new AppUser();
-        appUser.setCreateDate(new Date());
-        appUser.setCreateBy("Apichat");
-        appUser.setUsername("kopeenoAppUserUpdatePage");
-        appUser.setPassword("password");
-        appUser.setDepartment("MIS");
-        appUser.setEmailAddress("apichat.kop@gmail.com");
-        appUser.setEnabled(1);
-        appUser.setName("Apichat Eakwongsa");
-        appUser.setRoleName("admin");
-        appUserService.create(appUser);
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("username", "kopeenoAppUserUpdatePage");
+        multipartHttpServletRequestWrapper.setParameter("password", "password");
+        multipartHttpServletRequestWrapper.setParameter("name", "Apichat Eakwongsa");
+        multipartHttpServletRequestWrapper.setParameter("department", "MIS");
+        multipartHttpServletRequestWrapper.setParameter("emailAddress", "apichat.kop@gmail.com");
+        multipartHttpServletRequestWrapper.setParameter("phoneNumber", "0800103329");
+        multipartHttpServletRequestWrapper.setParameter("roleName", "admin");
+
+        appUserService.create(multipartHttpServletRequestWrapper);
 
         this.mockMvc.perform(get("/appuser/" + appUserService.findByUsername("kopeenoAppUserUpdatePage").getId()).principal(principal).param("update",""))
                 .andExpect(status().isOk())
@@ -65,17 +65,16 @@ public class AppUserControllerTests extends AbstractTestController {
     @Test
     public void appUserListPage() throws Exception {
 
-        AppUser appUser = new AppUser();
-        appUser.setCreateDate(new Date());
-        appUser.setCreateBy("Apichat");
-        appUser.setUsername("kopeenoAppUserListPage");
-        appUser.setPassword("password");
-        appUser.setDepartment("MIS");
-        appUser.setEmailAddress("apichat.kop@gmail.com");
-        appUser.setEnabled(1);
-        appUser.setName("Apichat Eakwongsa");
-        appUser.setRoleName("admin");
-        appUserService.create(appUser);
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("username", "kopeenoAppUserListPage");
+        multipartHttpServletRequestWrapper.setParameter("password", "password");
+        multipartHttpServletRequestWrapper.setParameter("name", "Apichat Eakwongsa");
+        multipartHttpServletRequestWrapper.setParameter("department", "MIS");
+        multipartHttpServletRequestWrapper.setParameter("emailAddress", "apichat.kop@gmail.com");
+        multipartHttpServletRequestWrapper.setParameter("phoneNumber", "0800103329");
+        multipartHttpServletRequestWrapper.setParameter("roleName", "admin");
+
+        appUserService.create(multipartHttpServletRequestWrapper);
 
         this.mockMvc.perform(get("/appuser").principal(principal).param("list",""))
                 .andExpect(status().isOk())

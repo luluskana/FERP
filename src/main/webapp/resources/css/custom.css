@@ -1,5 +1,6 @@
 body {
     padding-top: 70px;
+    background-color: #ecf0f1;
 }
 body > .navbar {
     transition: background-color 0.3s ease-in 0s;

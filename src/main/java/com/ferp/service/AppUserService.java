@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,11 +23,38 @@ public class AppUserService {
     @Autowired
     private AppUserDao appUserDao;
 
-    public void create(AppUser appUser) {
+    public AppUser create(MultipartHttpServletRequest multipartHttpServletRequest) {
         try {
+            String username = validateString(multipartHttpServletRequest.getParameter("username"));
+            String password = validateString(multipartHttpServletRequest.getParameter("password"));
+            String name = validateString(multipartHttpServletRequest.getParameter("name"));
+            String department = validateString(multipartHttpServletRequest.getParameter("department"));
+            String emailAddress = validateString(multipartHttpServletRequest.getParameter("emailAddress"));
+            String phoneNumber = validateString(multipartHttpServletRequest.getParameter("phoneNumber"));
+            String roleName = validateString(multipartHttpServletRequest.getParameter("roleName"));
+            Principal principal = multipartHttpServletRequest.getUserPrincipal();
+
+            AppUser appUser = new AppUser();
+            appUser.setCreateDate(new Date());
+            AppUser creator = appUserDao.findByUsername(principal.getName());
+            if(creator == null) {
+                appUser.setCreateBy("admin");
+            } else {
+                appUser.setCreateBy(principal.getName());
+            }
+            appUser.setUsername(username);
+            appUser.setPassword(password);
+            appUser.setName(name);
+            appUser.setDepartment(department);
+            appUser.setEmailAddress(emailAddress);
+            appUser.setPhoneNumber(phoneNumber);
+            appUser.setEnabled(1);
+            appUser.setRoleName(roleName);
             appUserDao.create(appUser);
+            return appUser;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -37,8 +67,34 @@ public class AppUserService {
         }
     }
 
-    public void update(AppUser appUser) {
+    public void update(MultipartHttpServletRequest multipartHttpServletRequest) {
         try {
+            String id = validateString(multipartHttpServletRequest.getParameter("id"));
+            String username = validateString(multipartHttpServletRequest.getParameter("username"));
+            String password = validateString(multipartHttpServletRequest.getParameter("password"));
+            String name = validateString(multipartHttpServletRequest.getParameter("name"));
+            String department = validateString(multipartHttpServletRequest.getParameter("department"));
+            String emailAddress = validateString(multipartHttpServletRequest.getParameter("emailAddress"));
+            String phoneNumber = validateString(multipartHttpServletRequest.getParameter("phoneNumber"));
+            String roleName = validateString(multipartHttpServletRequest.getParameter("roleName"));
+            Principal principal = multipartHttpServletRequest.getUserPrincipal();
+
+            AppUser appUser = appUserDao.findById(Long.parseLong(id));
+            appUser.setUpdateDate(new Date());
+            AppUser creator = appUserDao.findByUsername(principal.getName());
+            if(creator == null) {
+                appUser.setUpdateBy("admin");
+            } else {
+                appUser.setUpdateBy(principal.getName());
+            }
+            appUser.setUsername(username);
+            appUser.setPassword(password);
+            appUser.setName(name);
+            appUser.setDepartment(department);
+            appUser.setEmailAddress(emailAddress);
+            appUser.setPhoneNumber(phoneNumber);
+            appUser.setEnabled(1);
+            appUser.setRoleName(roleName);
             appUserDao.update(appUser);
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,6 +116,14 @@ public class AppUserService {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public String validateString(String data) {
+        if(data == null) {
+            return "na";
+        } else {
+            return data;
         }
     }
 }
