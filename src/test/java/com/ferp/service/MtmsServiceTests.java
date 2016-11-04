@@ -3,6 +3,7 @@ package com.ferp.service;
 import com.ferp.MultipartHttpServletRequestWrapper;
 import com.ferp.dao.MaterialTypeDao;
 import com.ferp.domain.AppUser;
+import com.ferp.domain.Material;
 import com.ferp.domain.MaterialType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,5 +64,29 @@ public class MtmsServiceTests {
 
         MaterialType materialTypeTest = materialTypeDao.findById(materialType.getId());
         assertNull(materialTypeTest);
+    }
+
+    @Test
+    public void createMaterialTest() throws Exception {
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("typeName","createMaterialTest");
+        MaterialType materialType = mtmsService.createMaterialType(multipartHttpServletRequestWrapper);
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper2 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper2.setParameter("id","" + materialType.getId());
+        multipartHttpServletRequestWrapper2.setParameter("inputMaterialName","Z470");
+        multipartHttpServletRequestWrapper2.setParameter("inputManufacturing","Thailand");
+        multipartHttpServletRequestWrapper2.setParameter("inputUlNumber","Z1121");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputSpec","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRoHs","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateRoHs","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputMSDS","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputHalogen","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateHF","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputGuarantee","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRedPhosphorus","/Users/apichat/Workspace/temp/01Test.pdf");
+
+        Material material = mtmsService.createMaterial(multipartHttpServletRequestWrapper2);
+        assertNotNull(material);
     }
 }

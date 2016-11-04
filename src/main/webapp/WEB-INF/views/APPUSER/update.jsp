@@ -5,56 +5,54 @@
 <%@page session="true"%>
 <div class="container">
     <form class="form-horizontal well" id="appUserId" action="" method="GET">
-        <fieldset>
-            <legend>Update User</legend>
-            <div class="form-group">
-                <label for="inputUser" class="col-sm-2 control-label">Username</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control input-group-sm" id="inputUser" placeholder="Username" required="required" value="${appUser.username}" autocomplete="off">
-                </div>
+        <legend>Update User</legend>
+        <div class="form-group">
+            <label for="inputUser" class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control input-group-sm" id="inputUser" placeholder="Username" required="required" value="${appUser.username}" autocomplete="off">
             </div>
-            <div class="form-group">
-                <label for="inputPassword" class="col-sm-2 control-label">Password</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control input-group-sm" id="inputPassword" placeholder="Password" required="required" value="${appUser.password}" autocomplete="off">
-                </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control input-group-sm" id="inputPassword" placeholder="Password" required="required" value="${appUser.password}" autocomplete="off">
             </div>
-            <div class="form-group">
-                <label for="inputName" class="col-sm-2 control-label">Name</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control input-group-sm" id="inputName" placeholder="Name" required="required" value="${appUser.name}" autocomplete="off">
-                </div>
+        </div>
+        <div class="form-group">
+            <label for="inputName" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control input-group-sm" id="inputName" placeholder="Name" required="required" value="${appUser.name}" autocomplete="off">
             </div>
-            <div class="form-group">
-                <label for="inputDepartment" class="col-sm-2 control-label">Department</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control input-group-sm" id="inputDepartment" placeholder="Department" required="required" value="${appUser.department}" autocomplete="off">
-                </div>
+        </div>
+        <div class="form-group">
+            <label for="inputDepartment" class="col-sm-2 control-label">Department</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control input-group-sm" id="inputDepartment" placeholder="Department" required="required" value="${appUser.department}" autocomplete="off">
             </div>
-            <div class="form-group">
-                <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-                <div class="col-sm-10">
-                    <input type="email" class="form-control input-group-sm" id="inputEmail" placeholder="Email" required="required" value="${appUser.emailAddress}" autocomplete="off">
-                </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control input-group-sm" id="inputEmail" placeholder="Email" required="required" value="${appUser.emailAddress}" autocomplete="off">
             </div>
-            <div class="form-group">
-                <label for="inputTelephoneNumber" class="col-sm-2 control-label">Telephone Number</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control input-group-sm" id="inputTelephoneNumber" placeholder="Telephone Number" required="required" value="${appUser.phoneNumber}" autocomplete="off">
-                </div>
+        </div>
+        <div class="form-group">
+            <label for="inputTelephoneNumber" class="col-sm-2 control-label">Telephone Number</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control input-group-sm" id="inputTelephoneNumber" placeholder="Telephone Number" required="required" value="${appUser.phoneNumber}" autocomplete="off">
             </div>
-            <div class="form-group">
-                <label for="inputRoleName" class="col-sm-2 control-label">Role Name</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control input-group-sm" id="inputRoleName" placeholder="Role Name" required="required" value="${appUser.roleName}" autocomplete="off">
-                </div>
+        </div>
+        <div class="form-group">
+            <label for="inputRoleName" class="col-sm-2 control-label">Role Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control input-group-sm" id="inputRoleName" placeholder="Role Name" required="required" value="${appUser.roleName}" autocomplete="off">
             </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary btn-group-sm">Update</button>
-                </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary btn-group-sm">Update</button>
             </div>
-        </fieldset>
+        </div>
     </form>
 </div>
 <script>
