@@ -400,7 +400,7 @@ public class MultipartHttpServletRequestWrapper implements MultipartHttpServletR
     public void setMultipartFile(String name, String fileName) throws IOException {
         File file = new File(fileName);
         FileInputStream input = new FileInputStream(file);
-        MultipartFile multipartFile = new MockMultipartFile(file.getName(), input);
+        MultipartFile multipartFile = new MockMultipartFile(file.getName(), file.getName(),"text/plain", input);
         multipartFileMap.put(name, multipartFile);
     }
 

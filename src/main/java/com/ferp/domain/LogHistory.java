@@ -35,6 +35,24 @@ public class LogHistory implements Serializable {
     @Column(name = "remark")
     private String remark;
 
+    @Column(name = "spec")
+    private Long spec;
+
+    @Column(name = "rosh")
+    private Long rosh;
+
+    @Column(name = "msds")
+    private Long msds;
+
+    @Column(name = "halogen")
+    private Long halogen;
+
+    @Column(name = "guaranteeLetter")
+    private Long guaranteeLetter;
+
+    @Column(name = "redPhosphorus")
+    private Long redPhosphorus;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "appUser")
     private AppUser appUser;
@@ -97,6 +115,54 @@ public class LogHistory implements Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Long getSpec() {
+        return spec;
+    }
+
+    public void setSpec(Long spec) {
+        this.spec = spec;
+    }
+
+    public Long getRosh() {
+        return rosh;
+    }
+
+    public void setRosh(Long rosh) {
+        this.rosh = rosh;
+    }
+
+    public Long getMsds() {
+        return msds;
+    }
+
+    public void setMsds(Long msds) {
+        this.msds = msds;
+    }
+
+    public Long getHalogen() {
+        return halogen;
+    }
+
+    public void setHalogen(Long halogen) {
+        this.halogen = halogen;
+    }
+
+    public Long getGuaranteeLetter() {
+        return guaranteeLetter;
+    }
+
+    public void setGuaranteeLetter(Long guaranteeLetter) {
+        this.guaranteeLetter = guaranteeLetter;
+    }
+
+    public Long getRedPhosphorus() {
+        return redPhosphorus;
+    }
+
+    public void setRedPhosphorus(Long redPhosphorus) {
+        this.redPhosphorus = redPhosphorus;
     }
 
     public AppUser getAppUser() {

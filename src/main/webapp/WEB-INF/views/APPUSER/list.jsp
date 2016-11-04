@@ -9,45 +9,43 @@
     <div class="row">
         <div class="col-sm-12 well" align="center">
             <h4><label>All User</label></h4>
-            <fieldset>
-                <table id="appuserList" class="table table-striped table-hover">
-                    <thead>
+            <table id="appuserList" class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Email</th>
+                    <th>Telephone</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Email</th>
+                    <th>Telephone</th>
+                    <th></th>
+                </tr>
+                </tfoot>
+                <tbody>
+                <c:forEach var="appUser" items="${appUsers}" varStatus="loop">
                     <tr>
-                        <th>Username</th>
-                        <th>Password</th>
-                        <th>Name</th>
-                        <th>Department</th>
-                        <th>Email</th>
-                        <th>Telephone</th>
-                        <th></th>
+                        <td>${appUser.username}</td>
+                        <td>${appUser.password}</td>
+                        <td>${appUser.name}</td>
+                        <td>${appUser.department}</td>
+                        <td>${appUser.emailAddress}</td>
+                        <td>${appUser.phoneNumber}</td>
+                        <td><a href="${home}appuser/${appUser.id}?update" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
                     </tr>
-                    </thead>
-                    <tfoot>
-                    <tr>
-                        <th>Username</th>
-                        <th>Password</th>
-                        <th>Name</th>
-                        <th>Department</th>
-                        <th>Email</th>
-                        <th>Telephone</th>
-                        <th></th>
-                    </tr>
-                    </tfoot>
-                    <tbody>
-                    <c:forEach var="appUser" items="${appUsers}" varStatus="loop">
-                        <tr>
-                            <td>${appUser.username}</td>
-                            <td>${appUser.password}</td>
-                            <td>${appUser.name}</td>
-                            <td>${appUser.department}</td>
-                            <td>${appUser.emailAddress}</td>
-                            <td>${appUser.phoneNumber}</td>
-                            <td><a href="${home}appuser/${appUser.id}?update" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-            </fieldset>
+                </c:forEach>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

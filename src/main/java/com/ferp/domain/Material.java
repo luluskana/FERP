@@ -25,7 +25,7 @@ public class Material implements Serializable {
     @Column(name="createDate")
     private Date createDate;
 
-    @Column(name="createBy")
+    @OneToOne(fetch = FetchType.EAGER)
     private AppUser createBy;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -33,10 +33,10 @@ public class Material implements Serializable {
     @Column(name="updateDate")
     private Date updateDate;
 
-    @Column(name="updateBy")
+    @OneToOne(fetch = FetchType.EAGER)
     private AppUser updateBy;
 
-    @Column(name="materialName")
+    @Column(name="materialName", unique = true)
     private String materialName;
 
     @Column(name="manufacturing")

@@ -75,7 +75,7 @@ public class DatabaseConfig {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
-    @Bean(name = "jdbcFileDatabase")
+    @Bean
     public JdbcTemplate jdbcTemplate() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(env.getProperty("db.file.driver"));
