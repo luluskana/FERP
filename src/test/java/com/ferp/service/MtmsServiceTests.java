@@ -88,5 +88,9 @@ public class MtmsServiceTests {
 
         Material material = mtmsService.createMaterial(multipartHttpServletRequestWrapper2);
         assertNotNull(material);
+        assertEquals("Z470", material.getMaterialName());
+        assertEquals("Thailand", material.getManufacturing());
+        assertEquals("Z1121", material.getUlNumber());
+        assertEquals("CREATE_MATERIAL", material.getStatus());
     }
 }

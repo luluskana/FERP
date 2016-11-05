@@ -21,6 +21,7 @@
                                     <th>#</th>
                                     <th>Material Name</th>
                                     <th>Total SAP Code</th>
+                                    <th>Status</th>
                                     <th>Update</th>
                                     <th>Delete</th>
                                     <th>Zoom In</th>
@@ -32,6 +33,7 @@
                                         <td>${loop.index + 1}</td>
                                         <td>${material.materialName}</td>
                                         <td>${fn:length(material.sapCodes)}</td>
+                                        <td>${material.status}</td>
                                         <c:choose>
                                             <c:when test="${roleName eq 'admin' or roleName eq 'user'}">
                                                 <td><button class="btn btn-warning btn-sm update" value="${material.id}_${material.materialName}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>

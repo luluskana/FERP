@@ -130,13 +130,13 @@ public class MtmsService {
 
             if(spec != null) {
                 Long idInsert = selectIdInsert();
-                saveFile(idInsert, spec.getBytes(), spec.getOriginalFilename());
+                saveFile(idInsert, spec.getBytes(), spec.getOriginalFilename(), spec.getContentType());
                 material.setSpec(idInsert);
                 logHistory.setSpec(idInsert);
             }
             if(rohs != null) {
                 Long idInsert = selectIdInsert();
-                saveFile(idInsert, rohs.getBytes(), rohs.getOriginalFilename());
+                saveFile(idInsert, rohs.getBytes(), rohs.getOriginalFilename(), rohs.getContentType());
                 material.setRosh(idInsert);
                 logHistory.setRosh(idInsert);
 
@@ -150,13 +150,13 @@ public class MtmsService {
             }
             if(msds != null) {
                 Long idInsert = selectIdInsert();
-                saveFile(idInsert, msds.getBytes(), msds.getOriginalFilename());
+                saveFile(idInsert, msds.getBytes(), msds.getOriginalFilename(), msds.getContentType());
                 material.setMsds(idInsert);
                 logHistory.setMsds(idInsert);
             }
             if(halogen != null) {
                 Long idInsert = selectIdInsert();
-                saveFile(idInsert, halogen.getBytes(), halogen.getOriginalFilename());
+                saveFile(idInsert, halogen.getBytes(), halogen.getOriginalFilename(), halogen.getContentType());
                 material.setHalogen(idInsert);
                 logHistory.setHalogen(idInsert);
 
@@ -170,14 +170,14 @@ public class MtmsService {
             }
             if(guaranteeLetter != null) {
                 Long idInsert = selectIdInsert();
-                saveFile(idInsert, guaranteeLetter.getBytes(), guaranteeLetter.getOriginalFilename());
+                saveFile(idInsert, guaranteeLetter.getBytes(), guaranteeLetter.getOriginalFilename(), guaranteeLetter.getContentType());
                 material.setGuaranteeLetter(idInsert);
                 logHistory.setGuaranteeLetter(idInsert);
             }
 
             if(redPhosphorus != null) {
                 Long idInsert = selectIdInsert();
-                saveFile(idInsert, redPhosphorus.getBytes(), redPhosphorus.getOriginalFilename());
+                saveFile(idInsert, redPhosphorus.getBytes(), redPhosphorus.getOriginalFilename(), guaranteeLetter.getContentType());
                 material.setRedPhosphorus(idInsert);
                 logHistory.setRedPhosphorus(idInsert);
             }
@@ -231,8 +231,8 @@ public class MtmsService {
         }
     }
 
-    public void saveFile(Long id, byte[] stream, String fileName) {
-        String sqlInsertFile = "INSERT INTO ITEM_FILE (id, dataFile, fileName) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sqlInsertFile, id, stream, fileName);
+    public void saveFile(Long id, byte[] stream, String fileName, String contentType) {
+        String sqlInsertFile = "INSERT INTO ITEM_FILE (id, dataFile, fileName, contentType) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sqlInsertFile, id, stream, fileName, contentType);
     }
 }
