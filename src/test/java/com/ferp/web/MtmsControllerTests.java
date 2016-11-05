@@ -1,6 +1,7 @@
 package com.ferp.web;
 
 import com.ferp.MultipartHttpServletRequestWrapper;
+import com.ferp.dao.MaterialDao;
 import com.ferp.domain.Material;
 import com.ferp.domain.MaterialType;
 import com.ferp.service.MtmsService;
@@ -20,6 +21,9 @@ public class MtmsControllerTests extends AbstractTestController {
 
     @Autowired
     private MtmsService mtmsService;
+
+    @Autowired
+    private MaterialDao materialDao;
 
     @Test
     public void mtmsHomePageNoLoginTest() throws Exception {
@@ -100,6 +104,37 @@ public class MtmsControllerTests extends AbstractTestController {
                 .andExpect(status().isOk())
                 .andExpect(view().name("MTMS/createMaterial"))
                 .andExpect(model().attribute("materialType", notNullValue()))
+                .andExpect(model().attribute("name", notNullValue()))
+                .andExpect(model().attribute("logout", notNullValue()))
+                .andExpect(model().attribute("login", nullValue()))
+                .andExpect(model().attribute("roleName", notNullValue()));
+    }
+
+    @Test
+    public void mtmsUpdateMaterialPageTest() throws Exception {
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("typeName","mtmsUpdateMaterialPageTest");
+        MaterialType materialType = mtmsService.createMaterialType(multipartHttpServletRequestWrapper);
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper2 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper2.setParameter("id","" + materialType.getId());
+        multipartHttpServletRequestWrapper2.setParameter("inputMaterialName","mtmsUpdateMaterialPageTest01");
+        multipartHttpServletRequestWrapper2.setParameter("inputManufacturing","Thailand");
+        multipartHttpServletRequestWrapper2.setParameter("inputUlNumber","Z1121");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputSpec","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRoHs","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateRoHs","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputMSDS","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputHalogen","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateHF","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputGuarantee","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRedPhosphorus","/Users/apichat/Workspace/temp/01Test.pdf");
+        Material material = mtmsService.createMaterial(multipartHttpServletRequestWrapper2);
+        this.mockMvc.perform(get("/mtms/updateMaterial/" + materialDao.findByMaterialName(material.getMaterialName()).getId()).principal(principal))
+                .andExpect(status().isOk())
+                .andExpect(view().name("MTMS/updateMaterial"))
+                .andExpect(model().attribute("material", notNullValue()))
                 .andExpect(model().attribute("name", notNullValue()))
                 .andExpect(model().attribute("logout", notNullValue()))
                 .andExpect(model().attribute("login", nullValue()))

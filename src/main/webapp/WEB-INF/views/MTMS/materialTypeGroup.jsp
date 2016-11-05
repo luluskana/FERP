@@ -35,7 +35,7 @@
                                         <td>${fn:length(material.sapCodes)}</td>
                                         <td>${material.status}</td>
                                         <c:choose>
-                                            <c:when test="${roleName eq 'admin' or roleName eq 'user'}">
+                                            <c:when test="${roleName eq 'admin' or roleName eq 'user' or roleName eq 'purchase' or roleName eq 'qa' or roleName eq 'qaEngineer'}">
                                                 <td><button class="btn btn-warning btn-sm update" value="${material.id}_${material.materialName}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
                                                 <td><button class="btn btn-danger btn-sm delete" value="${material.id}_${material.materialName}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
                                             </c:when>
@@ -67,6 +67,11 @@
 </div>
 <script>
     $(document).ready(function() {
-        $('#materialList').DataTable();
+        $("#materialList").DataTable();
+
+        $(".update").click(function() {
+            alert($(this).attr("value").split("_")[0])
+            window.location.href = "${home}mtms/updateMaterial/" + $(this).attr("value").split("_")[0];
+        });
     });
 </script>

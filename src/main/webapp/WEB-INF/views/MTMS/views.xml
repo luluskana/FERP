@@ -14,4 +14,8 @@
     <definition name="MTMS/createMaterial" extends="layout.bootstrap">
         <put-attribute name="body" value="/WEB-INF/views/MTMS/createMaterial.jsp" />
     </definition>
+
+    <definition name="MTMS/updateMaterial" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/MTMS/updateMaterial.jsp" />
+    </definition>
 </tiles-definitions>

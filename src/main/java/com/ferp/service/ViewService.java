@@ -1,5 +1,6 @@
 package com.ferp.service;
 
+import com.ferp.dao.MaterialDao;
 import com.ferp.dao.MaterialTypeDao;
 import com.ferp.domain.AppUser;
 import com.ferp.domain.MaterialType;
@@ -20,6 +21,9 @@ public class ViewService {
 
     @Autowired
     private MaterialTypeDao materialTypeDao;
+
+    @Autowired
+    private MaterialDao materialDao;
 
     public void addLogin(ModelAndView model) {
         model.addObject("login", "on");
@@ -47,5 +51,13 @@ public class ViewService {
 
     public void addMaterialType(ModelAndView model, Long id) {
         model.addObject("materialType",materialTypeDao.findById(id));
+    }
+
+    public void addMaterial(ModelAndView model, Long id) {
+        try {
+            model.addObject("material",materialDao.findById(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
