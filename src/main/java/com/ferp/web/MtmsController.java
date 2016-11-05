@@ -80,6 +80,23 @@ public class MtmsController {
         return model;
     }
 
+    @RequestMapping(value = "/mtms/updateMaterial/{id}", method = RequestMethod.GET)
+    public ModelAndView updateMaterial(@PathVariable("id") Long id, ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        viewService.addMaterial(model, id);
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            if(appUser.getRoleName().equals("purchase") || appUser.getRoleName().equals("qa") || appUser.getRoleName().equals("admin")) {
+                model.setViewName("MTMS/updateMaterial");
+            } else {
+                model.setViewName("MTMS/404");
+            }
+        } catch (Exception e) {
+            model.setViewName("MTMS/updateMaterial");
+        }
+        return model;
+    }
+
     @RequestMapping(value = "/mtms/file/{id}", method = RequestMethod.GET)
     @ResponseBody
     public void downloadFile(@PathVariable("id") Long id, HttpServletResponse response) {
