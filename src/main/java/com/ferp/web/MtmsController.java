@@ -2,16 +2,22 @@ package com.ferp.web;
 
 import com.ferp.dao.AppUserDao;
 import com.ferp.domain.AppUser;
+import com.ferp.domain.FileData;
+import com.ferp.service.DownloadFileServiec;
 import com.ferp.service.ViewService;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 
 /**
@@ -27,6 +33,9 @@ public class MtmsController {
 
     @Autowired
     private AppUserDao appUserDao;
+
+    @Autowired
+    private DownloadFileServiec downloadFileServiec;
 
     @RequestMapping(value = "/mtms", method = RequestMethod.GET)
     public ModelAndView index(ModelAndView model, Principal principal) {
@@ -69,5 +78,18 @@ public class MtmsController {
             model.setViewName("MTMS/createMaterial");
         }
         return model;
+    }
+
+    @RequestMapping(value = "/mtms/file/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public void downloadFile(@PathVariable("id") Long id, HttpServletResponse response) {
+        try {
+            FileData fileData = downloadFileServiec.getFileName(id);
+            response.setContentType(fileData.getContentType());
+            response.setHeader("Content-Disposition", "inline;filename=" + fileData.getFileName());
+            response.getOutputStream().write(fileData.getDataFile());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
