@@ -70,7 +70,6 @@
         $("#materialList").DataTable();
 
         $(".update").click(function() {
-            alert($(this).attr("value").split("_")[0])
             window.location.href = "${home}mtms/updateMaterial/" + $(this).attr("value").split("_")[0];
         });
     });
