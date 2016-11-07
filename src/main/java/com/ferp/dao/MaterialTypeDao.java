@@ -2,7 +2,9 @@ package com.ferp.dao;
 
 import com.ferp.domain.MaterialType;
 import com.sun.prism.Material;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -39,5 +41,11 @@ public class MaterialTypeDao {
 
     public MaterialType findById(Long id) {
         return entityManager.find(MaterialType.class, id);
+    }
+
+    public MaterialType findByTypeName(String typeName) {
+        Criteria c = ((Session) entityManager.getDelegate()).createCriteria(MaterialType.class);
+        c.add(Restrictions.eq("typeName", typeName));
+        return (MaterialType)c.uniqueResult();
     }
 }

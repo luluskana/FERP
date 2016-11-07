@@ -3,12 +3,17 @@ package com.ferp.service;
 import com.ferp.dao.MaterialDao;
 import com.ferp.dao.MaterialTypeDao;
 import com.ferp.domain.AppUser;
+import com.ferp.domain.Material;
 import com.ferp.domain.MaterialType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by apichat on 10/27/2016 AD.
@@ -46,7 +51,7 @@ public class ViewService {
     }
 
     public void addMaterialTypes(ModelAndView model) {
-        model.addObject("materialTypes",materialTypeDao.findAllMaterialType());
+        model.addObject("materialTypes", materialTypeDao.findAllMaterialType());
     }
 
     public void addMaterialType(ModelAndView model, Long id) {

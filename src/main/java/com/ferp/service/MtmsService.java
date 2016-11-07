@@ -118,7 +118,6 @@ public class MtmsService {
             Calendar cal = Calendar.getInstance();
 
             MaterialType materialType = materialTypeDao.findById(Long.parseLong(id));
-
             Material material = new Material();
 
             Set<LogHistory> logHistories = material.getLogHistories();
@@ -131,7 +130,6 @@ public class MtmsService {
             material.setMaterialName(materialName);
             material.setManufacturing(manufacturing);
             material.setUlNumber(ulNumber);
-
             if(spec != null) {
                 Long idInsert = selectIdInsert();
                 saveFile(idInsert, spec.getBytes(), spec.getOriginalFilename(), spec.getContentType());
@@ -181,20 +179,25 @@ public class MtmsService {
 
             if(redPhosphorus != null) {
                 Long idInsert = selectIdInsert();
-                saveFile(idInsert, redPhosphorus.getBytes(), redPhosphorus.getOriginalFilename(), guaranteeLetter.getContentType());
+                saveFile(idInsert, redPhosphorus.getBytes(), redPhosphorus.getOriginalFilename(), redPhosphorus.getContentType());
                 material.setRedPhosphorus(idInsert);
                 logHistory.setRedPhosphorus(idInsert);
             }
 
-            material.setStatus("CREATE_MATERIAL");
-
+            if(spec != null && msds != null && rohs != null && halogen != null) {
+                material.setStatus("CREATE_MATERIAL_DOCUMENT_FULL");
+                logHistory.setStatus("CREATE_MATERIAL_DOCUMENT_FULL");
+                logHistory.setActionTYpe("User create material attach document full");
+            } else {
+                material.setStatus("CREATE_MATERIAL_DOCUMENT_NOT_FULL");
+                logHistory.setStatus("CREATE_MATERIAL_DOCUMENT_NOT_FULL");
+                logHistory.setActionTYpe("User create material attach document not full");
+            }
 
             if(appUser != null) {
                 logHistory.setCreateBy(appUser);
             }
             logHistory.setCreateDate(new Date());
-            logHistory.setStatus("CREATE_MATERIAL");
-            logHistory.setActionTYpe("User Create Material In System");
             logHistory.setMaterial(material);
             logHistories.add(logHistory);
 
@@ -206,9 +209,7 @@ public class MtmsService {
             materials.add(material);
 
             materialType.setMaterials(materials);
-
             materialTypeDao.update(materialType);
-
             return material;
         } catch (Exception e) {
             e.printStackTrace();
@@ -312,20 +313,26 @@ public class MtmsService {
 
             if(redPhosphorus != null) {
                 Long idInsert = selectIdInsert();
-                saveFile(idInsert, redPhosphorus.getBytes(), redPhosphorus.getOriginalFilename(), guaranteeLetter.getContentType());
+                saveFile(idInsert, redPhosphorus.getBytes(), redPhosphorus.getOriginalFilename(), redPhosphorus.getContentType());
                 material.setRedPhosphorus(idInsert);
                 logHistory.setRedPhosphorus(idInsert);
             }
 
-            material.setStatus("UPDATE_MATERIAL");
+            if(spec != null && msds != null && rohs != null && halogen != null) {
+                material.setStatus("UPDATE_MATERIAL_DOCUMENT_FULL");
+                logHistory.setStatus("UPDATE_MATERIAL_DOCUMENT_FULL");
+                logHistory.setActionTYpe("User update material attach document full");
+            } else {
+                material.setStatus("UPDATE_MATERIAL_DOCUMENT_NOT_FULL");
+                logHistory.setStatus("UPDATE_MATERIAL_DOCUMENT_NOT_FULL");
+                logHistory.setActionTYpe("User update material attach document not full");
+            }
 
 
             if(appUser != null) {
                 logHistory.setCreateBy(appUser);
             }
             logHistory.setCreateDate(new Date());
-            logHistory.setStatus("UPDATE_MATERIAL");
-            logHistory.setActionTYpe("User Update Material In System");
             logHistory.setMaterial(material);
             logHistories.add(logHistory);
 
@@ -362,5 +369,15 @@ public class MtmsService {
     public void saveFile(Long id, byte[] stream, String fileName, String contentType) {
         String sqlInsertFile = "INSERT INTO ITEM_FILE (id, dataFile, fileName, contentType) VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sqlInsertFile, id, stream, fileName, contentType);
+    }
+
+    public void deleteMaterial(MultipartHttpServletRequest multipartHttpServletRequest) {
+        try {
+            String id = multipartHttpServletRequest.getParameter("id");
+            Principal principal = multipartHttpServletRequest.getUserPrincipal();
+            materialDao.delete(Long.parseLong(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
