@@ -76,7 +76,7 @@ public class ViewService {
 
     public void addMaterialAdditionalOrReject(ModelAndView model) {
         try {
-            model.addObject("materialsAdditionalOrReject",materialDao.findByMaterialStatus(new String[] {"UPDATE_MATERIAL_DOCUMENT_NOT_FULL", "CREATE_MATERIAL_DOCUMENT_NOT_FULL"}));
+            model.addObject("materialsAdditionalOrReject",materialDao.findByMaterialStatus(new String[] {"UPDATE_MATERIAL_DOCUMENT_NOT_FULL", "CREATE_MATERIAL_DOCUMENT_NOT_FULL", "REJECT_MATERIAL"}));
         } catch (Exception e) {
             e.printStackTrace();
         }

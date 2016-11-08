@@ -96,4 +96,30 @@ public class MtmsControllerJson {
             return new ResponseEntity<String>("{\"process\":\"fail\"}", headers, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @RequestMapping(value = "/mtms/approve/material", method = RequestMethod.POST, headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> approveMaterial(MultipartHttpServletRequest multipartHttpServletRequest) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        try {
+            mtmsService.approveMaterial(multipartHttpServletRequest);
+            return new ResponseEntity<String>("{\"process\":\"success\"}", headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("{\"process\":\"fail\"}", headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/mtms/reject/material", method = RequestMethod.POST, headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> rejectMaterial(MultipartHttpServletRequest multipartHttpServletRequest) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        try {
+            mtmsService.rejectMaterial(multipartHttpServletRequest);
+            return new ResponseEntity<String>("{\"process\":\"success\"}", headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("{\"process\":\"fail\"}", headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

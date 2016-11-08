@@ -376,8 +376,81 @@ public class MtmsService {
     public void deleteMaterial(MultipartHttpServletRequest multipartHttpServletRequest) {
         try {
             String id = multipartHttpServletRequest.getParameter("id");
-            Principal principal = multipartHttpServletRequest.getUserPrincipal();
             materialDao.delete(Long.parseLong(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void approveMaterial(MultipartHttpServletRequest multipartHttpServletRequest) {
+        try {
+            String id = multipartHttpServletRequest.getParameter("id");
+            Principal principal = multipartHttpServletRequest.getUserPrincipal();
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+
+            Material material = materialDao.findById(Long.parseLong(id));
+
+            Set<LogHistory> logHistories = material.getLogHistories();
+            LogHistory logHistory = new LogHistory();
+
+            material.setUpdateDate(new Date());
+            if(appUser != null) {
+                material.setUpdateBy(appUser);
+            }
+
+            material.setStatus("APPROVE_MATERIAL");
+            logHistory.setStatus("APPROVE_MATERIAL");
+            logHistory.setActionTYpe("QA approve material");
+
+            if(appUser != null) {
+                logHistory.setCreateBy(appUser);
+            }
+            logHistory.setCreateDate(new Date());
+            logHistory.setMaterial(material);
+            logHistories.add(logHistory);
+
+            material.setLogHistories(logHistories);
+
+            materialDao.update(material);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void rejectMaterial(MultipartHttpServletRequest multipartHttpServletRequest) {
+        try {
+            String id = multipartHttpServletRequest.getParameter("id");
+            String remark = multipartHttpServletRequest.getParameter("remark");
+            Principal principal = multipartHttpServletRequest.getUserPrincipal();
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+
+            Material material = materialDao.findById(Long.parseLong(id));
+
+            Set<LogHistory> logHistories = material.getLogHistories();
+            LogHistory logHistory = new LogHistory();
+
+            material.setUpdateDate(new Date());
+            if(appUser != null) {
+                material.setUpdateBy(appUser);
+            }
+
+            material.setStatus("REJECT_MATERIAL");
+            logHistory.setStatus("REJECT_MATERIAL");
+            logHistory.setActionTYpe("QA reject material");
+
+            if(appUser != null) {
+                logHistory.setCreateBy(appUser);
+            }
+            logHistory.setCreateDate(new Date());
+            logHistory.setMaterial(material);
+            logHistory.setRemark(remark);
+            logHistories.add(logHistory);
+
+            material.setLogHistories(logHistories);
+
+            materialDao.update(material);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
