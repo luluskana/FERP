@@ -209,42 +209,6 @@ public class MtmsServiceTests {
         assertEquals("UPDATE_MATERIAL_DOCUMENT_NOT_FULL", material2NotFull.getStatus());
     }
 
-//    @Test
-//    public void deleteMaterialTest() throws Exception {
-//
-//        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
-//        multipartHttpServletRequestWrapper.setParameter("typeName","deleteMaterialTest");
-//        MaterialType materialType = mtmsService.createMaterialType(multipartHttpServletRequestWrapper);
-//
-//        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper2 = new MultipartHttpServletRequestWrapper();
-//        multipartHttpServletRequestWrapper2.setParameter("id","" + materialType.getId());
-//        multipartHttpServletRequestWrapper2.setParameter("inputMaterialName","deleteMaterialTest");
-//        multipartHttpServletRequestWrapper2.setParameter("inputManufacturing","Thailand");
-//        multipartHttpServletRequestWrapper2.setParameter("inputUlNumber","Z1121");
-//        multipartHttpServletRequestWrapper2.setMultipartFile("inputSpec","/Users/apichat/Workspace/temp/01Test.pdf");
-//        multipartHttpServletRequestWrapper2.setMultipartFile("inputRoHs","/Users/apichat/Workspace/temp/01Test.pdf");
-//        multipartHttpServletRequestWrapper2.setParameter("inputDateRoHs","01/11/2016");
-//        multipartHttpServletRequestWrapper2.setMultipartFile("inputMSDS","/Users/apichat/Workspace/temp/01Test.pdf");
-//        multipartHttpServletRequestWrapper2.setMultipartFile("inputHalogen","/Users/apichat/Workspace/temp/01Test.pdf");
-//        multipartHttpServletRequestWrapper2.setParameter("inputDateHF","01/11/2016");
-//        multipartHttpServletRequestWrapper2.setMultipartFile("inputGuarantee","/Users/apichat/Workspace/temp/01Test.pdf");
-//        multipartHttpServletRequestWrapper2.setMultipartFile("inputRedPhosphorus","/Users/apichat/Workspace/temp/01Test.pdf");
-//
-//        Material materialFull = mtmsService.createMaterial(multipartHttpServletRequestWrapper2);
-//        assertNotNull(materialFull);
-//        assertEquals("deleteMaterialTest", materialFull.getMaterialName());
-//        assertEquals("Thailand", materialFull.getManufacturing());
-//        assertEquals("Z1121", materialFull.getUlNumber());
-//        assertEquals("CREATE_MATERIAL_DOCUMENT_FULL", materialFull.getStatus());
-//
-//        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper3 = new MultipartHttpServletRequestWrapper();
-//        multipartHttpServletRequestWrapper3.setParameter("id", "" + materialDao.findByMaterialName("deleteMaterialTest").getId());
-//        mtmsService.deleteMaterial(multipartHttpServletRequestWrapper3);
-//
-//        Material material = materialDao.findByMaterialName("deleteMaterialTest");
-//        assertEquals("DELETE_MATERIAL", material.getStatus());
-//    }
-
     @Test
     public void deleteMaterialTest() throws Exception {
 
@@ -279,5 +243,80 @@ public class MtmsServiceTests {
 
         Material material = materialDao.findByMaterialName("deleteMaterialTest");
         assertNull(material);
+    }
+
+    @Test
+    public void approveMaterialTest() throws Exception {
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("typeName","approveMaterialTest");
+        MaterialType materialType = mtmsService.createMaterialType(multipartHttpServletRequestWrapper);
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper2 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper2.setParameter("id","" + materialType.getId());
+        multipartHttpServletRequestWrapper2.setParameter("inputMaterialName","approveMaterialTest");
+        multipartHttpServletRequestWrapper2.setParameter("inputManufacturing","Thailand");
+        multipartHttpServletRequestWrapper2.setParameter("inputUlNumber","Z1121");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputSpec","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRoHs","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateRoHs","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputMSDS","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputHalogen","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateHF","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputGuarantee","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRedPhosphorus","/Users/apichat/Workspace/temp/01Test.pdf");
+
+        Material materialFull = mtmsService.createMaterial(multipartHttpServletRequestWrapper2);
+        assertNotNull(materialFull);
+        assertEquals("approveMaterialTest", materialFull.getMaterialName());
+        assertEquals("Thailand", materialFull.getManufacturing());
+        assertEquals("Z1121", materialFull.getUlNumber());
+        assertEquals("CREATE_MATERIAL_DOCUMENT_FULL", materialFull.getStatus());
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper3 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper3.setParameter("id", "" + materialDao.findByMaterialName("approveMaterialTest").getId());
+        mtmsService.approveMaterial(multipartHttpServletRequestWrapper3);
+
+        Material material = materialDao.findByMaterialName("approveMaterialTest");
+        assertNotNull(material);
+        assertEquals("APPROVE_MATERIAL", material.getStatus());
+    }
+
+    @Test
+    public void rejectMaterialTest() throws Exception {
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("typeName","rejectMaterialTest");
+        MaterialType materialType = mtmsService.createMaterialType(multipartHttpServletRequestWrapper);
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper2 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper2.setParameter("id","" + materialType.getId());
+        multipartHttpServletRequestWrapper2.setParameter("inputMaterialName","rejectMaterialTest");
+        multipartHttpServletRequestWrapper2.setParameter("inputManufacturing","Thailand");
+        multipartHttpServletRequestWrapper2.setParameter("inputUlNumber","Z1121");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputSpec","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRoHs","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateRoHs","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputMSDS","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputHalogen","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateHF","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputGuarantee","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRedPhosphorus","/Users/apichat/Workspace/temp/01Test.pdf");
+
+        Material materialFull = mtmsService.createMaterial(multipartHttpServletRequestWrapper2);
+        assertNotNull(materialFull);
+        assertEquals("rejectMaterialTest", materialFull.getMaterialName());
+        assertEquals("Thailand", materialFull.getManufacturing());
+        assertEquals("Z1121", materialFull.getUlNumber());
+        assertEquals("CREATE_MATERIAL_DOCUMENT_FULL", materialFull.getStatus());
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper3 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper3.setParameter("id", "" + materialDao.findByMaterialName("rejectMaterialTest").getId());
+        multipartHttpServletRequestWrapper3.setParameter("remark", "reject test");
+        mtmsService.rejectMaterial(multipartHttpServletRequestWrapper3);
+
+        Material material = materialDao.findByMaterialName("rejectMaterialTest");
+        assertNotNull(material);
+        assertEquals("REJECT_MATERIAL", material.getStatus());
     }
 }

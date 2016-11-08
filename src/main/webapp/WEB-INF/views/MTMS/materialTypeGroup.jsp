@@ -56,7 +56,7 @@
                             </table>
                         </div>
                     </div>
-                    <c:if test="${roleName eq 'admin' or roleName eq 'user' or roleName eq 'qa' or roleName eq 'pu'}">
+                    <c:if test="${roleName eq 'admin' or roleName eq 'user' or roleName eq 'qa' or roleName eq 'purchase'}">
                         <div class="row" id="rowAddMaterialType">
                             <div class="col-sm-12">
                                 <a href="${home}mtms/createMaterial/${materialType.id}" id="btnAddMaterial" class="btn btn-default btn-group-sm">

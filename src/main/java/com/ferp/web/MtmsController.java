@@ -150,4 +150,21 @@ public class MtmsController {
         model.setViewName("MTMS/additionalMaterial");
         return model;
     }
+
+    @RequestMapping(value = "/mtms/waitingApproveMaterial/{id}", method = RequestMethod.GET)
+    public ModelAndView waitingApproveMaterial(@PathVariable("id") Long id, ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        viewService.addMaterial(model, id);
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            if(appUser.getRoleName().equals("qa") || appUser.getRoleName().equals("admin")) {
+                model.setViewName("MTMS/waitingApproveMaterial");
+            } else {
+                model.setViewName("MTMS/404");
+            }
+        } catch (Exception e) {
+            model.setViewName("MTMS/waitingApproveMaterial");
+        }
+        return model;
+    }
 }

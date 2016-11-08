@@ -85,7 +85,7 @@
                                                 <td><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
                                             </c:otherwise>
                                         </c:choose>
-                                        <td><a href="#" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                                        <td><a href="${home}mtms/waitingApproveMaterial/${material.id}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

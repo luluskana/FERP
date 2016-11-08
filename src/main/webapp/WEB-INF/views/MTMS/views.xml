@@ -30,4 +30,8 @@
     <definition name="MTMS/additionalMaterial" extends="layout.bootstrap">
         <put-attribute name="body" value="/WEB-INF/views/MTMS/additionalMaterial.jsp" />
     </definition>
+
+    <definition name="MTMS/waitingApproveMaterial" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/MTMS/waitingApproveMaterial.jsp" />
+    </definition>
 </tiles-definitions>

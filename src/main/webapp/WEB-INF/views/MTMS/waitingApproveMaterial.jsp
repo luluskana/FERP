@@ -127,6 +127,18 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <form class="form-horizontal well">
+                        <div class="form-group">
+                            <div class="col-sm-12" align="center">
+                                <button type="button" id="approve" class="btn btn-success btn-group-sm">Approve</button>
+                                <button type="button" id="reject" class="btn btn-danger btn-group-sm">Reject</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -187,3 +199,81 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="alertRejectModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title">Reject Reason</h4>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" rows="3" id="inputReason"><jsp:text/></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnReject">reject</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $("#approve").click(function() {
+            if (confirm('Are you sure you want to Approve ?')) {
+                var formData = new FormData();
+                formData.append("id", "${material.id}");
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        Accept: "application/json",
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    url: "${home}mtms/approve/material",
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    async: false,
+                    success: function(data){
+                        window.location.href = "${home}mtms/waitingApprove";
+                    },
+                    error: function(data){
+                        alert("Error");
+                        return false;
+                    }
+                });
+            } else {
+                return false;
+            }
+        });
+
+        $("#reject").click(function() {
+            $("#alertRejectModal").modal({show:true});
+        });
+
+        $("#btnReject").click(function() {
+            var formData = new FormData();
+            formData.append("id", "${material.id}");
+            formData.append("remark", $("#inputReason").val());
+            $.ajax({
+                type: "POST",
+                headers: {
+                    Accept: "application/json",
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "${home}mtms/reject/material",
+                processData: false,
+                contentType: false,
+                data: formData,
+                async: false,
+                success: function(data){
+                    window.location.href = "${home}mtms/waitingApprove";
+                },
+                error: function(data){
+                    alert("Error");
+                    return false;
+                }
+            });
+        });
+    });
+</script>

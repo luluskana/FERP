@@ -31,6 +31,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests().antMatchers("/mtms/create/material").authenticated()
                 .and().authorizeRequests().antMatchers("/mtms/update/material").authenticated()
                 .and().authorizeRequests().antMatchers("/mtms/delete/material").authenticated()
+                .and().authorizeRequests().antMatchers("/mtms/waitingApproveMaterial/**").authenticated()
+                .and().authorizeRequests().antMatchers("/mtms/approve/material").authenticated()
+                .and().authorizeRequests().antMatchers("/mtms/reject/material").authenticated()
 
                 .and().csrf().disable().formLogin().loginPage("/login").loginProcessingUrl("/resources/j_spring_security_check").failureUrl("/login?error")
                 .defaultSuccessUrl("/", false).usernameParameter("username").passwordParameter("password").permitAll()
