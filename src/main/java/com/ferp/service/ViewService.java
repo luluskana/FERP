@@ -65,4 +65,20 @@ public class ViewService {
             e.printStackTrace();
         }
     }
+
+    public void addMaterialWaitingApprove(ModelAndView model) {
+        try {
+            model.addObject("materialsWaitingApprove",materialDao.findByMaterialStatus(new String[] {"CREATE_MATERIAL_DOCUMENT_FULL", "UPDATE_MATERIAL_DOCUMENT_FULL"}));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addMaterialAdditionalOrReject(ModelAndView model) {
+        try {
+            model.addObject("materialsAdditionalOrReject",materialDao.findByMaterialStatus(new String[] {"UPDATE_MATERIAL_DOCUMENT_NOT_FULL", "CREATE_MATERIAL_DOCUMENT_NOT_FULL"}));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

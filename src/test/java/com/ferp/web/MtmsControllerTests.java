@@ -167,4 +167,91 @@ public class MtmsControllerTests extends AbstractTestController {
         this.mockMvc.perform(get("/mtms/file/" + material.getSpec()))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    public void mtmsMaterialDetailPageTest() throws Exception {
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("typeName","mtmsMaterialDetailPageTest");
+        MaterialType materialType = mtmsService.createMaterialType(multipartHttpServletRequestWrapper);
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper2 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper2.setParameter("id","" + materialType.getId());
+        multipartHttpServletRequestWrapper2.setParameter("inputMaterialName","mtmsMaterialDetailPageTest");
+        multipartHttpServletRequestWrapper2.setParameter("inputManufacturing","Thailand");
+        multipartHttpServletRequestWrapper2.setParameter("inputUlNumber","Z1121");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputSpec","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRoHs","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateRoHs","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputMSDS","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputHalogen","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateHF","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputGuarantee","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRedPhosphorus","/Users/apichat/Workspace/temp/01Test.pdf");
+        Material material = mtmsService.createMaterial(multipartHttpServletRequestWrapper2);
+        this.mockMvc.perform(get("/mtms/detailMaterial/" + materialDao.findByMaterialName(material.getMaterialName()).getId()).principal(principal))
+                .andExpect(status().isOk())
+                .andExpect(view().name("MTMS/detailMaterial"))
+                .andExpect(model().attribute("material", notNullValue()))
+                .andExpect(model().attribute("name", notNullValue()))
+                .andExpect(model().attribute("logout", notNullValue()))
+                .andExpect(model().attribute("login", nullValue()))
+                .andExpect(model().attribute("roleName", notNullValue()));
+    }
+
+    @Test
+    public void mtmsWaitingApprovePageTest() throws Exception {
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("typeName","mtmsWaitingApprovePageTest");
+        MaterialType materialType = mtmsService.createMaterialType(multipartHttpServletRequestWrapper);
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper2 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper2.setParameter("id","" + materialType.getId());
+        multipartHttpServletRequestWrapper2.setParameter("inputMaterialName","mtmsWaitingApprovePageTest");
+        multipartHttpServletRequestWrapper2.setParameter("inputManufacturing","Thailand");
+        multipartHttpServletRequestWrapper2.setParameter("inputUlNumber","Z1121");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputSpec","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRoHs","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateRoHs","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputMSDS","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputHalogen","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateHF","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputGuarantee","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRedPhosphorus","/Users/apichat/Workspace/temp/01Test.pdf");
+        mtmsService.createMaterial(multipartHttpServletRequestWrapper2);
+
+        this.mockMvc.perform(get("/mtms/waitingApprove"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("MTMS/waitingApprove"))
+                .andExpect(model().attribute("materialsWaitingApprove", notNullValue()));
+    }
+
+    @Test
+    public void mtmsAdditionalOrRejectPageTest() throws Exception {
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("typeName","mtmsAdditionalOrRejectPageTest");
+        MaterialType materialType = mtmsService.createMaterialType(multipartHttpServletRequestWrapper);
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper2 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper2.setParameter("id","" + materialType.getId());
+        multipartHttpServletRequestWrapper2.setParameter("inputMaterialName","mtmsAdditionalOrRejectPageTest");
+        multipartHttpServletRequestWrapper2.setParameter("inputManufacturing","Thailand");
+        multipartHttpServletRequestWrapper2.setParameter("inputUlNumber","Z1121");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputSpec",null);
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRoHs","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateRoHs","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputMSDS","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputHalogen","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateHF","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputGuarantee","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRedPhosphorus","/Users/apichat/Workspace/temp/01Test.pdf");
+        mtmsService.createMaterial(multipartHttpServletRequestWrapper2);
+
+        this.mockMvc.perform(get("/mtms/additionalMaterial"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("MTMS/additionalMaterial"))
+                .andExpect(model().attribute("materialsAdditionalOrReject", notNullValue()));
+    }
 }

@@ -192,6 +192,7 @@ public class MtmsService {
                 material.setStatus("CREATE_MATERIAL_DOCUMENT_NOT_FULL");
                 logHistory.setStatus("CREATE_MATERIAL_DOCUMENT_NOT_FULL");
                 logHistory.setActionTYpe("User create material attach document not full");
+                logHistory.setRemark("User create material attach document not full");
             }
 
             if(appUser != null) {
@@ -326,6 +327,7 @@ public class MtmsService {
                 material.setStatus("UPDATE_MATERIAL_DOCUMENT_NOT_FULL");
                 logHistory.setStatus("UPDATE_MATERIAL_DOCUMENT_NOT_FULL");
                 logHistory.setActionTYpe("User update material attach document not full");
+                logHistory.setRemark("User update material attach document not full");
             }
 
 

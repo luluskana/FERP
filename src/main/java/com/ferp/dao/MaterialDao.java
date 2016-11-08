@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -57,6 +58,14 @@ public class MaterialDao {
         query2.setParameter("id", id);
         query2.executeUpdate();
         deleteFile(logHistories);
+    }
+
+    public List<Material> findByMaterialStatus(String[] strings) {
+        Criteria criteria = ((Session) entityManager.getDelegate()).createCriteria(Material.class);
+        Criterion case1 = Restrictions.in("status", strings);
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        criteria.add(case1);
+        return criteria.list();
     }
 
     public void deleteFile(Set<LogHistory> logHistories) {

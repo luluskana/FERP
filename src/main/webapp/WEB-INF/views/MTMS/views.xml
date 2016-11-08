@@ -18,4 +18,16 @@
     <definition name="MTMS/updateMaterial" extends="layout.bootstrap">
         <put-attribute name="body" value="/WEB-INF/views/MTMS/updateMaterial.jsp" />
     </definition>
+
+    <definition name="MTMS/detailMaterial" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/MTMS/detailMaterial.jsp" />
+    </definition>
+
+    <definition name="MTMS/waitingApprove" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/MTMS/waitingApprove.jsp" />
+    </definition>
+
+    <definition name="MTMS/additionalMaterial" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/MTMS/additionalMaterial.jsp" />
+    </definition>
 </tiles-definitions>
