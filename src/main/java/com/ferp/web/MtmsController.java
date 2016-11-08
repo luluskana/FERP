@@ -46,6 +46,8 @@ public class MtmsController {
             viewService.addLogin(model);
         }
         viewService.addMaterialTypes(model);
+        viewService.addMaterialWaitingApprove(model);
+        viewService.addMaterialAdditionalOrReject(model);
         model.setViewName("MTMS/home");
         return model;
     }
@@ -108,5 +110,44 @@ public class MtmsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping(value = "/mtms/detailMaterial/{id}", method = RequestMethod.GET)
+    public ModelAndView detailMaterial(@PathVariable("id") Long id, ModelAndView model, Principal principal) {
+        try {
+            principal.getName();
+            viewService.addMenuAndName(model, principal);
+        } catch (Exception e) {
+            viewService.addLogin(model);
+        }
+        viewService.addMaterial(model, id);
+        model.setViewName("MTMS/detailMaterial");
+        return model;
+    }
+
+    @RequestMapping(value = "/mtms/waitingApprove", method = RequestMethod.GET)
+    public ModelAndView waitingApproveMaterial(ModelAndView model, Principal principal) {
+        try {
+            principal.getName();
+            viewService.addMenuAndName(model, principal);
+        } catch (Exception e) {
+            viewService.addLogin(model);
+        }
+        viewService.addMaterialWaitingApprove(model);
+        model.setViewName("MTMS/waitingApprove");
+        return model;
+    }
+
+    @RequestMapping(value = "/mtms/additionalMaterial", method = RequestMethod.GET)
+    public ModelAndView AdditionalOrRejectMaterial(ModelAndView model, Principal principal) {
+        try {
+            principal.getName();
+            viewService.addMenuAndName(model, principal);
+        } catch (Exception e) {
+            viewService.addLogin(model);
+        }
+        viewService.addMaterialAdditionalOrReject(model);
+        model.setViewName("MTMS/additionalMaterial");
+        return model;
     }
 }

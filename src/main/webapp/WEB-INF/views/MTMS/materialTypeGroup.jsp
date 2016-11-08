@@ -33,7 +33,12 @@
                                         <td>${loop.index + 1}</td>
                                         <td>${material.materialName}</td>
                                         <td>${fn:length(material.sapCodes)}</td>
-                                        <td>${material.status}</td>
+                                        <c:if test="${material.status eq 'CREATE_MATERIAL_DOCUMENT_FULL' or material.status eq 'UPDATE_MATERIAL_DOCUMENT_FULL'}">
+                                            <td><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Waiting QA approve</td>
+                                        </c:if>
+                                        <c:if test="${material.status eq 'CREATE_MATERIAL_DOCUMENT_NOT_FULL' or material.status eq 'UPDATE_MATERIAL_DOCUMENT_NOT_FULL'}">
+                                            <td><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Additional or reject</td>
+                                        </c:if>
                                         <c:choose>
                                             <c:when test="${roleName eq 'admin' or roleName eq 'user' or roleName eq 'purchase' or roleName eq 'qa' or roleName eq 'qaEngineer'}">
                                                 <td><button class="btn btn-warning btn-sm update" value="${material.id}_${material.materialName}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
@@ -44,7 +49,7 @@
                                                 <td><button class="btn btn-danger btn-sm" disabled><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
                                             </c:otherwise>
                                         </c:choose>
-                                        <td><a href="${home}mtms/material/${material.id}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                                        <td><a href="${home}mtms/detailMaterial/${material.id}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

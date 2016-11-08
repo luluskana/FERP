@@ -111,12 +111,12 @@
                 </div>
                 <div class="panel-body">
                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-text">
-                            <span class="badge">7</span>
+                        <a href="${home}mtms/waitingApprove" class="list-group-item list-group-item-text">
+                            <span class="badge">${fn:length(materialsWaitingApprove)}</span>
                             Waiting Approve
                         </a>
-                        <a href="#" class="list-group-item list-group-item-text">
-                            <span class="badge">10</span>
+                        <a href="${home}mtms/additionalMaterial" class="list-group-item list-group-item-text">
+                            <span class="badge">${fn:length(materialsAdditionalOrReject)}</span>
                             Additional requests or reject
                         </a>
                         <a href="#" class="list-group-item list-group-item-text">
