@@ -178,6 +178,12 @@
                                     <c:if test="${logHistory.status eq 'UPDATE_MATERIAL_DOCUMENT_FULL' or logHistory.status eq 'UPDATE_MATERIAL_DOCUMENT_NOT_FULL'}">
                                         <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update</td>
                                     </c:if>
+                                    <c:if test="${logHistory.status eq 'REJECT_MATERIAL'}">
+                                        <td><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Reject</td>
+                                    </c:if>
+                                    <c:if test="${logHistory.status eq 'APPROVE_MATERIAL'}">
+                                        <td><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Approve</td>
+                                    </c:if>
                                     <td>${logHistory.remark}</td>
                                     <c:if test="${roleName eq 'admin'}">
                                         <td><a class="btn btn-warning btn-sm" href="${home}mtms/file/${logHistory.spec}" target="_blank" role="button"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>

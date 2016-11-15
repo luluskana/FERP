@@ -111,6 +111,10 @@
                 </div>
                 <div class="panel-body">
                     <div class="list-group">
+                        <a href="${home}mtms/materialApprove" class="list-group-item list-group-item-text">
+                            <span class="badge">${fn:length(materialsApproveList)}</span>
+                            Material Approve
+                        </a>
                         <a href="${home}mtms/waitingApprove" class="list-group-item list-group-item-text">
                             <span class="badge">${fn:length(materialsWaitingApprove)}</span>
                             Waiting Approve
@@ -119,8 +123,8 @@
                             <span class="badge">${fn:length(materialsAdditionalOrReject)}</span>
                             Additional requests or reject
                         </a>
-                        <a href="#" class="list-group-item list-group-item-text">
-                            <span class="badge">20</span>
+                        <a href="${home}mtms/materialExpiredList" class="list-group-item list-group-item-text">
+                            <span class="badge">${fn:length(materialsExpiredList)}</span>
                             Material Expired
                         </a>
                     </div>

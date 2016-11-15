@@ -34,4 +34,12 @@
     <definition name="MTMS/waitingApproveMaterial" extends="layout.bootstrap">
         <put-attribute name="body" value="/WEB-INF/views/MTMS/waitingApproveMaterial.jsp" />
     </definition>
+
+    <definition name="MTMS/materialApproveList" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/MTMS/materialApproveList.jsp" />
+    </definition>
+
+    <definition name="MTMS/materialExpiredList" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/MTMS/materialExpiredList.jsp" />
+    </definition>
 </tiles-definitions>

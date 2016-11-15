@@ -48,6 +48,8 @@ public class MtmsController {
         viewService.addMaterialTypes(model);
         viewService.addMaterialWaitingApprove(model);
         viewService.addMaterialAdditionalOrReject(model);
+        viewService.addMaterialApproveList(model);
+        viewService.addMaterialsExpired(model);
         model.setViewName("MTMS/home");
         return model;
     }
@@ -165,6 +167,32 @@ public class MtmsController {
         } catch (Exception e) {
             model.setViewName("MTMS/waitingApproveMaterial");
         }
+        return model;
+    }
+
+    @RequestMapping(value = "/mtms/materialApprove", method = RequestMethod.GET)
+    public ModelAndView materialApproveList(ModelAndView model, Principal principal) {
+        try {
+            principal.getName();
+            viewService.addMenuAndName(model, principal);
+        } catch (Exception e) {
+            viewService.addLogin(model);
+        }
+        viewService.addMaterialApproveList(model);
+        model.setViewName("MTMS/materialApproveList");
+        return model;
+    }
+
+    @RequestMapping(value = "/mtms/materialExpiredList", method = RequestMethod.GET)
+    public ModelAndView materialExpiredList(ModelAndView model, Principal principal) {
+        try {
+            principal.getName();
+            viewService.addMenuAndName(model, principal);
+        } catch (Exception e) {
+            viewService.addLogin(model);
+        }
+        viewService.addMaterialsExpired(model);
+        model.setViewName("MTMS/materialExpiredList");
         return model;
     }
 }

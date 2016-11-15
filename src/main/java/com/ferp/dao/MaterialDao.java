@@ -14,7 +14,11 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -93,5 +97,18 @@ public class MaterialDao {
     public void queryDelete(Long id) {
         String sqlSelect = "DELETE FROM ITEM_FILE WHERE ID = ?";
         jdbcTemplate.update(sqlSelect, id);
+    }
+
+    public List<Material> findAllMaterialGe(Date date) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Material> cq = builder.createQuery(Material.class);
+        Root<Material> root = cq.from(Material.class);
+        cq.where(
+                builder.or(
+                        builder.lessThanOrEqualTo(root.<Date>get("rohsAlertDateTest"), date),
+                        builder.lessThanOrEqualTo(root.<Date>get("halogenAlertDateTest"), date)
+                )
+        );
+        return entityManager.createQuery(cq).getResultList();
     }
 }
