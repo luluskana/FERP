@@ -1,5 +1,6 @@
 package com.ferp.service;
 
+import com.ferp.dao.CustomerDao;
 import com.ferp.dao.MaterialDao;
 import com.ferp.dao.MaterialTypeDao;
 import com.ferp.domain.AppUser;
@@ -26,6 +27,9 @@ public class ViewService {
 
     @Autowired
     private MaterialDao materialDao;
+
+    @Autowired
+    private CustomerDao customerDao;
 
     public void addLogin(ModelAndView model) {
         model.addObject("login", "on");
@@ -90,6 +94,14 @@ public class ViewService {
     public void addMaterialsExpired(ModelAndView model) {
         try {
             model.addObject("materialsExpiredList",materialDao.findAllMaterialGe(new Date()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addCustomerList(ModelAndView model) {
+        try {
+            model.addObject("customers", customerDao.findAllCustomer());
         } catch (Exception e) {
             e.printStackTrace();
         }

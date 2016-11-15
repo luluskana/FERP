@@ -25,10 +25,11 @@
                         <li><a href="#">Canon Barcode Compare</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Help</a></li>
+                <li><a href="${home}customer">Customer</a></li>
                 <li><a href="#">Blog</a></li>
                 <li><a href="#">Download</a></li>
                 <li><a href="#">Contract</a></li>
+                <li><a href="#">Help</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
