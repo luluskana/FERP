@@ -65,10 +65,6 @@ public class LogHistory implements Serializable {
     @JoinColumn(name = "material")
     private Material material;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "sapCode")
-    private SapCode sapCode;
-
     public Long getId() {
         return id;
     }
@@ -189,11 +185,4 @@ public class LogHistory implements Serializable {
         this.material = material;
     }
 
-    public SapCode getSapCode() {
-        return sapCode;
-    }
-
-    public void setSapCode(SapCode sapCode) {
-        this.sapCode = sapCode;
-    }
 }

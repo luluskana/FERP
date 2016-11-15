@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by apichat on 10/27/2016 AD.
@@ -77,6 +74,22 @@ public class ViewService {
     public void addMaterialAdditionalOrReject(ModelAndView model) {
         try {
             model.addObject("materialsAdditionalOrReject",materialDao.findByMaterialStatus(new String[] {"UPDATE_MATERIAL_DOCUMENT_NOT_FULL", "CREATE_MATERIAL_DOCUMENT_NOT_FULL", "REJECT_MATERIAL"}));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addMaterialApproveList(ModelAndView model) {
+        try {
+            model.addObject("materialsApproveList",materialDao.findByMaterialStatus(new String[] {"APPROVE_MATERIAL"}));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addMaterialsExpired(ModelAndView model) {
+        try {
+            model.addObject("materialsExpiredList",materialDao.findAllMaterialGe(new Date()));
         } catch (Exception e) {
             e.printStackTrace();
         }

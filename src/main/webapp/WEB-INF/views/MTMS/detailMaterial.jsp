@@ -111,6 +111,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>SAP Code</th>
+                                        <th>Delete</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -118,6 +119,7 @@
                                         <tr>
                                             <td>${loop.index + 1}</td>
                                             <td>${sapCode.name}</td>
+                                            <td></td>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
@@ -125,6 +127,36 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <c:if test="${roleName eq 'admin' or roleName eq 'user' or roleName eq 'qa' or roleName eq 'purchase'}">
+                <div class="row" id="rowAddSapCode">
+                    <div class="col-sm-12">
+                        <button type="button" id="btnAddSapCode" class="btn btn-default btn-group-sm">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add SAP CODE
+                        </button>
+                    </div>
+                </div>
+            </c:if>
+            <div class="row hidden" id="rowCreateSapCode">
+                <div class="col-sm-12">
+                    <form class="form-horizontal well" id="createSapCodeForm" action="" method="POST">
+                        <fieldset>
+                            <legend>Create SAP Code</legend>
+                            <div class="form-group">
+                                <label for="inputSapCode" class="col-sm-3 control-label">SAP CODE</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control input-group-sm" id="inputSapCode" placeholder="SAP CODE" required="required" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="submit" class="btn btn-default btn-group-sm">Create</button>
+                                    <button type="button" id="btnCancelCreate" class="btn btn-warning btn-group-sm">Cancel</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
             </div>
         </div>
@@ -166,6 +198,12 @@
                                     <c:if test="${logHistory.status eq 'UPDATE_MATERIAL_DOCUMENT_FULL' or logHistory.status eq 'UPDATE_MATERIAL_DOCUMENT_NOT_FULL'}">
                                         <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update</td>
                                     </c:if>
+                                    <c:if test="${logHistory.status eq 'REJECT_MATERIAL'}">
+                                        <td><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Reject</td>
+                                    </c:if>
+                                    <c:if test="${logHistory.status eq 'APPROVE_MATERIAL'}">
+                                        <td><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Approve</td>
+                                    </c:if>
                                     <td>${logHistory.remark}</td>
                                     <c:if test="${roleName eq 'admin'}">
                                         <td><a class="btn btn-warning btn-sm" href="${home}mtms/file/${logHistory.spec}" target="_blank" role="button"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>
@@ -187,3 +225,44 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $("#btnAddSapCode").click(function() {
+            $("#rowAddSapCode").addClass("hidden");
+            $("#rowCreateSapCode").removeClass("hidden");
+            $("#inputSapCode").focus();
+        });
+
+        $("#btnCancelCreate").click(function() {
+            $("#rowAddSapCode").removeClass("hidden");
+            $("#rowCreateSapCode").addClass("hidden");
+        });
+
+        $("#createSapCodeForm").submit(function() {
+            var formData = new FormData();
+            formData.append("id", "${material.id}");
+            formData.append("name", $("#inputSapCode").val());
+            $.ajax({
+                type: "POST",
+                headers: {
+                    Accept: "application/json",
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "${home}mtms/create/codesap",
+                processData: false,
+                contentType: false,
+                data: formData,
+                async: false,
+                success: function(data){
+                    window.location.href = "${home}mtms/detailMaterial/${material.id}";
+                },
+                error: function(data){
+                    alert("Error");
+                    return false;
+                }
+            });
+            return false;
+        });
+    });
+</script>

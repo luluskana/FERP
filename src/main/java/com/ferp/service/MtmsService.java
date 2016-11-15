@@ -3,10 +3,7 @@ package com.ferp.service;
 import com.ferp.dao.AppUserDao;
 import com.ferp.dao.MaterialDao;
 import com.ferp.dao.MaterialTypeDao;
-import com.ferp.domain.AppUser;
-import com.ferp.domain.LogHistory;
-import com.ferp.domain.Material;
-import com.ferp.domain.MaterialType;
+import com.ferp.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -454,5 +451,24 @@ public class MtmsService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void createSapCode(MultipartHttpServletRequest multipartHttpServletRequest) {
+        Principal principal = multipartHttpServletRequest.getUserPrincipal();
+        AppUser appUser = appUserDao.findByUsername(principal.getName());
+        String id = multipartHttpServletRequest.getParameter("id");
+        String name = multipartHttpServletRequest.getParameter("name");
+        Material material = materialDao.findById(Long.parseLong(id));
+
+        Set<SapCode> sapCodes = material.getSapCodes();
+        SapCode sapCode = new SapCode();
+        sapCode.setCreateBy(appUser);
+        sapCode.setCreateDate(new Date());
+        sapCode.setName(name);
+        sapCode.setMaterial(material);
+        sapCodes.add(sapCode);
+
+        material.setSapCodes(sapCodes);
+        materialDao.update(material);
     }
 }

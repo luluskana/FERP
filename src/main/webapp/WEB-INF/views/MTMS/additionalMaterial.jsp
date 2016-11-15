@@ -40,7 +40,7 @@
                                                 <td>${appuser.name}</td>
                                             </c:if>
                                         </c:forEach>
-                                        <td><a href="${home}mtms/updateMaterial/${material.id}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                                        <td><a href="${home}mtms/updateMaterial/${material.id}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

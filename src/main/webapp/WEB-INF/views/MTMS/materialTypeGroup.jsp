@@ -39,6 +39,12 @@
                                         <c:if test="${material.status eq 'CREATE_MATERIAL_DOCUMENT_NOT_FULL' or material.status eq 'UPDATE_MATERIAL_DOCUMENT_NOT_FULL'}">
                                             <td><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Additional or reject</td>
                                         </c:if>
+                                        <c:if test="${material.status eq 'APPROVE_MATERIAL'}">
+                                            <td><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Approve</td>
+                                        </c:if>
+                                        <c:if test="${material.status eq 'REJECT_MATERIAL'}">
+                                            <td><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Reject</td>
+                                        </c:if>
                                         <c:choose>
                                             <c:when test="${roleName eq 'admin' or roleName eq 'user' or roleName eq 'purchase' or roleName eq 'qa' or roleName eq 'qaEngineer'}">
                                                 <td><button class="btn btn-warning btn-sm update" value="${material.id}_${material.materialName}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>

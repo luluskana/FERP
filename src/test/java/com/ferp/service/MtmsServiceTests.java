@@ -3,7 +3,6 @@ package com.ferp.service;
 import com.ferp.MultipartHttpServletRequestWrapper;
 import com.ferp.dao.MaterialDao;
 import com.ferp.dao.MaterialTypeDao;
-import com.ferp.domain.AppUser;
 import com.ferp.domain.Material;
 import com.ferp.domain.MaterialType;
 import org.junit.Test;
@@ -318,5 +317,45 @@ public class MtmsServiceTests {
         Material material = materialDao.findByMaterialName("rejectMaterialTest");
         assertNotNull(material);
         assertEquals("REJECT_MATERIAL", material.getStatus());
+    }
+
+    @Test
+    public void createSapCodeTest() throws Exception {
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("typeName","createSapCodeTest");
+        MaterialType materialType = mtmsService.createMaterialType(multipartHttpServletRequestWrapper);
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper2 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper2.setParameter("id","" + materialType.getId());
+        multipartHttpServletRequestWrapper2.setParameter("inputMaterialName","createSapCodeTest");
+        multipartHttpServletRequestWrapper2.setParameter("inputManufacturing","Thailand");
+        multipartHttpServletRequestWrapper2.setParameter("inputUlNumber","Z1121");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputSpec","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRoHs","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateRoHs","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputMSDS","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputHalogen","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateHF","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputGuarantee","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRedPhosphorus","/Users/apichat/Workspace/temp/01Test.pdf");
+
+        Material materialFull = mtmsService.createMaterial(multipartHttpServletRequestWrapper2);
+        assertNotNull(materialFull);
+        assertEquals("createSapCodeTest", materialFull.getMaterialName());
+        assertEquals("Thailand", materialFull.getManufacturing());
+        assertEquals("Z1121", materialFull.getUlNumber());
+        assertEquals("CREATE_MATERIAL_DOCUMENT_FULL", materialFull.getStatus());
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper3 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper3.setParameter("id", "" + materialDao.findByMaterialName("createSapCodeTest").getId());
+        multipartHttpServletRequestWrapper3.setParameter("name", "123456qwasdf");
+        mtmsService.createSapCode(multipartHttpServletRequestWrapper3);
+
+        Material material = materialDao.findByMaterialName("createSapCodeTest");
+        assertNotNull(material);
+        assertEquals("CREATE_MATERIAL_DOCUMENT_FULL", material.getStatus());
+        assertNotNull(material.getSapCodes());
+
     }
 }
