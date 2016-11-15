@@ -106,6 +106,69 @@
             </form>
         </div>
     </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-warning">
+                <div class="panel-heading" align="center">
+                    <h3 class="panel-title">History</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-12 table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Reason</th>
+                                <c:if test="${roleName eq 'admin'}">
+                                    <th>Spec</th>
+                                    <th>MSDS</th>
+                                    <th>RoHs</th>
+                                    <th>Halogen Free</th>
+                                    <th>Guarantee</th>
+                                    <th>Red Phosphorus</th>
+                                </c:if>
+                                <th>By</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach var="logHistory" items="${material.logHistories}" varStatus="loop">
+                                <tr>
+                                    <td>${loop.index + 1}</td>
+                                    <td><fmt:formatDate pattern="dd/MM/yyyy HH:mm"  value="${logHistory.createDate}" /></td>
+                                    <c:if test="${logHistory.status eq 'CREATE_MATERIAL_DOCUMENT_FULL' or logHistory.status eq 'CREATE_MATERIAL_DOCUMENT_NOT_FULL'}">
+                                        <td><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Create</td>
+                                    </c:if>
+                                    <c:if test="${logHistory.status eq 'UPDATE_MATERIAL_DOCUMENT_FULL' or logHistory.status eq 'UPDATE_MATERIAL_DOCUMENT_NOT_FULL'}">
+                                        <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update</td>
+                                    </c:if>
+                                    <c:if test="${logHistory.status eq 'REJECT_MATERIAL'}">
+                                        <td><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Reject</td>
+                                    </c:if>
+                                    <c:if test="${logHistory.status eq 'APPROVE_MATERIAL'}">
+                                        <td><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Approve</td>
+                                    </c:if>
+                                    <td>${logHistory.remark}</td>
+                                    <c:if test="${roleName eq 'admin'}">
+                                        <td><a class="btn btn-warning btn-sm" href="${home}mtms/file/${logHistory.spec}" target="_blank" role="button"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>
+                                        <td><a class="btn btn-warning btn-sm" href="${home}mtms/file/${logHistory.msds}" target="_blank" role="button"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>
+                                        <td><a class="btn btn-warning btn-sm" href="${home}mtms/file/${logHistory.rosh}" target="_blank" role="button"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>
+                                        <td><a class="btn btn-warning btn-sm" href="${home}mtms/file/${logHistory.halogen}" target="_blank" role="button"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>
+                                        <td><a class="btn btn-warning btn-sm" href="${home}mtms/file/${logHistory.guaranteeLetter}" target="_blank" role="button"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>
+                                        <td><a class="btn btn-warning btn-sm" href="${home}mtms/file/${logHistory.redPhosphorus}" target="_blank" role="button"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>
+                                    </c:if>
+                                    <c:set var="appUser" value="${logHistory.createBy}"/>
+                                    <td>${appUser.name}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     $(document).ready(function() {

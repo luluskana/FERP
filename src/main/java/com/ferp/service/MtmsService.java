@@ -3,6 +3,7 @@ package com.ferp.service;
 import com.ferp.dao.AppUserDao;
 import com.ferp.dao.MaterialDao;
 import com.ferp.dao.MaterialTypeDao;
+import com.ferp.dao.SapCodeDao;
 import com.ferp.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -32,6 +33,9 @@ public class MtmsService {
 
     @Autowired
     private MaterialDao materialDao;
+
+    @Autowired
+    private SapCodeDao sapCodeDao;
 
     public MaterialType createMaterialType(MultipartHttpServletRequest multipartHttpServletRequest) {
         try {
@@ -470,5 +474,10 @@ public class MtmsService {
 
         material.setSapCodes(sapCodes);
         materialDao.update(material);
+    }
+
+    public void deleteSapCode(MultipartHttpServletRequest multipartHttpServletRequest) {
+        String id = multipartHttpServletRequest.getParameter("id");
+        sapCodeDao.delete(Long.parseLong(id));
     }
 }
