@@ -3,8 +3,10 @@ package com.ferp.service;
 import com.ferp.MultipartHttpServletRequestWrapper;
 import com.ferp.dao.MaterialDao;
 import com.ferp.dao.MaterialTypeDao;
+import com.ferp.dao.SapCodeDao;
 import com.ferp.domain.Material;
 import com.ferp.domain.MaterialType;
+import com.ferp.domain.SapCode;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class MtmsServiceTests {
 
     @Autowired
     private MaterialDao materialDao;
+
+    @Autowired
+    private SapCodeDao sapCodeDao;
 
     @Test
     public void createMaterialTypeTest() throws Exception {
@@ -356,6 +361,54 @@ public class MtmsServiceTests {
         assertNotNull(material);
         assertEquals("CREATE_MATERIAL_DOCUMENT_FULL", material.getStatus());
         assertNotNull(material.getSapCodes());
+
+    }
+
+    @Test
+    public void deleteSapCodeTest() throws Exception {
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("typeName","deleteSapCodeTest");
+        MaterialType materialType = mtmsService.createMaterialType(multipartHttpServletRequestWrapper);
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper2 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper2.setParameter("id","" + materialType.getId());
+        multipartHttpServletRequestWrapper2.setParameter("inputMaterialName","deleteSapCodeTest");
+        multipartHttpServletRequestWrapper2.setParameter("inputManufacturing","Thailand");
+        multipartHttpServletRequestWrapper2.setParameter("inputUlNumber","Z1121");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputSpec","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRoHs","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateRoHs","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputMSDS","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputHalogen","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setParameter("inputDateHF","01/11/2016");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputGuarantee","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper2.setMultipartFile("inputRedPhosphorus","/Users/apichat/Workspace/temp/01Test.pdf");
+
+        Material materialFull = mtmsService.createMaterial(multipartHttpServletRequestWrapper2);
+        assertNotNull(materialFull);
+        assertEquals("deleteSapCodeTest", materialFull.getMaterialName());
+        assertEquals("Thailand", materialFull.getManufacturing());
+        assertEquals("Z1121", materialFull.getUlNumber());
+        assertEquals("CREATE_MATERIAL_DOCUMENT_FULL", materialFull.getStatus());
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper3 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper3.setParameter("id", "" + materialDao.findByMaterialName("deleteSapCodeTest").getId());
+        multipartHttpServletRequestWrapper3.setParameter("name", "deleteSapCodeTest");
+        mtmsService.createSapCode(multipartHttpServletRequestWrapper3);
+
+        Material material = materialDao.findByMaterialName("deleteSapCodeTest");
+        assertNotNull(material);
+        assertEquals("CREATE_MATERIAL_DOCUMENT_FULL", material.getStatus());
+        assertNotNull(material.getSapCodes());
+
+        SapCode sapCode = sapCodeDao.findByName("deleteSapCodeTest");
+        assertNotNull(sapCode);
+
+        sapCodeDao.delete(sapCode.getId());
+
+        SapCode sapCode2 = sapCodeDao.findByName("deleteSapCodeTest");
+        assertNull(sapCode2);
 
     }
 }

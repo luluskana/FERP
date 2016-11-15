@@ -119,7 +119,14 @@
                                         <tr>
                                             <td>${loop.index + 1}</td>
                                             <td>${sapCode.name}</td>
-                                            <td></td>
+                                            <c:choose>
+                                                <c:when test="${roleName eq 'admin' or roleName eq 'user' or roleName eq 'qa' or roleName eq 'purchase'}">
+                                                    <td><button class="btn btn-danger btn-sm delete" value="${sapCode.id}_${sapCode.name}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <td><button class="btn btn-danger btn-sm" disabled><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
@@ -131,11 +138,18 @@
             </div>
             <c:if test="${roleName eq 'admin' or roleName eq 'user' or roleName eq 'qa' or roleName eq 'purchase'}">
                 <div class="row" id="rowAddSapCode">
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <button type="button" id="btnAddSapCode" class="btn btn-default btn-group-sm">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add SAP CODE
                         </button>
                     </div>
+                    <c:if test="${roleName eq 'admin' or roleName eq 'user' or roleName eq 'qa'}">
+                        <div class="col-sm-6">
+                            <button type="button" id="reject" class="btn btn-danger btn-group-sm">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reject
+                            </button>
+                        </div>
+                    </c:if>
                 </div>
             </c:if>
             <div class="row hidden" id="rowCreateSapCode">
@@ -225,6 +239,22 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="alertRejectModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title">Reject Reason</h4>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" rows="3" id="inputReason"><jsp:text/></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnReject">reject</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function() {
         $("#btnAddSapCode").click(function() {
@@ -263,6 +293,68 @@
                 }
             });
             return false;
+        });
+
+        $(".delete").click(function() {
+            $("#rowCreateSapCode").addClass("hidden");
+            $("#rowAddSapCode").removeClass("hidden");
+            if (confirm('Are you sure you want to delete this thing into the database?')) {
+                var formData = new FormData();
+                formData.append("id", $(this).attr("value").split("_")[0]);
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        Accept: "application/json",
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    url: "${home}mtms/delete/codesap",
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    async: false,
+                    success: function(data){
+                        window.location.href = "${home}mtms/detailMaterial/${material.id}";
+                    },
+                    error: function(data){
+                        alert("Error");
+                        return false;
+                    }
+                });
+            } else {
+                return false;
+            }
+            return false;
+        });
+
+        $("#reject").click(function() {
+            $("#alertRejectModal").modal({show:true});
+        });
+
+        $("#btnReject").click(function() {
+            var formData = new FormData();
+            formData.append("id", "${material.id}");
+            formData.append("remark", $("#inputReason").val());
+            $.ajax({
+                type: "POST",
+                headers: {
+                    Accept: "application/json",
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "${home}mtms/reject/material",
+                processData: false,
+                contentType: false,
+                data: formData,
+                async: false,
+                success: function(data){
+                    window.location.href = "${home}mtms/waitingApprove";
+                },
+                error: function(data){
+                    alert("Error");
+                    return false;
+                }
+            });
         });
     });
 </script>
