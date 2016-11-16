@@ -27,7 +27,15 @@
         <div class="form-group">
             <label for="inputDepartment" class="col-sm-2 control-label">Department</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control input-group-sm" id="inputDepartment" placeholder="Department" required="required" value="${appUser.department}" autocomplete="off">
+                <select class="form-control" id="inputDepartment">
+                    <option>QA</option>
+                    <option>Engineer</option>
+                    <option>Purchase</option>
+                    <option>MIS</option>
+                    <option>Sale</option>
+                    <option>Other</option>
+                    <option>Other</option>
+                </select>
             </div>
         </div>
         <div class="form-group">
@@ -45,7 +53,15 @@
         <div class="form-group">
             <label for="inputRoleName" class="col-sm-2 control-label">Role Name</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control input-group-sm" id="inputRoleName" placeholder="Role Name" required="required" value="${appUser.roleName}" autocomplete="off">
+                <select class="form-control" id="inputRoleName">
+                    <option>qa</option>
+                    <option>qaEngineer</option>
+                    <option>purchase</option>
+                    <option>engineer</option>
+                    <option>admin</option>
+                    <option>saleCo</option>
+                    <option>saleOut</option>
+                </select>
             </div>
         </div>
         <div class="form-group">

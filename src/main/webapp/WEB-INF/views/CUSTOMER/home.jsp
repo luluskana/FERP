@@ -58,8 +58,16 @@
                                             <td>${loop.index + 1}</td>
                                             <td>${customer.name}</td>
                                             <td>${customer.groupType}</td>
-                                            <td><button class="btn btn-warning btn-sm update" disabled><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
-                                            <td><button class="btn btn-danger btn-sm" disabled><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
+                                            <c:choose>
+                                                <c:when test="${roleName eq 'admin' or roleName eq 'user'}">
+                                                    <td><button class="btn btn-warning btn-sm update" value="${customer.id}_${customer.groupType}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
+                                                    <td><button class="btn btn-danger btn-sm delete" value="${customer.id}_${customer.groupType}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <td><button class="btn btn-warning btn-sm" disabled><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
+                                                    <td><button class="btn btn-danger btn-sm" disabled><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
+                                                </c:otherwise>
+                                            </c:choose>
                                             <td><a href="#" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
                                         </tr>
                                     </c:forEach>
@@ -100,6 +108,36 @@
                     return false;
                 }
             });
+            return false;
+        });
+
+        $(".delete").click(function() {
+            if (confirm('Are you sure you want to delete this thing into the database?')) {
+                var formData = new FormData();
+                formData.append("id", $(this).attr("value").split("_")[0]);
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        Accept: "application/json",
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    url: "${home}customer/delete/customer",
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    async: false,
+                    success: function(data){
+                        window.location.href = "${home}customer";
+                    },
+                    error: function(data){
+                        alert("Error");
+                        return false;
+                    }
+                });
+            } else {
+                return false;
+            }
             return false;
         });
     });

@@ -76,7 +76,7 @@ public class MtmsController {
             if(appUser.getRoleName().equals("purchase") || appUser.getRoleName().equals("qa") || appUser.getRoleName().equals("admin")) {
                 model.setViewName("MTMS/createMaterial");
             } else {
-                model.setViewName("MTMS/404");
+                model.setViewName("404");
             }
         } catch (Exception e) {
             model.setViewName("MTMS/createMaterial");
@@ -93,7 +93,7 @@ public class MtmsController {
             if(appUser.getRoleName().equals("purchase") || appUser.getRoleName().equals("qa") || appUser.getRoleName().equals("admin")) {
                 model.setViewName("MTMS/updateMaterial");
             } else {
-                model.setViewName("MTMS/404");
+                model.setViewName("404");
             }
         } catch (Exception e) {
             model.setViewName("MTMS/updateMaterial");
@@ -162,7 +162,7 @@ public class MtmsController {
             if(appUser.getRoleName().equals("qa") || appUser.getRoleName().equals("admin")) {
                 model.setViewName("MTMS/waitingApproveMaterial");
             } else {
-                model.setViewName("MTMS/404");
+                model.setViewName("404");
             }
         } catch (Exception e) {
             model.setViewName("MTMS/waitingApproveMaterial");

@@ -37,6 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests().antMatchers("/mtms/create/codesap").authenticated()
                 .and().authorizeRequests().antMatchers("/mtms/delete/codesap").authenticated()
                 .and().authorizeRequests().antMatchers("/customer/create/customer").authenticated()
+                .and().authorizeRequests().antMatchers("/customer/delete/customer").authenticated()
 
                 .and().csrf().disable().formLogin().loginPage("/login").loginProcessingUrl("/resources/j_spring_security_check").failureUrl("/login?error")
                 .defaultSuccessUrl("/", false).usernameParameter("username").passwordParameter("password").permitAll()
