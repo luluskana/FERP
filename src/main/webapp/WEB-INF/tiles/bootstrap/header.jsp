@@ -16,15 +16,15 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">System <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">FAMS <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">FA Management</a></li>
-                        <li class="divider"></li>
-                        <li><a href="${home}mtms">Material Management</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Canon Barcode Compare</a></li>
+                        <li><a href="${home}fams">Status</a></li>
+                        <c:if test="${roleName eq 'admin' or roleName eq 'saleCo' or roleName eq 'saleOut'}">
+                            <li><a href="${home}fams/request">Request FA</a></li>
+                        </c:if>
                     </ul>
                 </li>
+                <li><a href="${home}mtms">MTMS</a></li>
                 <li><a href="${home}customer">Customer</a></li>
                 <li><a href="#">Blog</a></li>
                 <li><a href="#">Download</a></li>
