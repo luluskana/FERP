@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by apichat on 11/15/2016 AD.
@@ -26,7 +27,7 @@ public class CustomerServiceTests {
     private CustomerDao customerDao;
 
     @Test
-    public void createMaterialTypeTest() throws Exception {
+    public void createCustomerTest() throws Exception {
         MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
         multipartHttpServletRequestWrapper.setParameter("customerName", "Foamtec");
         multipartHttpServletRequestWrapper.setParameter("groupType", "Electronics");
@@ -36,5 +37,26 @@ public class CustomerServiceTests {
         assertNotNull(customer);
         assertEquals("Foamtec", customer.getName());
         assertEquals("Electronics", customer.getGroupType());
+    }
+
+    @Test
+    public void deleteCustomerTest() throws Exception {
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("customerName", "deleteCustomerTest");
+        multipartHttpServletRequestWrapper.setParameter("groupType", "Electronics");
+        customerService.create(multipartHttpServletRequestWrapper);
+
+        Customer customer = customerDao.findByName("deleteCustomerTest");
+        assertNotNull(customer);
+        assertEquals("deleteCustomerTest", customer.getName());
+        assertEquals("Electronics", customer.getGroupType());
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper2 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper2.setParameter("id", "" + customer.getId());
+
+        customerService.delete(multipartHttpServletRequestWrapper2);
+
+        Customer customer2 = customerDao.findByName("deleteCustomerTest");
+        assertNull(customer2);
     }
 }

@@ -37,4 +37,9 @@ public class CustomerService {
         customer.setGroupType(groupType);
         customerDao.create(customer);
     }
+
+    public void delete(MultipartHttpServletRequest multipartHttpServletRequest) {
+        String id = multipartHttpServletRequest.getParameter("id");
+        customerDao.delete(Long.parseLong(id));
+    }
 }

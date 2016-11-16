@@ -34,4 +34,12 @@ public class CustomerDao {
         c.add(Restrictions.eq("name", name));
         return (Customer)c.uniqueResult();
     }
+
+    public Customer findById(Long id) {
+        return entityManager.find(Customer.class, id);
+    }
+
+    public void delete(Long id) {
+        entityManager.remove(findById(id));
+    }
 }
