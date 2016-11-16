@@ -148,14 +148,7 @@
             $("#formCreateMaterialType").addClass("hidden");
         });
 
-        $(".update").click(function() {
-            $("#formUpdateMaterialType").removeClass("hidden");
-            $("#rowAddMaterialType").addClass("hidden");
-            $("#formCreateMaterialType").addClass("hidden");
-            $("#inputIdTypeName").val($(this).attr("value").split("_")[0]);
-            $("#inputTypeNameUpdate").val($(this).attr("value").split("_")[1]);
-            $("#inputTypeNameUpdate").focus();
-        });
+
 
         $("#btnCancelUpdate").click(function() {
             $("#rowAddMaterialType").removeClass("hidden");
@@ -214,37 +207,46 @@
             });
             return false;
         });
-
-        $(".delete").click(function() {
-            $("#formUpdateMaterialType").addClass("hidden");
-            $("#formCreateMaterialType").addClass("hidden");
-            if (confirm('Are you sure you want to delete this thing into the database?')) {
-                var formData = new FormData();
-                formData.append("id", $(this).attr("value").split("_")[0]);
-                $.ajax({
-                    type: "POST",
-                    headers: {
-                        Accept: "application/json",
-                    },
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    url: "${home}mtms/delete/materialType",
-                    processData: false,
-                    contentType: false,
-                    data: formData,
-                    async: false,
-                    success: function(data){
-                        window.location.href = "${home}mtms";
-                    },
-                    error: function(data){
-                        alert("Error");
-                        return false;
-                    }
-                });
-            } else {
-                return false;
-            }
-            return false;
-        });
     } );
+
+    $(".update").click(function() {
+        $("#formUpdateMaterialType").removeClass("hidden");
+        $("#rowAddMaterialType").addClass("hidden");
+        $("#formCreateMaterialType").addClass("hidden");
+        $("#inputIdTypeName").val($(this).attr("value").split("_")[0]);
+        $("#inputTypeNameUpdate").val($(this).attr("value").split("_")[1]);
+        $("#inputTypeNameUpdate").focus();
+    });
+
+    $(".delete").click(function() {
+        $("#formUpdateMaterialType").addClass("hidden");
+        $("#formCreateMaterialType").addClass("hidden");
+        if (confirm('Are you sure you want to delete this thing into the database?')) {
+            var formData = new FormData();
+            formData.append("id", $(this).attr("value").split("_")[0]);
+            $.ajax({
+                type: "POST",
+                headers: {
+                    Accept: "application/json",
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "${home}mtms/delete/materialType",
+                processData: false,
+                contentType: false,
+                data: formData,
+                async: false,
+                success: function(data){
+                    window.location.href = "${home}mtms";
+                },
+                error: function(data){
+                    alert("Error");
+                    return false;
+                }
+            });
+        } else {
+            return false;
+        }
+        return false;
+    });
 </script>
