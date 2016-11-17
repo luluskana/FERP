@@ -43,9 +43,4 @@ public class MaterialTypeDao {
         return entityManager.find(MaterialType.class, id);
     }
 
-    public MaterialType findByTypeName(String typeName) {
-        Criteria c = ((Session) entityManager.getDelegate()).createCriteria(MaterialType.class);
-        c.add(Restrictions.eq("typeName", typeName));
-        return (MaterialType)c.uniqueResult();
-    }
 }

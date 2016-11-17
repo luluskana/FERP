@@ -3,6 +3,7 @@ package com.ferp.dao;
 import com.ferp.domain.AppUser;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -43,5 +44,13 @@ public class AppUserDao {
     public List<AppUser> findAll() {
         Criteria c = ((Session) entityManager.getDelegate()).createCriteria(AppUser.class);
         return c.list();
+    }
+
+    public List<AppUser> findInRoleName(String[] strings) {
+        Criteria criteria = ((Session) entityManager.getDelegate()).createCriteria(AppUser.class);
+        Criterion case1 = Restrictions.in("roleName", strings);
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        criteria.add(case1);
+        return criteria.list();
     }
 }

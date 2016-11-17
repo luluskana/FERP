@@ -50,4 +50,16 @@ public class AppUserJsonController {
             return new ResponseEntity<String>("{\"process\":\"fail\"}", headers, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @RequestMapping(value = "/appuser/findInRoleName", method = RequestMethod.POST, headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> appUserFindInRoleName(MultipartHttpServletRequest multipartHttpServletRequest) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        try {
+            return new ResponseEntity<String>(appUserService.findInRoleName(multipartHttpServletRequest).toString(), headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("{\"process\":\"fail\"}", headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

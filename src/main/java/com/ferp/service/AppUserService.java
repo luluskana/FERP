@@ -2,6 +2,8 @@ package com.ferp.service;
 
 import com.ferp.dao.AppUserDao;
 import com.ferp.domain.AppUser;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -125,5 +127,15 @@ public class AppUserService {
         } else {
             return data;
         }
+    }
+
+    public JSONArray findInRoleName(MultipartHttpServletRequest multipartHttpServletRequest) {
+        String roleName = multipartHttpServletRequest.getParameter("roleName");
+        List<AppUser> appUsers = appUserDao.findInRoleName(new String[]{roleName});
+        JSONArray jsonArray = new JSONArray();
+        for (AppUser a : appUsers) {
+            jsonArray.put(a.getName());
+        }
+        return jsonArray;
     }
 }
