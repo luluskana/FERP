@@ -1,6 +1,7 @@
 package com.ferp.service;
 
 import com.ferp.MultipartHttpServletRequestWrapper;
+import com.ferp.dao.AppUserDao;
 import com.ferp.domain.AppUser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import static org.junit.Assert.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by apichat on 10/26/2016 AD.
@@ -25,6 +27,9 @@ public class AppUserServiceTests {
 
     @Autowired
     private AppUserService appUserService;
+
+    @Autowired
+    private AppUserDao appUserDao;
 
     @Test
     public void createAppUserTest() throws Exception {
@@ -118,6 +123,39 @@ public class AppUserServiceTests {
         AppUser appUser2 = appUserService.findById(appUser1.getId());
         assertNotNull(appUser2);
         assertEquals("kopeeno4", appUser1.getUsername());
+    }
+
+    @Test
+    public void findAppUserInRoleNameTest() throws Exception {
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("username", "find01");
+        multipartHttpServletRequestWrapper.setParameter("password", "password");
+        multipartHttpServletRequestWrapper.setParameter("name", "Apichat Eakwongsa");
+        multipartHttpServletRequestWrapper.setParameter("department", "MIS");
+        multipartHttpServletRequestWrapper.setParameter("emailAddress", "apichat.kop@gmail.com");
+        multipartHttpServletRequestWrapper.setParameter("phoneNumber", "0800103329");
+        multipartHttpServletRequestWrapper.setParameter("roleName", "admin");
+
+        AppUser appUser = appUserService.create(multipartHttpServletRequestWrapper);
+        assertNotNull(appUser);
+        assertEquals("find01", appUser.getUsername());
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper2 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper2.setParameter("username", "find02");
+        multipartHttpServletRequestWrapper2.setParameter("password", "password");
+        multipartHttpServletRequestWrapper2.setParameter("name", "Apichat Eakwongsa");
+        multipartHttpServletRequestWrapper2.setParameter("department", "MIS");
+        multipartHttpServletRequestWrapper2.setParameter("emailAddress", "apichat.kop@gmail.com");
+        multipartHttpServletRequestWrapper2.setParameter("phoneNumber", "0800103329");
+        multipartHttpServletRequestWrapper2.setParameter("roleName", "saleOut");
+
+        AppUser appUser2 = appUserService.create(multipartHttpServletRequestWrapper2);
+        assertNotNull(appUser2);
+        assertEquals("find02", appUser2.getUsername());
+
+        List<AppUser> appUsers = appUserDao.findInRoleName(new String[]{"saleOut"});
+        assertNotNull(appUsers);
+        assertEquals("saleOut", appUsers.get(0).getRoleName());
     }
 
 }
