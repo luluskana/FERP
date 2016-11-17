@@ -111,4 +111,8 @@ public class MaterialDao {
         );
         return entityManager.createQuery(cq).getResultList();
     }
+
+    public List<Material> findAll() {
+        return entityManager.createQuery("SELECT o FROM Material o order by createDate", Material.class).getResultList();
+    }
 }

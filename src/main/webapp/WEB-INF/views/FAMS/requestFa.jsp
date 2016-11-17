@@ -201,14 +201,30 @@
     </div>
 </div>
 <script>
+    var customerList = [];
+    var saleOutList = [];
+    var materialList = [];
+
     $(document).ready(function() {
 
         $("#inputNeedDate").datepicker({ dateFormat: "dd/mm/yy" });
 
         addCustomer();
         addDataSaleOut();
-
+        addMaterial();
         $("#faForm").submit(function() {
+
+            if(customerList.indexOf($("#inputCustomer").val()) < 0) {
+                $("#inputCustomer").focus();
+                return false;
+            }
+
+            if(saleOutList.indexOf($("#inputSaleOut").val()) < 0) {
+                $("#inputSaleOut").focus();
+                return false;
+            }
+
+            return false;
             var formData = new FormData();
             formData.append("customer", $("#inputCustomer").val());
             formData.append("partNo", $("#inputPartNo").val());
@@ -233,7 +249,6 @@
             formData.append("remark", $("#inputRemark").val());
             formData.append("drawingFile", $("#inputFile1")[0].files[0]);
             formData.append("drawingOther", $("#inputFile2")[0].files[0]);
-            console.log(formData);
             return false;
         });
     });
@@ -254,6 +269,7 @@
                 $("#inputCustomer").autocomplete({
                     source: data
                 });
+                customerList = data;
             },
             error: function(data){
                 alert("Error");
@@ -281,6 +297,52 @@
                 $("#inputSaleOut").autocomplete({
                     source: data
                 });
+                saleOutList = data;
+            },
+            error: function(data){
+                alert("Error");
+                return false;
+            }
+        });
+    }
+
+    function addMaterial() {
+        $.ajax({
+            type: "POST",
+            headers: {
+                Accept: "application/json",
+            },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            url: "${home}material/all",
+            processData: false,
+            contentType: false,
+            async: false,
+            success: function(data){
+                $("#inputMat1").autocomplete({
+                    source: data
+                });
+
+                $("#inputMat2").autocomplete({
+                    source: data
+                });
+
+                $("#inputMat3").autocomplete({
+                    source: data
+                });
+
+                $("#inputMat4").autocomplete({
+                    source: data
+                });
+
+                $("#inputMat5").autocomplete({
+                    source: data
+                });
+
+                $("#inputMat6").autocomplete({
+                    source: data
+                });
+                materialList = data;
             },
             error: function(data){
                 alert("Error");

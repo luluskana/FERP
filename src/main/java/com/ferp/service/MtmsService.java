@@ -5,6 +5,7 @@ import com.ferp.dao.MaterialDao;
 import com.ferp.dao.MaterialTypeDao;
 import com.ferp.dao.SapCodeDao;
 import com.ferp.domain.*;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -479,5 +480,18 @@ public class MtmsService {
     public void deleteSapCode(MultipartHttpServletRequest multipartHttpServletRequest) {
         String id = multipartHttpServletRequest.getParameter("id");
         sapCodeDao.delete(Long.parseLong(id));
+    }
+
+    public JSONArray findAllMaterial() {
+        List<Material> materialList = materialDao.findAll();
+        JSONArray jsonArray = new JSONArray();
+        for (Material material : materialList) {
+            jsonArray.put(material.getMaterialName());
+            Set<SapCode> sapCodeSet = material.getSapCodes();
+            for (SapCode sapCode : sapCodeSet) {
+                jsonArray.put(sapCode.getName());
+            }
+        }
+        return jsonArray;
     }
 }
