@@ -1,6 +1,7 @@
 package com.ferp.service;
 
 import com.ferp.dao.CustomerDao;
+import com.ferp.dao.FaRequestDao;
 import com.ferp.dao.MaterialDao;
 import com.ferp.dao.MaterialTypeDao;
 import com.ferp.domain.AppUser;
@@ -30,6 +31,9 @@ public class ViewService {
 
     @Autowired
     private CustomerDao customerDao;
+
+    @Autowired
+    private FaRequestDao faRequestDao;
 
     public void addLogin(ModelAndView model) {
         model.addObject("login", "on");
@@ -102,6 +106,14 @@ public class ViewService {
     public void addCustomerList(ModelAndView model) {
         try {
             model.addObject("customers", customerDao.findAllCustomer());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addFaRequestStatusCreate(ModelAndView model) {
+        try {
+            model.addObject("faStatusCreateList", faRequestDao.findByStatus("CREATE_FA_REQUEST"));
         } catch (Exception e) {
             e.printStackTrace();
         }
