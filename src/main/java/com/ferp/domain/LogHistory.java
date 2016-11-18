@@ -27,7 +27,7 @@ public class LogHistory implements Serializable {
     private AppUser createBy;
 
     @Column(name = "actionTYpe")
-    private String actionTYpe;
+    private String actionType;
 
     @Column(name = "status")
     private String status;
@@ -53,6 +53,12 @@ public class LogHistory implements Serializable {
     @Column(name = "redPhosphorus")
     private Long redPhosphorus;
 
+    @Column(name = "drawingFile")
+    private Long drawingFile;
+
+    @Column(name = "otherFile")
+    private Long otherFile;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "appUser")
     private AppUser appUser;
@@ -64,6 +70,10 @@ public class LogHistory implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "material")
     private Material material;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "faRequest")
+    private FaRequest faRequest;
 
     public Long getId() {
         return id;
@@ -90,11 +100,11 @@ public class LogHistory implements Serializable {
     }
 
     public String getActionTYpe() {
-        return actionTYpe;
+        return actionType;
     }
 
-    public void setActionTYpe(String actionTYpe) {
-        this.actionTYpe = actionTYpe;
+    public void setActionTYpe(String actionType) {
+        this.actionType = actionType;
     }
 
     public String getStatus() {
@@ -185,4 +195,27 @@ public class LogHistory implements Serializable {
         this.material = material;
     }
 
+    public FaRequest getFaRequest() {
+        return faRequest;
+    }
+
+    public void setFaRequest(FaRequest faRequest) {
+        this.faRequest = faRequest;
+    }
+
+    public Long getDrawingFile() {
+        return drawingFile;
+    }
+
+    public void setDrawingFile(Long drawingFile) {
+        this.drawingFile = drawingFile;
+    }
+
+    public Long getOtherFile() {
+        return otherFile;
+    }
+
+    public void setOtherFile(Long otherFile) {
+        this.otherFile = otherFile;
+    }
 }

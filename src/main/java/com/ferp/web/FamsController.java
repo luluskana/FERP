@@ -32,6 +32,7 @@ public class FamsController {
         } catch (Exception e) {
             viewService.addLogin(model);
         }
+        viewService.addFaRequestStatusCreate(model);
         model.setViewName("FAMS/home");
         return model;
     }

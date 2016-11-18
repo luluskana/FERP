@@ -224,7 +224,37 @@
                 return false;
             }
 
-            return false;
+            var inputMat1 = $("#inputMat1").val();
+            if(materialList.indexOf(inputMat1) < 0) {
+                $("#inputMat1").focus();
+                return false;
+            }
+            var inputMat2 = $("#inputMat2").val();
+            if(materialList.indexOf(inputMat2) < 0 && inputMat2.length > 0) {
+                $("#inputMat2").focus();
+                return false;
+            }
+            var inputMat3 = $("#inputMat3").val();
+            if(materialList.indexOf(inputMat3) < 0 && inputMat3.length > 0) {
+                $("#inputMat3").focus();
+                return false;
+            }
+            var inputMat4 = $("#inputMat4").val();
+            if(materialList.indexOf(inputMat4) < 0 && inputMat4.length > 0) {
+                $("#inputMat4").focus();
+                return false;
+            }
+            var inputMat5 = $("#inputMat5").val();
+            if(materialList.indexOf(inputMat5) < 0 && inputMat5.length > 0) {
+                $("#inputMat5").focus();
+                return false;
+            }
+            var inputMat6 = $("#inputMat6").val();
+            if(materialList.indexOf(inputMat6) < 0 && inputMat6.length > 0) {
+                $("#inputMat6").focus();
+                return false;
+            }
+
             var formData = new FormData();
             formData.append("customer", $("#inputCustomer").val());
             formData.append("partNo", $("#inputPartNo").val());
@@ -248,7 +278,29 @@
             formData.append("tools", $("#inputTools").val());
             formData.append("remark", $("#inputRemark").val());
             formData.append("drawingFile", $("#inputFile1")[0].files[0]);
-            formData.append("drawingOther", $("#inputFile2")[0].files[0]);
+            formData.append("otherFile", $("#inputFile2")[0].files[0]);
+
+            $.ajax({
+                type: "POST",
+                headers: {
+                    Accept: "application/json",
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "${home}fams/create/fa",
+                processData: false,
+                contentType: false,
+                data: formData,
+                async: false,
+                success: function(data){
+                    window.location.href = "${home}fams";
+                },
+                error: function(data){
+                    alert("Error");
+                    return false;
+                }
+            });
+
             return false;
         });
     });
