@@ -21,6 +21,7 @@
                         <li><a href="${home}fams">Status</a></li>
                         <c:if test="${roleName eq 'admin' or roleName eq 'saleCo' or roleName eq 'saleOut' or roleName eq 'user'}">
                             <li><a href="${home}fams/request">Request FA</a></li>
+                            <li><a href="${home}fams/listSale">Request List</a></li>
                         </c:if>
                     </ul>
                 </li>

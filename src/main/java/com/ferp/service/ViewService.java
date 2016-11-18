@@ -118,4 +118,20 @@ public class ViewService {
             e.printStackTrace();
         }
     }
+
+    public void addFaRequest(ModelAndView model, Long id) {
+        try {
+            model.addObject("faRequest", faRequestDao.findById(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addFaByUserList(ModelAndView model, AppUser appUser) {
+        try {
+            model.addObject("faByUserList", faRequestDao.findByCreateBy(appUser));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

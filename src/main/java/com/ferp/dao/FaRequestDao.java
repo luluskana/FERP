@@ -1,5 +1,6 @@
 package com.ferp.dao;
 
+import com.ferp.domain.AppUser;
 import com.ferp.domain.FaRequest;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -32,6 +33,10 @@ public class FaRequestDao {
         entityManager.flush();
     }
 
+    public FaRequest findById(Long id) {
+        return entityManager.find(FaRequest.class, id);
+    }
+
     public FaRequest findByPartNumber(String partNumber) {
         Criteria c = ((Session) entityManager.getDelegate()).createCriteria(FaRequest.class);
         c.add(Restrictions.eq("partNo", partNumber));
@@ -41,6 +46,12 @@ public class FaRequestDao {
     public List<FaRequest> findByStatus(String status) {
         Criteria c = ((Session) entityManager.getDelegate()).createCriteria(FaRequest.class);
         c.add(Restrictions.eq("status", status));
+        return c.list();
+    }
+
+    public List<FaRequest> findByCreateBy(AppUser appUser) {
+        Criteria c = ((Session) entityManager.getDelegate()).createCriteria(FaRequest.class);
+        c.add(Restrictions.eq("createBy", appUser));
         return c.list();
     }
 }
