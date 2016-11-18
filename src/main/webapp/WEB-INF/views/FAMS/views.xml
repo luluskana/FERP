@@ -10,4 +10,12 @@
     <definition name="FAMS/requestFa" extends="layout.bootstrap">
         <put-attribute name="body" value="/WEB-INF/views/FAMS/requestFa.jsp" />
     </definition>
+
+    <definition name="FAMS/detailCreate" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/FAMS/detailCreate.jsp" />
+    </definition>
+
+    <definition name="FAMS/listSale" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/FAMS/listSale.jsp" />
+    </definition>
 </tiles-definitions>

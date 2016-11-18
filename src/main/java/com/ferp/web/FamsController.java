@@ -37,8 +37,21 @@ public class FamsController {
         return model;
     }
 
+    @RequestMapping(value = "/fams/detail/create/{id}", method = RequestMethod.GET)
+    public ModelAndView famsStatusCreateDetail(@PathVariable("id") Long id, ModelAndView model, Principal principal) {
+        try {
+            principal.getName();
+            viewService.addMenuAndName(model, principal);
+        } catch (Exception e) {
+            viewService.addLogin(model);
+        }
+        viewService.addFaRequest(model, id);
+        model.setViewName("FAMS/detailCreate");
+        return model;
+    }
+
     @RequestMapping(value = "/fams/request", method = RequestMethod.GET)
-    public ModelAndView createMaterial(ModelAndView model, Principal principal) {
+    public ModelAndView createFarequest(ModelAndView model, Principal principal) {
         viewService.addMenuAndName(model, principal);
         try {
             AppUser appUser = appUserDao.findByUsername(principal.getName());
@@ -49,6 +62,23 @@ public class FamsController {
             }
         } catch (Exception e) {
             model.setViewName("FAMS/requestFa");
+        }
+        return model;
+    }
+
+    @RequestMapping(value = "/fams/listSale", method = RequestMethod.GET)
+    public ModelAndView listForSale(ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            viewService.addFaByUserList(model, appUser);
+            if(appUser.getRoleName().equals("saleCo") || appUser.getRoleName().equals("saleOut") || appUser.getRoleName().equals("admin")) {
+                model.setViewName("FAMS/listSale");
+            } else {
+                model.setViewName("404");
+            }
+        } catch (Exception e) {
+            model.setViewName("FAMS/listSale");
         }
         return model;
     }
