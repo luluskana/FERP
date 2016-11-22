@@ -59,6 +59,12 @@ public class LogHistory implements Serializable {
     @Column(name = "otherFile")
     private Long otherFile;
 
+    @Column(name="methodFirst")
+    private String methodFirst;
+
+    @Column(name="qtyFirst")
+    private Integer qtyFirst;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "appUser")
     private AppUser appUser;
@@ -217,5 +223,29 @@ public class LogHistory implements Serializable {
 
     public void setOtherFile(Long otherFile) {
         this.otherFile = otherFile;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
+    }
+
+    public String getMethodFirst() {
+        return methodFirst;
+    }
+
+    public void setMethodFirst(String methodFirst) {
+        this.methodFirst = methodFirst;
+    }
+
+    public Integer getQtyFirst() {
+        return qtyFirst;
+    }
+
+    public void setQtyFirst(Integer qtyFirst) {
+        this.qtyFirst = qtyFirst;
     }
 }

@@ -121,6 +121,14 @@ public class FaRequest implements Serializable {
     @Column(name="status")
     private String status;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy hh:mm:ss")
+    @Column(name="engineerCommitDate")
+    private Date engineerCommitDate;
+
+    @Column(name="process")
+    private String process;
+
     @OrderBy("createDate")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "faRequest")
     private Set<LogHistory> logHistories = new HashSet<LogHistory>();
@@ -380,4 +388,21 @@ public class FaRequest implements Serializable {
     public void setOtherFile(Long otherFile) {
         this.otherFile = otherFile;
     }
+
+    public Date getEngineerCommitDate() {
+        return engineerCommitDate;
+    }
+
+    public void setEngineerCommitDate(Date engineerCommitDate) {
+        this.engineerCommitDate = engineerCommitDate;
+    }
+
+    public String getProcess() {
+        return process;
+    }
+
+    public void setProcess(String process) {
+        this.process = process;
+    }
+
 }

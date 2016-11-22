@@ -22,4 +22,12 @@
     <definition name="FAMS/update" extends="layout.bootstrap">
         <put-attribute name="body" value="/WEB-INF/views/FAMS/update.jsp" />
     </definition>
+
+    <definition name="FAMS/engineerView" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/FAMS/engineerView.jsp" />
+    </definition>
+
+    <definition name="FAMS/engineerReview" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/FAMS/engineerReview.jsp" />
+    </definition>
 </tiles-definitions>
