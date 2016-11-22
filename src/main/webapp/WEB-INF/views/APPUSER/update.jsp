@@ -28,13 +28,13 @@
             <label for="inputDepartment" class="col-sm-2 control-label">Department</label>
             <div class="col-sm-10">
                 <select class="form-control" id="inputDepartment">
-                    <option>QA</option>
-                    <option>Engineer</option>
-                    <option>Purchase</option>
-                    <option>MIS</option>
-                    <option>Sale</option>
-                    <option>Other</option>
-                    <option>Other</option>
+                    <option value="QA">QA</option>
+                    <option value="Engineer">Engineer</option>
+                    <option value="Purchase">Purchase</option>
+                    <option value="MIS">MIS</option>
+                    <option value="Sale">Sale</option>
+                    <option value="Other">Other</option>
+                    <option value="Other">Other</option>
                 </select>
             </div>
         </div>
@@ -54,13 +54,13 @@
             <label for="inputRoleName" class="col-sm-2 control-label">Role Name</label>
             <div class="col-sm-10">
                 <select class="form-control" id="inputRoleName">
-                    <option>qa</option>
-                    <option>qaEngineer</option>
-                    <option>purchase</option>
-                    <option>engineer</option>
-                    <option>admin</option>
-                    <option>saleCo</option>
-                    <option>saleOut</option>
+                    <option value="qa">qa</option>
+                    <option value="qaEngineer">qaEngineer</option>
+                    <option value="purchase">purchase</option>
+                    <option value="engineer">engineer</option>
+                    <option value="admin">admin</option>
+                    <option value="saleCo">saleCo</option>
+                    <option value="saleOut">saleOut</option>
                 </select>
             </div>
         </div>
@@ -73,6 +73,10 @@
 </div>
 <script>
     $(document).ready(function() {
+
+        $('#inputDepartment option[value=${appUser.department}]').attr('selected','selected');
+        $('#inputRoleName option[value=${appUser.roleName}]').attr('selected','selected');
+
         $("#appUserId").submit(function() {
             var formData = new FormData();
             formData.append("id", "${appUser.id}");

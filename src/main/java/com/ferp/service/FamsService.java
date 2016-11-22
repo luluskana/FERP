@@ -276,4 +276,72 @@ public class FamsService {
             return (Long)lists.get(0).get("ID") + 1;
         }
     }
+
+    public void engineerApproveFa(MultipartHttpServletRequest multipartHttpServletRequest) {
+        String id = multipartHttpServletRequest.getParameter("id");
+        String commitDate = multipartHttpServletRequest.getParameter("commitDate");
+        String process = multipartHttpServletRequest.getParameter("process");
+        Principal principal = multipartHttpServletRequest.getUserPrincipal();
+        AppUser appUser = appUserDao.findByUsername(principal.getName());
+        FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
+        faRequest.setEngineerCommitDate(convertToDate(commitDate));
+        faRequest.setProcess(process);
+        Set<LogHistory> logHistories = faRequest.getLogHistories();
+        LogHistory logHistory = new LogHistory();
+        logHistory.setCreateDate(new Date());
+        if(appUser != null) {
+            faRequest.setUpdateBy(appUser);
+            logHistory.setCreateBy(appUser);
+        }
+        faRequest.setStatus("ENGINEER_APPROVE_FA_REQUEST");
+        logHistory.setStatus("ENGINEER_APPROVE_FA_REQUEST");
+        logHistory.setFaRequest(faRequest);
+        logHistories.add(logHistory);
+        faRequest.setLogHistories(logHistories);
+        faRequestDao.update(faRequest);
+    }
+
+    public void engineerWaitingFa(MultipartHttpServletRequest multipartHttpServletRequest) {
+        String id = multipartHttpServletRequest.getParameter("id");
+        String reason = multipartHttpServletRequest.getParameter("reason");
+        Principal principal = multipartHttpServletRequest.getUserPrincipal();
+        AppUser appUser = appUserDao.findByUsername(principal.getName());
+        FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
+        Set<LogHistory> logHistories = faRequest.getLogHistories();
+        LogHistory logHistory = new LogHistory();
+        logHistory.setCreateDate(new Date());
+        if(appUser != null) {
+            faRequest.setUpdateBy(appUser);
+            logHistory.setCreateBy(appUser);
+        }
+        faRequest.setStatus("ENGINEER_WAITING_FA_REQUEST");
+        logHistory.setStatus("ENGINEER_WAITING_FA_REQUEST");
+        logHistory.setRemark(reason);
+        logHistory.setFaRequest(faRequest);
+        logHistories.add(logHistory);
+        faRequest.setLogHistories(logHistories);
+        faRequestDao.update(faRequest);
+    }
+
+    public void engineerRejectFa(MultipartHttpServletRequest multipartHttpServletRequest) {
+        String id = multipartHttpServletRequest.getParameter("id");
+        String reason = multipartHttpServletRequest.getParameter("reason");
+        Principal principal = multipartHttpServletRequest.getUserPrincipal();
+        AppUser appUser = appUserDao.findByUsername(principal.getName());
+        FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
+        Set<LogHistory> logHistories = faRequest.getLogHistories();
+        LogHistory logHistory = new LogHistory();
+        logHistory.setCreateDate(new Date());
+        if(appUser != null) {
+            faRequest.setUpdateBy(appUser);
+            logHistory.setCreateBy(appUser);
+        }
+        faRequest.setStatus("ENGINEER_REJECT_FA_REQUEST");
+        logHistory.setStatus("ENGINEER_REJECT_FA_REQUEST");
+        logHistory.setRemark(reason);
+        logHistory.setFaRequest(faRequest);
+        logHistories.add(logHistory);
+        faRequest.setLogHistories(logHistories);
+        faRequestDao.update(faRequest);
+    }
 }

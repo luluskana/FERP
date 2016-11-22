@@ -23,6 +23,9 @@
                             <li><a href="${home}fams/request">Request FA</a></li>
                             <li><a href="${home}fams/listSale">Request List</a></li>
                         </c:if>
+                        <c:if test="${roleName eq 'admin' or roleName eq 'engineer' or roleName eq 'user'}">
+                            <li><a href="${home}fams/engineerView">Engineer View</a></li>
+                        </c:if>
                     </ul>
                 </li>
                 <li><a href="${home}mtms">MTMS</a></li>

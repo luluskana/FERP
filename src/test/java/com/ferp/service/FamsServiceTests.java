@@ -130,4 +130,153 @@ public class FamsServiceTests {
         assertEquals("UPDATE_FA_REQUEST", faRequest2.getStatus());
         assertEquals("gh", faRequest2.getDocumentRequest());
     }
+
+    @Test
+    public void engineerApproveFaRequestTest() throws Exception {
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("customer","Canon");
+        multipartHttpServletRequestWrapper.setParameter("partNo","engineerApproveFaRequestTest");
+        multipartHttpServletRequestWrapper.setParameter("partName","test1");
+        multipartHttpServletRequestWrapper.setParameter("revision","02");
+        multipartHttpServletRequestWrapper.setParameter("saleOut","LLLLLL");
+        multipartHttpServletRequestWrapper.setParameter("qwsNo","12");
+        multipartHttpServletRequestWrapper.setParameter("apqaNo","asd");
+        multipartHttpServletRequestWrapper.setParameter("needDate","11/11/2016");
+        multipartHttpServletRequestWrapper.setParameter("faApproveQty","2");
+        multipartHttpServletRequestWrapper.setParameter("faForSellQty","4");
+        multipartHttpServletRequestWrapper.setParameter("sampleTestQty","0");
+        multipartHttpServletRequestWrapper.setParameter("samplePccQty", "");
+        multipartHttpServletRequestWrapper.setParameter("material1","ASDASD");
+        multipartHttpServletRequestWrapper.setParameter("material2","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material3","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material4","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material5","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material6", "");
+        multipartHttpServletRequestWrapper.setParameter("documentRequest","gh");
+        multipartHttpServletRequestWrapper.setParameter("tools","Foam");
+        multipartHttpServletRequestWrapper.setParameter("remark","Foam");
+        multipartHttpServletRequestWrapper.setParameter("drawingFile","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper.setParameter("otherFile","/Users/apichat/Workspace/temp/01Test.pdf");
+
+        famsService.createFa(multipartHttpServletRequestWrapper);
+
+        FaRequest faRequest = faRequestDao.findByPartNumber("engineerApproveFaRequestTest");
+        assertNotNull(faRequest);
+        assertEquals("engineerApproveFaRequestTest", faRequest.getPartNo());
+        assertEquals("CREATE_FA_REQUEST", faRequest.getStatus());
+        assertEquals("gh", faRequest.getDocumentRequest());
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper2 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper2.setParameter("id","" + faRequest.getId());
+        multipartHttpServletRequestWrapper2.setParameter("commitDate","22/06/2016");
+        multipartHttpServletRequestWrapper2.setParameter("process","test test");
+
+        famsService.engineerApproveFa(multipartHttpServletRequestWrapper2);
+        FaRequest faRequest2 = faRequestDao.findByPartNumber("engineerApproveFaRequestTest");
+
+        assertNotNull(faRequest2);
+        assertEquals("engineerApproveFaRequestTest", faRequest2.getPartNo());
+        assertEquals("ENGINEER_APPROVE_FA_REQUEST", faRequest2.getStatus());
+        assertEquals("test test", faRequest2.getProcess());
+        assertEquals("gh", faRequest2.getDocumentRequest());
+    }
+
+    @Test
+    public void engineerWaitingFaRequestTest() throws Exception {
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("customer","Canon");
+        multipartHttpServletRequestWrapper.setParameter("partNo","engineerWaitingFaRequestTest");
+        multipartHttpServletRequestWrapper.setParameter("partName","test1");
+        multipartHttpServletRequestWrapper.setParameter("revision","02");
+        multipartHttpServletRequestWrapper.setParameter("saleOut","LLLLLL");
+        multipartHttpServletRequestWrapper.setParameter("qwsNo","12");
+        multipartHttpServletRequestWrapper.setParameter("apqaNo","asd");
+        multipartHttpServletRequestWrapper.setParameter("needDate","11/11/2016");
+        multipartHttpServletRequestWrapper.setParameter("faApproveQty","2");
+        multipartHttpServletRequestWrapper.setParameter("faForSellQty","4");
+        multipartHttpServletRequestWrapper.setParameter("sampleTestQty","0");
+        multipartHttpServletRequestWrapper.setParameter("samplePccQty", "");
+        multipartHttpServletRequestWrapper.setParameter("material1","ASDASD");
+        multipartHttpServletRequestWrapper.setParameter("material2","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material3","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material4","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material5","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material6", "");
+        multipartHttpServletRequestWrapper.setParameter("documentRequest","gh");
+        multipartHttpServletRequestWrapper.setParameter("tools","Foam");
+        multipartHttpServletRequestWrapper.setParameter("remark","Foam");
+        multipartHttpServletRequestWrapper.setParameter("drawingFile","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper.setParameter("otherFile","/Users/apichat/Workspace/temp/01Test.pdf");
+
+        famsService.createFa(multipartHttpServletRequestWrapper);
+
+        FaRequest faRequest = faRequestDao.findByPartNumber("engineerWaitingFaRequestTest");
+        assertNotNull(faRequest);
+        assertEquals("engineerWaitingFaRequestTest", faRequest.getPartNo());
+        assertEquals("CREATE_FA_REQUEST", faRequest.getStatus());
+        assertEquals("gh", faRequest.getDocumentRequest());
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper2 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper2.setParameter("id","" + faRequest.getId());
+        multipartHttpServletRequestWrapper2.setParameter("reason","haha");
+
+        famsService.engineerWaitingFa(multipartHttpServletRequestWrapper2);
+        FaRequest faRequest2 = faRequestDao.findByPartNumber("engineerWaitingFaRequestTest");
+
+        assertNotNull(faRequest2);
+        assertEquals("engineerWaitingFaRequestTest", faRequest2.getPartNo());
+        assertEquals("ENGINEER_WAITING_FA_REQUEST", faRequest2.getStatus());
+        assertEquals("gh", faRequest2.getDocumentRequest());
+    }
+
+    @Test
+    public void engineerRejectFaRequestTest() throws Exception {
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("customer","Canon");
+        multipartHttpServletRequestWrapper.setParameter("partNo","engineerRejectFaRequestTest");
+        multipartHttpServletRequestWrapper.setParameter("partName","test1");
+        multipartHttpServletRequestWrapper.setParameter("revision","02");
+        multipartHttpServletRequestWrapper.setParameter("saleOut","LLLLLL");
+        multipartHttpServletRequestWrapper.setParameter("qwsNo","12");
+        multipartHttpServletRequestWrapper.setParameter("apqaNo","asd");
+        multipartHttpServletRequestWrapper.setParameter("needDate","11/11/2016");
+        multipartHttpServletRequestWrapper.setParameter("faApproveQty","2");
+        multipartHttpServletRequestWrapper.setParameter("faForSellQty","4");
+        multipartHttpServletRequestWrapper.setParameter("sampleTestQty","0");
+        multipartHttpServletRequestWrapper.setParameter("samplePccQty", "");
+        multipartHttpServletRequestWrapper.setParameter("material1","ASDASD");
+        multipartHttpServletRequestWrapper.setParameter("material2","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material3","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material4","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material5","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material6", "");
+        multipartHttpServletRequestWrapper.setParameter("documentRequest","gh");
+        multipartHttpServletRequestWrapper.setParameter("tools","Foam");
+        multipartHttpServletRequestWrapper.setParameter("remark","Foam");
+        multipartHttpServletRequestWrapper.setParameter("drawingFile","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper.setParameter("otherFile","/Users/apichat/Workspace/temp/01Test.pdf");
+
+        famsService.createFa(multipartHttpServletRequestWrapper);
+
+        FaRequest faRequest = faRequestDao.findByPartNumber("engineerRejectFaRequestTest");
+        assertNotNull(faRequest);
+        assertEquals("engineerRejectFaRequestTest", faRequest.getPartNo());
+        assertEquals("CREATE_FA_REQUEST", faRequest.getStatus());
+        assertEquals("gh", faRequest.getDocumentRequest());
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper2 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper2.setParameter("id","" + faRequest.getId());
+        multipartHttpServletRequestWrapper2.setParameter("reason","haha");
+
+        famsService.engineerRejectFa(multipartHttpServletRequestWrapper2);
+        FaRequest faRequest2 = faRequestDao.findByPartNumber("engineerRejectFaRequestTest");
+
+        assertNotNull(faRequest2);
+        assertEquals("engineerRejectFaRequestTest", faRequest2.getPartNo());
+        assertEquals("ENGINEER_REJECT_FA_REQUEST", faRequest2.getStatus());
+        assertEquals("gh", faRequest2.getDocumentRequest());
+    }
 }

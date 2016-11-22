@@ -97,12 +97,6 @@
                             <label class="form-control-static">${faRequest.material1}</label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Material 1 :</label>
-                        <div class="col-sm-8">
-                            <label class="form-control-static">${faRequest.material1}</label>
-                        </div>
-                    </div>
                     <c:if test="${faRequest.material2 ne 'na'}">
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Material 2 :</label>
@@ -181,6 +175,28 @@
                             </div>
                         </div>
                     </c:if>
+                    <div class="form-group">
+                        <label for="inputCommitDate" class="col-sm-4 control-label">Commit Date :</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inputCommitDate" placeholder="dd/MM/yyyy" autocomplete="off" required>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputProcess" class="col-sm-4 control-label">Process :</label>
+                        <div class="col-sm-8">
+                            <textarea id="inputProcess" rows="4" class="form-control"><jsp:text/></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <button type="button" id="btnApprove" class="btn btn-success">Approve</button>
+                            <button type="button" id="btnWaiting" class="btn btn-warning">Waiting</button>
+                            <button type="button" id="btnReject" class="btn btn-danger">Reject</button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
@@ -223,3 +239,165 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="alertApproveModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title">Approve</h4>
+            </div>
+            <div class="modal-body">
+                Confirm approve
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnApproveReason">confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="alertRejectModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title">Reject Reason</h4>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" rows="3" id="inputReasonReject"><jsp:text/></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnRejectModal">reject</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="alertWaittingModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title">Waiting Reason</h4>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" rows="3" id="inputReasonWaiting"><jsp:text/></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" id="btnWaitingModal">Waiting</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $("#inputCommitDate").datepicker({ dateFormat: "dd/mm/yy" });
+        $("#btnApprove").click(function() {
+            var inputCommitDate = $("#inputCommitDate").val();
+            if(inputCommitDate.length <= 0) {
+                $("#inputCommitDate").focus();
+                return false;
+            }
+            var inputProcess = $("#inputProcess").val();
+            if(inputProcess.length <= 0) {
+                $("#inputProcess").focus();
+                return false;
+            }
+            $("#alertApproveModal").modal({show:true});
+        });
+
+        $("#btnWaiting").click(function() {
+            $("#alertWaittingModal").modal({show:true});
+        });
+
+        $("#btnReject").click(function() {
+            $("#alertRejectModal").modal({show:true});
+        });
+
+        $("#btnApproveReason").click(function() {
+
+            var formData = new FormData();
+            formData.append("id", "${faRequest.id}");
+            formData.append("commitDate", $("#inputCommitDate").val());
+            formData.append("process", $("#inputProcess").val());
+
+            $.ajax({
+                type: "POST",
+                headers: {
+                    Accept: "application/json",
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "${home}fams/engineer/approve",
+                processData: false,
+                contentType: false,
+                data: formData,
+                async: false,
+                success: function(data){
+                    window.location.href = "${home}fams/engineerView";
+                },
+                error: function(data){
+                    alert("Error");
+                    return false;
+                }
+            });
+            return false;
+        });
+
+        $("#btnWaitingModal").click(function() {
+
+            var formData = new FormData();
+            formData.append("id", "${faRequest.id}");
+            formData.append("reason", $("#inputReasonWaiting").val());
+
+            $.ajax({
+                type: "POST",
+                headers: {
+                    Accept: "application/json",
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "${home}fams/engineer/waiting",
+                processData: false,
+                contentType: false,
+                data: formData,
+                async: false,
+                success: function(data){
+                    window.location.href = "${home}fams/engineerView";
+                },
+                error: function(data){
+                    alert("Error");
+                    return false;
+                }
+            });
+            return false;
+        });
+
+        $("#btnRejectModal").click(function() {
+
+            var formData = new FormData();
+            formData.append("id", "${faRequest.id}");
+            formData.append("reason", $("#inputReasonReject").val());
+
+            $.ajax({
+                type: "POST",
+                headers: {
+                    Accept: "application/json",
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "${home}fams/engineer/reject",
+                processData: false,
+                contentType: false,
+                data: formData,
+                async: false,
+                success: function(data){
+                    window.location.href = "${home}fams/engineerView";
+                },
+                error: function(data){
+                    alert("Error");
+                    return false;
+                }
+            });
+            return false;
+        });
+    });
+</script>

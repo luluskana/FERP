@@ -104,4 +104,38 @@ public class FamsController {
         }
         return model;
     }
+
+    @RequestMapping(value = "/fams/engineerView", method = RequestMethod.GET)
+    public ModelAndView listForEngineerView(ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        viewService.addFaRequestStatusCreate(model);
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            if(appUser.getRoleName().equals("engineer") ||  appUser.getRoleName().equals("admin")) {
+                model.setViewName("FAMS/engineerView");
+            } else {
+                model.setViewName("404");
+            }
+        } catch (Exception e) {
+            model.setViewName("FAMS/engineerView");
+        }
+        return model;
+    }
+
+    @RequestMapping(value = "/fams/engineerReview/{id}", method = RequestMethod.GET)
+    public ModelAndView engineerReviewFarequest(@PathVariable("id") Long id, ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        model.addObject("faRequest", faRequestDao.findById(id));
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            if(appUser.getRoleName().equals("engineer") || appUser.getRoleName().equals("admin")) {
+                model.setViewName("FAMS/engineerReview");
+            } else {
+                model.setViewName("404");
+            }
+        } catch (Exception e) {
+            model.setViewName("FAMS/engineerReview");
+        }
+        return model;
+    }
 }

@@ -144,4 +144,86 @@ public class FamsContrillerTests extends AbstractTestController {
                 .andExpect(model().attribute("roleName", notNullValue()));
     }
 
+    @Test
+    public void famsPageEngineerViewListTest() throws Exception {
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("customer","Canon");
+        multipartHttpServletRequestWrapper.setParameter("partNo","famsPageEngineerViewListTest");
+        multipartHttpServletRequestWrapper.setParameter("partName","test1");
+        multipartHttpServletRequestWrapper.setParameter("revision","02");
+        multipartHttpServletRequestWrapper.setParameter("saleOut","LLLLLL");
+        multipartHttpServletRequestWrapper.setParameter("qwsNo","12");
+        multipartHttpServletRequestWrapper.setParameter("apqaNo","asd");
+        multipartHttpServletRequestWrapper.setParameter("needDate","11/11/2016");
+        multipartHttpServletRequestWrapper.setParameter("faApproveQty","2");
+        multipartHttpServletRequestWrapper.setParameter("faForSellQty","4");
+        multipartHttpServletRequestWrapper.setParameter("sampleTestQty","0");
+        multipartHttpServletRequestWrapper.setParameter("samplePccQty", "");
+        multipartHttpServletRequestWrapper.setParameter("material1","ASDASD");
+        multipartHttpServletRequestWrapper.setParameter("material2","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material3","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material4","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material5","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material6", "");
+        multipartHttpServletRequestWrapper.setParameter("documentRequest","gh");
+        multipartHttpServletRequestWrapper.setParameter("tools","Foam");
+        multipartHttpServletRequestWrapper.setParameter("remark","Foam");
+        multipartHttpServletRequestWrapper.setParameter("drawingFile","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper.setParameter("otherFile","/Users/apichat/Workspace/temp/01Test.pdf");
+
+        famsService.createFa(multipartHttpServletRequestWrapper);
+
+        this.mockMvc.perform(get("/fams/engineerView").principal(principal))
+                .andExpect(status().isOk())
+                .andExpect(view().name("FAMS/engineerView"))
+                .andExpect(model().attribute("faStatusCreateList", notNullValue()))
+                .andExpect(model().attribute("name", notNullValue()))
+                .andExpect(model().attribute("logout", notNullValue()))
+                .andExpect(model().attribute("login", nullValue()))
+                .andExpect(model().attribute("roleName", notNullValue()));
+    }
+
+    @Test
+    public void famsPageEngineerReviewTest() throws Exception {
+
+        MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("customer","Canon");
+        multipartHttpServletRequestWrapper.setParameter("partNo","famsPageEngineerReviewTest");
+        multipartHttpServletRequestWrapper.setParameter("partName","test1");
+        multipartHttpServletRequestWrapper.setParameter("revision","02");
+        multipartHttpServletRequestWrapper.setParameter("saleOut","LLLLLL");
+        multipartHttpServletRequestWrapper.setParameter("qwsNo","12");
+        multipartHttpServletRequestWrapper.setParameter("apqaNo","asd");
+        multipartHttpServletRequestWrapper.setParameter("needDate","11/11/2016");
+        multipartHttpServletRequestWrapper.setParameter("faApproveQty","2");
+        multipartHttpServletRequestWrapper.setParameter("faForSellQty","4");
+        multipartHttpServletRequestWrapper.setParameter("sampleTestQty","0");
+        multipartHttpServletRequestWrapper.setParameter("samplePccQty", "");
+        multipartHttpServletRequestWrapper.setParameter("material1","ASDASD");
+        multipartHttpServletRequestWrapper.setParameter("material2","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material3","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material4","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material5","Foam");
+        multipartHttpServletRequestWrapper.setParameter("material6", "");
+        multipartHttpServletRequestWrapper.setParameter("documentRequest","gh");
+        multipartHttpServletRequestWrapper.setParameter("tools","Foam");
+        multipartHttpServletRequestWrapper.setParameter("remark","Foam");
+        multipartHttpServletRequestWrapper.setParameter("drawingFile","/Users/apichat/Workspace/temp/01Test.pdf");
+        multipartHttpServletRequestWrapper.setParameter("otherFile","/Users/apichat/Workspace/temp/01Test.pdf");
+
+        famsService.createFa(multipartHttpServletRequestWrapper);
+
+        FaRequest faRequest = faRequestDao.findByPartNumber("famsPageEngineerReviewTest");
+
+        this.mockMvc.perform(get("/fams/engineerReview/" + faRequest.getId()).principal(principal))
+                .andExpect(status().isOk())
+                .andExpect(view().name("FAMS/engineerReview"))
+                .andExpect(model().attribute("faRequest", notNullValue()))
+                .andExpect(model().attribute("name", notNullValue()))
+                .andExpect(model().attribute("logout", notNullValue()))
+                .andExpect(model().attribute("login", nullValue()))
+                .andExpect(model().attribute("roleName", notNullValue()));
+    }
+
 }
