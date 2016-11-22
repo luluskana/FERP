@@ -140,6 +140,111 @@ public class FamsService {
         }
     }
 
+    public void updateFa(MultipartHttpServletRequest multipartHttpServletRequest) {
+        try {
+            String id = validateString(multipartHttpServletRequest.getParameter("id"));
+            String customer = validateString(multipartHttpServletRequest.getParameter("customer"));
+            String partNo = validateString(multipartHttpServletRequest.getParameter("partNo"));
+            String partName = validateString(multipartHttpServletRequest.getParameter("partName"));
+            String revision = validateString(multipartHttpServletRequest.getParameter("revision"));
+            String saleOut = validateString(multipartHttpServletRequest.getParameter("saleOut"));
+            String qwsNo = validateString(multipartHttpServletRequest.getParameter("qwsNo"));
+            String apqaNo = validateString(multipartHttpServletRequest.getParameter("apqaNo"));
+            String needDate = validateString(multipartHttpServletRequest.getParameter("needDate"));
+            String faApproveQty = multipartHttpServletRequest.getParameter("faApproveQty");
+            String faForSellQty = multipartHttpServletRequest.getParameter("faForSellQty");
+            String sampleTestQty = multipartHttpServletRequest.getParameter("sampleTestQty");
+            String samplePccQty =  multipartHttpServletRequest.getParameter("samplePccQty");
+            String material1 = validateString(multipartHttpServletRequest.getParameter("material1"));
+            String material2 = validateString(multipartHttpServletRequest.getParameter("material2"));
+            String material3 = validateString(multipartHttpServletRequest.getParameter("material3"));
+            String material4 = validateString(multipartHttpServletRequest.getParameter("material4"));
+            String material5 = validateString(multipartHttpServletRequest.getParameter("material5"));
+            String material6 = validateString(multipartHttpServletRequest.getParameter("material6"));
+            String documentRequest = validateString(multipartHttpServletRequest.getParameter("documentRequest"));
+            String tools = validateString(multipartHttpServletRequest.getParameter("tools"));
+            String remark = validateString(multipartHttpServletRequest.getParameter("remark"));
+            MultipartFile drawingFile = multipartHttpServletRequest.getFile("drawingFile");
+            MultipartFile otherFile = multipartHttpServletRequest.getFile("otherFile");
+            Principal principal = multipartHttpServletRequest.getUserPrincipal();
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+
+            FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
+
+            Set<LogHistory> logHistories = faRequest.getLogHistories();
+            LogHistory logHistory = new LogHistory();
+
+            logHistory.setCreateDate(new Date());
+            if(appUser != null) {
+                faRequest.setUpdateBy(appUser);
+                logHistory.setCreateBy(appUser);
+            }
+            faRequest.setCustomer(customer);
+            faRequest.setPartNo(partNo);
+            faRequest.setPartName(partName);
+            faRequest.setRevision(revision);
+            faRequest.setSaleOut(saleOut);
+            faRequest.setQwsNo(qwsNo);
+            faRequest.setApqpNo(apqaNo);
+            faRequest.setNeedDate(convertToDate(needDate));
+
+            if(faApproveQty.length() > 0) {
+                faRequest.setFaApproveQty(Integer.parseInt(faApproveQty));
+            } else {
+                faRequest.setFaApproveQty(0);
+            }
+            if(faForSellQty.length() > 0) {
+                faRequest.setFaForSellQty(Integer.parseInt(faForSellQty));
+            } else {
+                faRequest.setFaForSellQty(0);
+            }
+            if(sampleTestQty.length() > 0) {
+                faRequest.setSamplTestQty(Integer.parseInt(sampleTestQty));
+            } else {
+                faRequest.setSamplTestQty(0);
+            }
+            if(samplePccQty.length() > 0) {
+                faRequest.setSamplePccQty(Integer.parseInt(samplePccQty));
+            } else {
+                faRequest.setSamplePccQty(0);
+            }
+
+            faRequest.setMaterial1(material1);
+            faRequest.setMaterial2(material2);
+            faRequest.setMaterial3(material3);
+            faRequest.setMaterial4(material4);
+            faRequest.setMaterial5(material5);
+            faRequest.setMaterial6(material6);
+            faRequest.setDocumentRequest(documentRequest);
+            faRequest.setTool(tools);
+            faRequest.setRemark(remark);
+            faRequest.setStatus("UPDATE_FA_REQUEST");
+
+            if(drawingFile != null) {
+                Long idInsert = selectIdInsert();
+                saveFile(idInsert, drawingFile.getBytes(), drawingFile.getOriginalFilename(), drawingFile.getContentType());
+                faRequest.setDrawingFile(idInsert);
+                logHistory.setDrawingFile(idInsert);
+            }
+
+            if(otherFile != null) {
+                Long idInsert = selectIdInsert();
+                saveFile(idInsert, otherFile.getBytes(), otherFile.getOriginalFilename(), otherFile.getContentType());
+                faRequest.setOtherFile(idInsert);
+                logHistory.setOtherFile(idInsert);
+            }
+
+            logHistory.setStatus("UPDATE_FA_REQUEST");
+            logHistory.setFaRequest(faRequest);
+            logHistories.add(logHistory);
+            faRequest.setLogHistories(logHistories);
+            faRequestDao.update(faRequest);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public String validateString(String data) {
         if(data == null || data.length() < 1) {
             return "na";

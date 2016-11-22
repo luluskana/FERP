@@ -1,6 +1,7 @@
 package com.ferp.web;
 
 import com.ferp.dao.AppUserDao;
+import com.ferp.dao.FaRequestDao;
 import com.ferp.domain.AppUser;
 import com.ferp.service.ViewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class FamsController {
 
     @Autowired
     private AppUserDao appUserDao;
+
+    @Autowired
+    private FaRequestDao faRequestDao;
 
     @RequestMapping(value = "/fams", method = RequestMethod.GET)
     public ModelAndView index(ModelAndView model, Principal principal) {
@@ -79,6 +83,24 @@ public class FamsController {
             }
         } catch (Exception e) {
             model.setViewName("FAMS/listSale");
+        }
+        return model;
+    }
+
+    @RequestMapping(value = "/fams/update/{id}", method = RequestMethod.GET)
+    public ModelAndView updateFarequest(@PathVariable("id") Long id, ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            if(appUser.getRoleName().equals("saleCo") || appUser.getRoleName().equals("saleOut") || appUser.getRoleName().equals("admin")) {
+                model.addObject("faRequest", faRequestDao.findByIdAndCreateBy(id, appUser));
+                model.setViewName("FAMS/update");
+            } else {
+                model.setViewName("404");
+            }
+        } catch (Exception e) {
+            model.addObject("faRequest", faRequestDao.findById(id));
+            model.setViewName("FAMS/update");
         }
         return model;
     }

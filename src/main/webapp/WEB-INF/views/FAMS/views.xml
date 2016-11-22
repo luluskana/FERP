@@ -18,4 +18,8 @@
     <definition name="FAMS/listSale" extends="layout.bootstrap">
         <put-attribute name="body" value="/WEB-INF/views/FAMS/listSale.jsp" />
     </definition>
+
+    <definition name="FAMS/update" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/FAMS/update.jsp" />
+    </definition>
 </tiles-definitions>

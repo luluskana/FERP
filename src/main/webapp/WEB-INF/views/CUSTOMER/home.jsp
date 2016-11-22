@@ -110,35 +110,35 @@
             });
             return false;
         });
+    });
 
-        $(".delete").click(function() {
-            if (confirm('Are you sure you want to delete this thing into the database?')) {
-                var formData = new FormData();
-                formData.append("id", $(this).attr("value").split("_")[0]);
-                $.ajax({
-                    type: "POST",
-                    headers: {
-                        Accept: "application/json",
-                    },
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    url: "${home}customer/delete/customer",
-                    processData: false,
-                    contentType: false,
-                    data: formData,
-                    async: false,
-                    success: function(data){
-                        window.location.href = "${home}customer";
-                    },
-                    error: function(data){
-                        alert("Error");
-                        return false;
-                    }
-                });
-            } else {
-                return false;
-            }
+    $(".delete").click(function() {
+        if (confirm('Are you sure you want to delete this thing into the database?')) {
+            var formData = new FormData();
+            formData.append("id", $(this).attr("value").split("_")[0]);
+            $.ajax({
+                type: "POST",
+                headers: {
+                    Accept: "application/json",
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "${home}customer/delete/customer",
+                processData: false,
+                contentType: false,
+                data: formData,
+                async: false,
+                success: function(data){
+                    window.location.href = "${home}customer";
+                },
+                error: function(data){
+                    alert("Error");
+                    return false;
+                }
+            });
+        } else {
             return false;
-        });
+        }
+        return false;
     });
 </script>

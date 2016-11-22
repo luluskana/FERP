@@ -113,7 +113,7 @@ public class ViewService {
 
     public void addFaRequestStatusCreate(ModelAndView model) {
         try {
-            model.addObject("faStatusCreateList", faRequestDao.findByStatus("CREATE_FA_REQUEST"));
+            model.addObject("faStatusCreateList", faRequestDao.findByStatus(new String[] {"CREATE_FA_REQUEST", "UPDATE_FA_REQUEST"}));
         } catch (Exception e) {
             e.printStackTrace();
         }

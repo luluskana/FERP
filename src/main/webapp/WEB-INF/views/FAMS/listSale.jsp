@@ -42,7 +42,7 @@
                                     <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${faRequest.needDate}" /></td>
                                     <td>${faRequest.saleOut}</td>
                                     <td>${faRequest.status}</td>
-                                    <td><a href="${home}fams/detail/create/${faRequest.id}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                                    <td><a href="${home}fams/update/${faRequest.id}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
