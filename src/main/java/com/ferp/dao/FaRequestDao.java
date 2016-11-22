@@ -4,6 +4,7 @@ import com.ferp.domain.AppUser;
 import com.ferp.domain.FaRequest;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -43,15 +44,27 @@ public class FaRequestDao {
         return (FaRequest)c.uniqueResult();
     }
 
-    public List<FaRequest> findByStatus(String status) {
+    public List<FaRequest> findByStatus(String[] status) {
         Criteria c = ((Session) entityManager.getDelegate()).createCriteria(FaRequest.class);
-        c.add(Restrictions.eq("status", status));
+        c.add(Restrictions.in("status", status));
+        c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return c.list();
     }
 
     public List<FaRequest> findByCreateBy(AppUser appUser) {
         Criteria c = ((Session) entityManager.getDelegate()).createCriteria(FaRequest.class);
         c.add(Restrictions.eq("createBy", appUser));
+        c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return c.list();
+    }
+
+    public FaRequest findByIdAndCreateBy(Long id, AppUser appUser) {
+        Criteria c = ((Session) entityManager.getDelegate()).createCriteria(FaRequest.class);
+        Criterion case1 = Restrictions.eq("id", id);
+        Criterion case2 = Restrictions.eq("createBy", appUser);
+        Criterion case5 = Restrictions.and(case1, case2);
+        c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        c.add(case5);
+        return (FaRequest)c.uniqueResult();
     }
 }
