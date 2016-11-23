@@ -97,12 +97,6 @@
                             <label class="form-control-static">${faRequest.material1}</label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Material 1 :</label>
-                        <div class="col-sm-8">
-                            <label class="form-control-static">${faRequest.material1}</label>
-                        </div>
-                    </div>
                     <c:if test="${faRequest.material2 ne 'na'}">
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Material 2 :</label>

@@ -14,7 +14,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a role="button" data-toggle="collapse" data-parent="#accordionGoodFlow" href="#collapse1">
-                                Sale Request
+                                Sale Request <span class="badge">${fn:length(faStatusCreateList)}</span>
                             </a>
                         </h4>
                     </div>
@@ -60,7 +60,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a role="button" data-toggle="collapse" data-parent="#accordionGoodFlow" href="#collapse2">
-                                Engineer ประเมิณว่าสามารถทำงานได้ กำลังทำงานเพื่อส่งตรวจ First shot
+                                Engineer ประเมิณว่าสามารถทำงานได้ กำลังทำงานเพื่อส่งตรวจ First shot <span class="badge">${fn:length(faStatusEngineerApprove)}</span>
                             </a>
                         </h4>
                     </div>
@@ -82,28 +82,20 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
+                                    <c:forEach var="faRequest" items="${faStatusEngineerApprove}" varStatus="loop">
+                                        <tr>
+                                            <td>${loop.index + 1}</td>
+                                            <td>${faRequest.faNumber}</td>
+                                            <td>${faRequest.partNo}</td>
+                                            <td>${faRequest.customer}</td>
+                                            <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${faRequest.createDate}" /></td>
+                                            <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${faRequest.needDate}" /></td>
+                                            <td>${faRequest.saleOut}</td>
+                                            <c:set var="appuserCreate" value="${faRequest.createBy}"/>
+                                            <td>${appuserCreate.name}</td>
+                                            <td><a href="${home}fams/detail/create/${faRequest.id}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -438,7 +430,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a role="button" data-toggle="collapse" data-parent="#accordionGoodFlow" href="#collapse9">
-                                Engineer ติดปัญหากำลังหาทางแก้ไข
+                                Engineer ติดปัญหากำลังหาทางแก้ไข <span class="badge">${fn:length(faStatusEngineerWaiting)}</span>
                             </a>
                         </h4>
                     </div>
@@ -460,28 +452,20 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
+                                    <c:forEach var="faRequest" items="${faStatusEngineerWaiting}" varStatus="loop">
+                                        <tr>
+                                            <td>${loop.index + 1}</td>
+                                            <td>${faRequest.faNumber}</td>
+                                            <td>${faRequest.partNo}</td>
+                                            <td>${faRequest.customer}</td>
+                                            <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${faRequest.createDate}" /></td>
+                                            <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${faRequest.needDate}" /></td>
+                                            <td>${faRequest.saleOut}</td>
+                                            <c:set var="appuserCreate" value="${faRequest.createBy}"/>
+                                            <td>${appuserCreate.name}</td>
+                                            <td><a href="${home}fams/detail/create/${faRequest.id}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -546,7 +530,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a role="button" data-toggle="collapse" data-parent="#accordionGoodFlow" href="#collapse11">
-                                Engineer ไม่สามารถทำงานได้ (Reject Sale)
+                                Engineer ไม่สามารถทำงานได้ (Reject Sale) <span class="badge">${fn:length(faStatusEngineerReject)}</span>
                             </a>
                         </h4>
                     </div>
@@ -568,28 +552,20 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
+                                    <c:forEach var="faRequest" items="${faStatusEngineerReject}" varStatus="loop">
+                                        <tr>
+                                            <td>${loop.index + 1}</td>
+                                            <td>${faRequest.faNumber}</td>
+                                            <td>${faRequest.partNo}</td>
+                                            <td>${faRequest.customer}</td>
+                                            <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${faRequest.createDate}" /></td>
+                                            <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${faRequest.needDate}" /></td>
+                                            <td>${faRequest.saleOut}</td>
+                                            <c:set var="appuserCreate" value="${faRequest.createBy}"/>
+                                            <td>${appuserCreate.name}</td>
+                                            <td><a href="${home}fams/detail/create/${faRequest.id}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

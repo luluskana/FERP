@@ -37,6 +37,9 @@ public class FamsController {
             viewService.addLogin(model);
         }
         viewService.addFaRequestStatusCreate(model);
+        viewService.addFaRequestStatusEngineerApprove(model);
+        viewService.addFaRequestStatusEngineerReject(model);
+        viewService.addFaRequestStatusEngineerWaiting(model);
         model.setViewName("FAMS/home");
         return model;
     }
