@@ -119,6 +119,30 @@ public class ViewService {
         }
     }
 
+    public void addFaRequestStatusEngineerApprove(ModelAndView model) {
+        try {
+            model.addObject("faStatusEngineerApprove", faRequestDao.findByStatus(new String[] {"ENGINEER_APPROVE_FA_REQUEST"}));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addFaRequestStatusEngineerWaiting(ModelAndView model) {
+        try {
+            model.addObject("faStatusEngineerWaiting", faRequestDao.findByStatus(new String[] {"ENGINEER_WAITING_FA_REQUEST"}));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addFaRequestStatusEngineerReject(ModelAndView model) {
+        try {
+            model.addObject("faStatusEngineerReject", faRequestDao.findByStatus(new String[] {"ENGINEER_REJECT_FA_REQUEST"}));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addFaRequest(ModelAndView model, Long id) {
         try {
             model.addObject("faRequest", faRequestDao.findById(id));
