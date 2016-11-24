@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,7 +33,7 @@ public class MtmsService {
     private AppUserDao appUserDao;
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private InformationFileDataService informationFileDataService;
 
     @Autowired
     private MaterialDao materialDao;
@@ -133,16 +136,14 @@ public class MtmsService {
             material.setManufacturing(manufacturing);
             material.setUlNumber(ulNumber);
             if(spec != null) {
-                Long idInsert = selectIdInsert();
-                saveFile(idInsert, spec.getBytes(), spec.getOriginalFilename(), spec.getContentType());
-                material.setSpec(idInsert);
-                logHistory.setSpec(idInsert);
+                Long idSpec = saveFile(spec.getBytes(), spec.getOriginalFilename(), spec.getContentType());
+                material.setSpec(idSpec);
+                logHistory.setSpec(idSpec);
             }
             if(rohs != null) {
-                Long idInsert = selectIdInsert();
-                saveFile(idInsert, rohs.getBytes(), rohs.getOriginalFilename(), rohs.getContentType());
-                material.setRosh(idInsert);
-                logHistory.setRosh(idInsert);
+                Long idRohs = saveFile(rohs.getBytes(), rohs.getOriginalFilename(), rohs.getContentType());
+                material.setRosh(idRohs);
+                logHistory.setRosh(idRohs);
 
                 Date date = df.parse(dateRohs);
                 material.setRohsDateTest(date);
@@ -153,16 +154,14 @@ public class MtmsService {
                 material.setRohsAlertDateTest(cal.getTime());
             }
             if(msds != null) {
-                Long idInsert = selectIdInsert();
-                saveFile(idInsert, msds.getBytes(), msds.getOriginalFilename(), msds.getContentType());
-                material.setMsds(idInsert);
-                logHistory.setMsds(idInsert);
+                Long idMsds = saveFile(msds.getBytes(), msds.getOriginalFilename(), msds.getContentType());
+                material.setMsds(idMsds);
+                logHistory.setMsds(idMsds);
             }
             if(halogen != null) {
-                Long idInsert = selectIdInsert();
-                saveFile(idInsert, halogen.getBytes(), halogen.getOriginalFilename(), halogen.getContentType());
-                material.setHalogen(idInsert);
-                logHistory.setHalogen(idInsert);
+                Long idHalogen = saveFile(halogen.getBytes(), halogen.getOriginalFilename(), halogen.getContentType());
+                material.setHalogen(idHalogen);
+                logHistory.setHalogen(idHalogen);
 
                 Date date = df.parse(dateHalogen);
                 material.setHalogenDateTest(date);
@@ -173,17 +172,15 @@ public class MtmsService {
                 material.setHalogenAlertDateTest(cal.getTime());
             }
             if(guaranteeLetter != null) {
-                Long idInsert = selectIdInsert();
-                saveFile(idInsert, guaranteeLetter.getBytes(), guaranteeLetter.getOriginalFilename(), guaranteeLetter.getContentType());
-                material.setGuaranteeLetter(idInsert);
-                logHistory.setGuaranteeLetter(idInsert);
+                Long idGuaranteeLetter = saveFile(guaranteeLetter.getBytes(), guaranteeLetter.getOriginalFilename(), guaranteeLetter.getContentType());
+                material.setGuaranteeLetter(idGuaranteeLetter);
+                logHistory.setGuaranteeLetter(idGuaranteeLetter);
             }
 
             if(redPhosphorus != null) {
-                Long idInsert = selectIdInsert();
-                saveFile(idInsert, redPhosphorus.getBytes(), redPhosphorus.getOriginalFilename(), redPhosphorus.getContentType());
-                material.setRedPhosphorus(idInsert);
-                logHistory.setRedPhosphorus(idInsert);
+                Long idRedPhosphorus = saveFile(redPhosphorus.getBytes(), redPhosphorus.getOriginalFilename(), redPhosphorus.getContentType());
+                material.setRedPhosphorus(idRedPhosphorus);
+                logHistory.setRedPhosphorus(idRedPhosphorus);
             }
 
             if(spec != null && msds != null && rohs != null && halogen != null) {
@@ -268,16 +265,14 @@ public class MtmsService {
             material.setUlNumber(ulNumber);
 
             if(spec != null) {
-                Long idInsert = selectIdInsert();
-                saveFile(idInsert, spec.getBytes(), spec.getOriginalFilename(), spec.getContentType());
-                material.setSpec(idInsert);
-                logHistory.setSpec(idInsert);
+                Long idSpec = saveFile(spec.getBytes(), spec.getOriginalFilename(), spec.getContentType());
+                material.setSpec(idSpec);
+                logHistory.setSpec(idSpec);
             }
             if(rohs != null) {
-                Long idInsert = selectIdInsert();
-                saveFile(idInsert, rohs.getBytes(), rohs.getOriginalFilename(), rohs.getContentType());
-                material.setRosh(idInsert);
-                logHistory.setRosh(idInsert);
+                Long idRohs = saveFile(rohs.getBytes(), rohs.getOriginalFilename(), rohs.getContentType());
+                material.setRosh(idRohs);
+                logHistory.setRosh(idRohs);
 
                 Date date = df.parse(dateRohs);
                 material.setRohsDateTest(date);
@@ -288,16 +283,14 @@ public class MtmsService {
                 material.setRohsAlertDateTest(cal.getTime());
             }
             if(msds != null) {
-                Long idInsert = selectIdInsert();
-                saveFile(idInsert, msds.getBytes(), msds.getOriginalFilename(), msds.getContentType());
-                material.setMsds(idInsert);
-                logHistory.setMsds(idInsert);
+                Long idMsds = saveFile(msds.getBytes(), msds.getOriginalFilename(), msds.getContentType());
+                material.setMsds(idMsds);
+                logHistory.setMsds(idMsds);
             }
             if(halogen != null) {
-                Long idInsert = selectIdInsert();
-                saveFile(idInsert, halogen.getBytes(), halogen.getOriginalFilename(), halogen.getContentType());
-                material.setHalogen(idInsert);
-                logHistory.setHalogen(idInsert);
+                Long idHalogen = saveFile(halogen.getBytes(), halogen.getOriginalFilename(), halogen.getContentType());
+                material.setHalogen(idHalogen);
+                logHistory.setHalogen(idHalogen);
 
                 Date date = df.parse(dateHalogen);
                 material.setHalogenDateTest(date);
@@ -308,17 +301,15 @@ public class MtmsService {
                 material.setHalogenAlertDateTest(cal.getTime());
             }
             if(guaranteeLetter != null) {
-                Long idInsert = selectIdInsert();
-                saveFile(idInsert, guaranteeLetter.getBytes(), guaranteeLetter.getOriginalFilename(), guaranteeLetter.getContentType());
-                material.setGuaranteeLetter(idInsert);
-                logHistory.setGuaranteeLetter(idInsert);
+                Long idGuaranteeLetter = saveFile(guaranteeLetter.getBytes(), guaranteeLetter.getOriginalFilename(), guaranteeLetter.getContentType());
+                material.setGuaranteeLetter(idGuaranteeLetter);
+                logHistory.setGuaranteeLetter(idGuaranteeLetter);
             }
 
             if(redPhosphorus != null) {
-                Long idInsert = selectIdInsert();
-                saveFile(idInsert, redPhosphorus.getBytes(), redPhosphorus.getOriginalFilename(), redPhosphorus.getContentType());
-                material.setRedPhosphorus(idInsert);
-                logHistory.setRedPhosphorus(idInsert);
+                Long idRedPhosphorus = saveFile(redPhosphorus.getBytes(), redPhosphorus.getOriginalFilename(), redPhosphorus.getContentType());
+                material.setRedPhosphorus(idRedPhosphorus);
+                logHistory.setRedPhosphorus(idRedPhosphorus);
             }
 
             if(spec != null && msds != null && rohs != null && halogen != null) {
@@ -360,19 +351,15 @@ public class MtmsService {
         }
     }
 
-    public Long selectIdInsert() {
-        String sqlSelect = "SELECT ID FROM ITEM_FILE ORDER BY ID DESC LIMIT 1";
-        List<Map<String, Object>> lists =  jdbcTemplate.queryForList(sqlSelect);
-        if(lists.size() <= 0) {
-            return 1L;
-        } else {
-            return (Long)lists.get(0).get("ID") + 1;
-        }
-    }
-
-    public void saveFile(Long id, byte[] stream, String fileName, String contentType) {
-        String sqlInsertFile = "INSERT INTO ITEM_FILE (id, dataFile, fileName, contentType) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sqlInsertFile, id, stream, fileName, contentType);
+    public Long saveFile(byte[] stream, String fileName, String contentType) throws IOException {
+            InformationFileData informationFileData = informationFileDataService.createFile(fileName, contentType);
+            String workingDir = System.getProperty("user.dir") + "/fileData";
+            File convFile = new File(workingDir + informationFileData.getUrl());
+            convFile.getParentFile().mkdirs();
+            FileOutputStream fos = new FileOutputStream(convFile);
+            fos.write(stream);
+            fos.close();
+            return informationFileData.getId();
     }
 
     public void deleteMaterial(MultipartHttpServletRequest multipartHttpServletRequest) {

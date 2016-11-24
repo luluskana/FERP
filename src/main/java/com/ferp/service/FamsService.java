@@ -4,6 +4,7 @@ import com.ferp.dao.AppUserDao;
 import com.ferp.dao.FaRequestDao;
 import com.ferp.domain.AppUser;
 import com.ferp.domain.FaRequest;
+import com.ferp.domain.InformationFileData;
 import com.ferp.domain.LogHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,7 +35,7 @@ public class FamsService {
     private AppUserDao appUserDao;
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private InformationFileDataService informationFileDataService;
 
     public void createFa(MultipartHttpServletRequest multipartHttpServletRequest) {
         try {
@@ -117,15 +121,13 @@ public class FamsService {
             faRequest.setStatus("CREATE_FA_REQUEST");
 
             if(drawingFile != null) {
-                Long idInsert = selectIdInsert();
-                saveFile(idInsert, drawingFile.getBytes(), drawingFile.getOriginalFilename(), drawingFile.getContentType());
+                Long idInsert = saveFile(drawingFile.getBytes(), drawingFile.getOriginalFilename(), drawingFile.getContentType());
                 faRequest.setDrawingFile(idInsert);
                 logHistory.setDrawingFile(idInsert);
             }
 
             if(otherFile != null) {
-                Long idInsert = selectIdInsert();
-                saveFile(idInsert, otherFile.getBytes(), otherFile.getOriginalFilename(), otherFile.getContentType());
+                Long idInsert = saveFile(otherFile.getBytes(), otherFile.getOriginalFilename(), otherFile.getContentType());
                 faRequest.setOtherFile(idInsert);
                 logHistory.setOtherFile(idInsert);
             }
@@ -221,15 +223,13 @@ public class FamsService {
             faRequest.setStatus("UPDATE_FA_REQUEST");
 
             if(drawingFile != null) {
-                Long idInsert = selectIdInsert();
-                saveFile(idInsert, drawingFile.getBytes(), drawingFile.getOriginalFilename(), drawingFile.getContentType());
+                Long idInsert = saveFile(drawingFile.getBytes(), drawingFile.getOriginalFilename(), drawingFile.getContentType());
                 faRequest.setDrawingFile(idInsert);
                 logHistory.setDrawingFile(idInsert);
             }
 
             if(otherFile != null) {
-                Long idInsert = selectIdInsert();
-                saveFile(idInsert, otherFile.getBytes(), otherFile.getOriginalFilename(), otherFile.getContentType());
+                Long idInsert = saveFile(otherFile.getBytes(), otherFile.getOriginalFilename(), otherFile.getContentType());
                 faRequest.setOtherFile(idInsert);
                 logHistory.setOtherFile(idInsert);
             }
@@ -262,19 +262,15 @@ public class FamsService {
         }
     }
 
-    public void saveFile(Long id, byte[] stream, String fileName, String contentType) {
-        String sqlInsertFile = "INSERT INTO ITEM_FILE (id, dataFile, fileName, contentType) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sqlInsertFile, id, stream, fileName, contentType);
-    }
-
-    public Long selectIdInsert() {
-        String sqlSelect = "SELECT ID FROM ITEM_FILE ORDER BY ID DESC LIMIT 1";
-        List<Map<String, Object>> lists =  jdbcTemplate.queryForList(sqlSelect);
-        if(lists.size() <= 0) {
-            return 1L;
-        } else {
-            return (Long)lists.get(0).get("ID") + 1;
-        }
+    public Long saveFile(byte[] stream, String fileName, String contentType) throws IOException {
+        InformationFileData informationFileData = informationFileDataService.createFile(fileName, contentType);
+        String workingDir = System.getProperty("user.dir") + "/fileData";
+        File convFile = new File(workingDir + informationFileData.getUrl());
+        convFile.getParentFile().mkdirs();
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(stream);
+        fos.close();
+        return informationFileData.getId();
     }
 
     public void engineerApproveFa(MultipartHttpServletRequest multipartHttpServletRequest) {

@@ -8,3 +8,4 @@ target/*
 *.zip
 FERP.iml
 derby.log
+fileData/*

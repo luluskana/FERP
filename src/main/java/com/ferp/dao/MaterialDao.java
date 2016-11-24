@@ -32,9 +32,6 @@ public class MaterialDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
     public void update(Material material) {
         entityManager.merge(material);
         entityManager.flush();
@@ -61,7 +58,6 @@ public class MaterialDao {
         SQLQuery query2 = session.createSQLQuery("DELETE FROM MATERIAL  WHERE id = :id");
         query2.setParameter("id", id);
         query2.executeUpdate();
-        deleteFile(logHistories);
     }
 
     public List<Material> findByMaterialStatus(String[] strings) {
@@ -70,33 +66,6 @@ public class MaterialDao {
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         criteria.add(case1);
         return criteria.list();
-    }
-
-    public void deleteFile(Set<LogHistory> logHistories) {
-        for(LogHistory logHistory : logHistories) {
-            if(logHistory.getSpec() != null) {
-                queryDelete(logHistory.getSpec());
-            }
-            if(logHistory.getRosh() != null) {
-                queryDelete(logHistory.getRosh());
-            }
-            if(logHistory.getMsds() != null) {
-                queryDelete(logHistory.getMsds());
-            }
-            if(logHistory.getHalogen() != null) {
-                queryDelete(logHistory.getHalogen());
-            }
-            if(logHistory.getGuaranteeLetter() != null) {
-                queryDelete(logHistory.getGuaranteeLetter());
-            }
-            if(logHistory.getRedPhosphorus() != null) {
-                queryDelete(logHistory.getRedPhosphorus());
-            }
-        }
-    }
-    public void queryDelete(Long id) {
-        String sqlSelect = "DELETE FROM ITEM_FILE WHERE ID = ?";
-        jdbcTemplate.update(sqlSelect, id);
     }
 
     public List<Material> findAllMaterialGe(Date date) {

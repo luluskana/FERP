@@ -1,14 +1,14 @@
 package com.ferp.service;
 
+import com.ferp.dao.InformationFileDataDao;
 import com.ferp.domain.FileData;
+import com.ferp.domain.InformationFileData;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.List;
 import java.util.Map;
 
@@ -19,22 +19,20 @@ import java.util.Map;
 public class DownloadFileServiec {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private InformationFileDataDao informationFileDataDao;
 
-    public FileData getFileName(Long id) {
-        String sqlSelect = "SELECT * FROM ITEM_FILE WHERE ID = ?";
-        List<Map<String, Object>> lists =  jdbcTemplate.queryForList(sqlSelect, id);
-        if(lists.size() != 0) {
-            String name = (String) lists.get(0).get("fileName");
-            String contentType = (String) lists.get(0).get("contentType");
-            byte[] data = (byte[]) lists.get(0).get("dataFile");
-            FileData fileData = new FileData();
-            fileData.setFileName(name);
-            fileData.setContentType(contentType);
-            fileData.setDataFile(data);
-            return fileData;
-        } else {
-            return null;
-        }
+    public FileData getFileName(Long id) throws IOException {
+        InformationFileData informationFileData = informationFileDataDao.findById(id);
+        String name = informationFileData.getFileName();
+        String contentType = informationFileData.getContentType();
+        String workingDir = System.getProperty("user.dir") + "/fileData";
+        File file = new File(workingDir + informationFileData.getUrl());
+        FileInputStream fis = new FileInputStream(file);
+        byte[] data = IOUtils.toByteArray(fis);
+        FileData fileData = new FileData();
+        fileData.setFileName(name);
+        fileData.setContentType(contentType);
+        fileData.setDataFile(data);
+        return fileData;
     }
 }

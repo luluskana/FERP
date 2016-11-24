@@ -74,15 +74,4 @@ public class DatabaseConfig {
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
-
-    @Bean
-    public JdbcTemplate jdbcTemplate() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getProperty("db.file.driver"));
-        dataSource.setUrl(env.getProperty("db.file.url"));
-        dataSource.setUsername(env.getProperty("db.file.username"));
-        dataSource.setPassword(env.getProperty("db.file.password"));
-        return new JdbcTemplate(dataSource);
-    }
-
 }
