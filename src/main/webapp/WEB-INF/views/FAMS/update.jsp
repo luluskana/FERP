@@ -195,10 +195,10 @@
                             <label class="col-sm-3 control-label">Document Request :</label>
                             <div class="col-sm-9">
                                 <select id="inputDocumentRequest" class="form-control input-group-sm">
-                                    <option value="No Need Data">No Need Data</option>
-                                    <option value="Inspection Only">Inspection Only</option>
-                                    <option value="Full FA Package">Full FA Package</option>
-                                    <option value="PPAP">PPAP</option>
+                                    <option>No Need Data</option>
+                                    <option>Inspection Only</option>
+                                    <option>Full FA Package</option>
+                                    <option>PPAP</option>
                                 </select>
                             </div>
                         </div>
@@ -248,10 +248,10 @@
     var materialList = [];
 
     $(document).ready(function() {
-
-        $('#inputDocumentRequest option[value=${faRequest.documentRequest}]').attr('selected','selected');
-
         $('#inputTools option[value=${faRequest.tool}]').attr('selected','selected');
+        $("#inputDocumentRequest option").filter(function() {
+            return this.text == '${faRequest.documentRequest}';
+        }).attr('selected', true);
 
         $("#inputNeedDate").datepicker({ dateFormat: "dd/mm/yy" });
 
