@@ -33,17 +33,35 @@
                             </thead>
                             <tbody>
                             <c:forEach var="faRequest" items="${faByUserList}" varStatus="loop">
-                                <tr>
-                                    <td>${loop.index + 1}</td>
-                                    <td>${faRequest.faNumber}</td>
-                                    <td>${faRequest.partNo}</td>
-                                    <td>${faRequest.customer}</td>
-                                    <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${faRequest.createDate}" /></td>
-                                    <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${faRequest.needDate}" /></td>
-                                    <td>${faRequest.saleOut}</td>
-                                    <td>${faRequest.status}</td>
-                                    <td><a href="${home}fams/update/${faRequest.id}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
-                                </tr>
+                                <c:if test="${faRequest.status ne 'SALE_CANCEL_FA_REQUEST'}">
+                                    <tr>
+                                        <td>${loop.index + 1}</td>
+                                        <td>${faRequest.faNumber}</td>
+                                        <td>${faRequest.partNo}</td>
+                                        <td>${faRequest.customer}</td>
+                                        <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${faRequest.createDate}" /></td>
+                                        <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${faRequest.needDate}" /></td>
+                                        <td>${faRequest.saleOut}</td>
+                                        <td>
+                                            <c:if test="${faRequest.status eq 'CREATE_FA_REQUEST'}">
+                                                <span class="label label-primary">create</span>
+                                            </c:if>
+                                            <c:if test="${faRequest.status eq 'UPDATE_FA_REQUEST'}">
+                                                <span class="label label-primary">update</span>
+                                            </c:if>
+                                            <c:if test="${faRequest.status eq 'ENGINEER_APPROVE_FA_REQUEST'}">
+                                                <span class="label label-success">engineer approve</span>
+                                             </c:if>
+                                            <c:if test="${faRequest.status eq 'ENGINEER_WAITING_FA_REQUEST'}">
+                                                <span class="label label-warning">engineer waiting</span>
+                                            </c:if>
+                                            <c:if test="${faRequest.status eq 'ENGINEER_REJECT_FA_REQUEST'}">
+                                                <span class="label label-danger">engineer reject</span>
+                                             </c:if>
+                                        </td>
+                                        <td><a href="${home}fams/update/${faRequest.id}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                                    </tr>
+                                </c:if>
                             </c:forEach>
                             </tbody>
                         </table>
