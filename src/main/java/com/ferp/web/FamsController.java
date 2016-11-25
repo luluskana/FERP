@@ -40,6 +40,7 @@ public class FamsController {
         viewService.addFaRequestStatusEngineerApprove(model);
         viewService.addFaRequestStatusEngineerReject(model);
         viewService.addFaRequestStatusEngineerWaiting(model);
+        viewService.addFaRequestStatusEngineerSendFirstShot(model);
         model.setViewName("FAMS/home");
         return model;
     }

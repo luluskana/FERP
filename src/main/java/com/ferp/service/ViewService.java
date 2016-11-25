@@ -143,6 +143,14 @@ public class ViewService {
         }
     }
 
+    public void addFaRequestStatusEngineerSendFirstShot(ModelAndView model) {
+        try {
+            model.addObject("faStatusEngineerSendFirstShot", faRequestDao.findByStatus(new String[] {"ENGINEER_SEND_FIRST_FA_REQUEST"}));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addFaRequest(ModelAndView model, Long id) {
         try {
             model.addObject("faRequest", faRequestDao.findById(id));

@@ -233,7 +233,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
-                                <c:if test="${faRequest.status eq 'CREATE_FA_REQUEST' or faRequest.status eq 'UPDATE_FA_REQUEST' or faRequest.status eq 'ENGINEER_REJECT_FA_REQUEST'}">
+                                <c:if test="${faRequest.status eq 'CREATE_FA_REQUEST' or faRequest.status eq 'UPDATE_FA_REQUEST' or faRequest.status eq 'ENGINEER_REJECT_FA_REQUEST' or faRequest.status eq 'ENGINEER_CANCEL_FA_REQUEST'}">
                                     <button type="submit" id="submit" class="btn btn-primary">Update</button>
                                     <button type="button" id="cancel" class="btn btn-danger">Cancel</button>
                                 </c:if>

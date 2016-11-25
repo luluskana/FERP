@@ -57,7 +57,13 @@
                                             </c:if>
                                             <c:if test="${faRequest.status eq 'ENGINEER_REJECT_FA_REQUEST'}">
                                                 <span class="label label-danger">engineer reject</span>
-                                             </c:if>
+                                            </c:if>
+                                            <c:if test="${faRequest.status eq 'ENGINEER_SEND_FIRST_FA_REQUEST'}">
+                                                <span class="label label-success">first shot</span>
+                                            </c:if>
+                                            <c:if test="${faRequest.status eq 'ENGINEER_CANCEL_FA_REQUEST'}">
+                                                <span class="label label-danger">engineer cancel</span>
+                                            </c:if>
                                         </td>
                                         <td><a href="${home}fams/update/${faRequest.id}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
                                     </tr>
