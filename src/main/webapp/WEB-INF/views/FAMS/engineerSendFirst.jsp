@@ -279,6 +279,22 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="alertCancelModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title">Cancel Reason</h4>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" rows="3" id="inputReasonCancel"><jsp:text/></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnCancelModal">confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function() {
         $("#btnApprove").click(function() {
@@ -301,6 +317,38 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 url: "${home}fams/engineer/sendFirstShot",
+                processData: false,
+                contentType: false,
+                data: formData,
+                async: false,
+                success: function(data){
+                    window.location.href = "${home}fams/engineerView";
+                },
+                error: function(data){
+                    alert("Error");
+                    return false;
+                }
+            });
+            return false;
+        });
+
+        $("#btnReject").click(function() {
+                    $("#alertCancelModal").modal({show:true});
+        });
+
+        $("#btnCancelModal").click(function() {
+            var formData = new FormData();
+            formData.append("id", "${faRequest.id}");
+            formData.append("reason", $("#inputReasonCancel").val());
+
+            $.ajax({
+                type: "POST",
+                headers: {
+                    Accept: "application/json",
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "${home}fams/engineer/cancel",
                 processData: false,
                 contentType: false,
                 data: formData,

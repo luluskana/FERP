@@ -175,6 +175,20 @@
                             </div>
                         </div>
                     </c:if>
+                    <c:if test="${not empty faRequest.engineerCommitDate}">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Commit Date :</label>
+                            <div class="col-sm-8">
+                                <label class="form-control-static"><fmt:formatDate pattern="dd/MM/yyyy"  value="${faRequest.engineerCommitDate}" /></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputProcess" class="col-sm-4 control-label">Process :</label>
+                            <div class="col-sm-8">
+                                <textarea id="inputProcess" rows="4" class="form-control" disabled>${faRequest.process}</textarea>
+                            </div>
+                        </div>
+                    </c:if>
                 </div>
             </form>
         </div>
