@@ -112,6 +112,8 @@ public class FamsController {
     public ModelAndView listForEngineerView(ModelAndView model, Principal principal) {
         viewService.addMenuAndName(model, principal);
         viewService.addFaRequestStatusCreate(model);
+        viewService.addFaRequestStatusEngineerWaiting(model);
+        viewService.addFaRequestStatusEngineerApprove(model);
         try {
             AppUser appUser = appUserDao.findByUsername(principal.getName());
             if(appUser.getRoleName().equals("engineer") ||  appUser.getRoleName().equals("admin")) {
@@ -138,6 +140,23 @@ public class FamsController {
             }
         } catch (Exception e) {
             model.setViewName("FAMS/engineerReview");
+        }
+        return model;
+    }
+
+    @RequestMapping(value = "/fams/engineerSendFirst/{id}", method = RequestMethod.GET)
+    public ModelAndView engineerSendFirstFarequest(@PathVariable("id") Long id, ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        model.addObject("faRequest", faRequestDao.findById(id));
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            if(appUser.getRoleName().equals("engineer") || appUser.getRoleName().equals("admin")) {
+                model.setViewName("FAMS/engineerSendFirst");
+            } else {
+                model.setViewName("404");
+            }
+        } catch (Exception e) {
+            model.setViewName("FAMS/engineerSendFirst");
         }
         return model;
     }

@@ -344,4 +344,52 @@ public class FamsService {
         faRequest.setLogHistories(logHistories);
         faRequestDao.update(faRequest);
     }
+
+    public void saleCancelFa(MultipartHttpServletRequest multipartHttpServletRequest) {
+        String id = multipartHttpServletRequest.getParameter("id");
+        String reason = multipartHttpServletRequest.getParameter("reason");
+        Principal principal = multipartHttpServletRequest.getUserPrincipal();
+        AppUser appUser = appUserDao.findByUsername(principal.getName());
+        FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
+        Set<LogHistory> logHistories = faRequest.getLogHistories();
+        LogHistory logHistory = new LogHistory();
+        logHistory.setCreateDate(new Date());
+        if(appUser != null) {
+            faRequest.setUpdateBy(appUser);
+            logHistory.setCreateBy(appUser);
+        }
+        faRequest.setStatus("SALE_CANCEL_FA_REQUEST");
+        logHistory.setStatus("SALE_CANCEL_FA_REQUEST");
+        logHistory.setRemark(reason);
+        logHistory.setFaRequest(faRequest);
+        logHistories.add(logHistory);
+        faRequest.setLogHistories(logHistories);
+        faRequestDao.update(faRequest);
+    }
+
+    public void engineerSendFirstFa(MultipartHttpServletRequest multipartHttpServletRequest) {
+        String id = multipartHttpServletRequest.getParameter("id");
+        String method = multipartHttpServletRequest.getParameter("method");
+        String materialSlip = multipartHttpServletRequest.getParameter("materialSlip");
+        String qtyFirst = multipartHttpServletRequest.getParameter("qtyFirst");
+        Principal principal = multipartHttpServletRequest.getUserPrincipal();
+        AppUser appUser = appUserDao.findByUsername(principal.getName());
+        FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
+        Set<LogHistory> logHistories = faRequest.getLogHistories();
+        LogHistory logHistory = new LogHistory();
+        logHistory.setCreateDate(new Date());
+        if(appUser != null) {
+            faRequest.setUpdateBy(appUser);
+            logHistory.setCreateBy(appUser);
+        }
+        faRequest.setStatus("ENGINEER_SEND_FIRST_FA_REQUEST");
+        logHistory.setStatus("ENGINEER_SEND_FIRST_FA_REQUEST");
+        logHistory.setQtyFirst(Integer.parseInt(qtyFirst));
+        logHistory.setSlipMatNo(materialSlip);
+        logHistory.setMethodFirst(method);
+        logHistory.setFaRequest(faRequest);
+        logHistories.add(logHistory);
+        faRequest.setLogHistories(logHistories);
+        faRequestDao.update(faRequest);
+    }
 }

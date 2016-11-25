@@ -233,12 +233,68 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
-                                <button type="submit" id="submit" class="btn btn-primary">Update</button>
+                                <c:if test="${faRequest.status eq 'CREATE_FA_REQUEST' or faRequest.status eq 'UPDATE_FA_REQUEST' or faRequest.status eq 'ENGINEER_REJECT_FA_REQUEST'}">
+                                    <button type="submit" id="submit" class="btn btn-primary">Update</button>
+                                    <button type="button" id="cancel" class="btn btn-danger">Cancel</button>
+                                </c:if>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading" align="center">History</div>
+                <div class="panel-body table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Update Date</th>
+                            <th>Status</th>
+                            <th>Remark</th>
+                            <th>Tooling No</th>
+                            <th>Qty</th>
+                            <th>Update By</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:set var="documentHistorys" value="${faRequest.logHistories}"/>
+                        <c:forEach var="documentHistory" items="${documentHistorys}" varStatus="loop">
+                            <tr>
+                                <td>${loop.index + 1}</td>
+                                <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${documentHistory.createDate}" /></td>
+                                <td>${documentHistory.status}</td>
+                                <td>${documentHistory.remark}</td>
+                                <td>${documentHistory.methodFirst}</td>
+                                <td>${documentHistory.qtyFirst}</td>
+                                <c:set var="createBy" value="${documentHistory.createBy}"/>
+                                <td>${createBy.name}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="alertCancelModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title">Cancel Reason</h4>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" rows="3" id="inputReasonCancel"><jsp:text/></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnCancelModal">confirm</button>
+            </div>
         </div>
     </div>
 </div>
@@ -340,7 +396,7 @@
                 data: formData,
                 async: false,
                 success: function(data){
-                    window.location.href = "${home}fams";
+                    window.location.href = "${home}fams/listSale";
                 },
                 error: function(data){
                     alert("Error");
@@ -348,6 +404,38 @@
                 }
             });
 
+            return false;
+        });
+
+        $("#cancel").click(function() {
+            $("#alertCancelModal").modal({show:true});
+        });
+
+        $("#btnCancelModal").click(function() {
+            var formData = new FormData();
+            formData.append("id", "${faRequest.id}");
+            formData.append("reason", $("#inputReasonCancel").val());
+
+            $.ajax({
+                type: "POST",
+                headers: {
+                    Accept: "application/json",
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "${home}fams/cancel/fa",
+                processData: false,
+                contentType: false,
+                data: formData,
+                async: false,
+                success: function(data){
+                    window.location.href = "${home}fams/listSale";
+                },
+                error: function(data){
+                    alert("Error");
+                    return false;
+                }
+            });
             return false;
         });
     });

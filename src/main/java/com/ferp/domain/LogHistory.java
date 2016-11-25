@@ -62,6 +62,9 @@ public class LogHistory implements Serializable {
     @Column(name="methodFirst")
     private String methodFirst;
 
+    @Column(name="slipMatNo")
+    private String slipMatNo;
+
     @Column(name="qtyFirst")
     private Integer qtyFirst;
 
@@ -247,5 +250,13 @@ public class LogHistory implements Serializable {
 
     public void setQtyFirst(Integer qtyFirst) {
         this.qtyFirst = qtyFirst;
+    }
+
+    public String getSlipMatNo() {
+        return slipMatNo;
+    }
+
+    public void setSlipMatNo(String slipMatNo) {
+        this.slipMatNo = slipMatNo;
     }
 }
