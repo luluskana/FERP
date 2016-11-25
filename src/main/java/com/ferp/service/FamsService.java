@@ -226,12 +226,16 @@ public class FamsService {
                 Long idInsert = saveFile(drawingFile.getBytes(), drawingFile.getOriginalFilename(), drawingFile.getContentType());
                 faRequest.setDrawingFile(idInsert);
                 logHistory.setDrawingFile(idInsert);
+            } else {
+                faRequest.setDrawingFile(null);
             }
 
             if(otherFile != null) {
                 Long idInsert = saveFile(otherFile.getBytes(), otherFile.getOriginalFilename(), otherFile.getContentType());
                 faRequest.setOtherFile(idInsert);
                 logHistory.setOtherFile(idInsert);
+            } else {
+                faRequest.setOtherFile(null);
             }
 
             logHistory.setStatus("UPDATE_FA_REQUEST");

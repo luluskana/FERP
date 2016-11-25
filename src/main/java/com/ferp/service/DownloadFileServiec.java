@@ -25,8 +25,8 @@ public class DownloadFileServiec {
         InformationFileData informationFileData = informationFileDataDao.findById(id);
         String name = informationFileData.getFileName();
         String contentType = informationFileData.getContentType();
-        String workingDir = System.getProperty("user.dir") + "/fileData";
-        File file = new File(workingDir + informationFileData.getUrl());
+        String workingDir = System.getProperty("user.dir") + "/fileData/" + informationFileData.getId() + "/";
+        File file = new File(workingDir + informationFileData.getFileName());
         FileInputStream fis = new FileInputStream(file);
         byte[] data = IOUtils.toByteArray(fis);
         FileData fileData = new FileData();
