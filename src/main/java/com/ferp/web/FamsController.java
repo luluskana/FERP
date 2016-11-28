@@ -240,4 +240,38 @@ public class FamsController {
         }
         return model;
     }
+
+    @RequestMapping(value = "/fams/qaEngineerView", method = RequestMethod.GET)
+    public ModelAndView listForQaEngineerView(ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        model.addObject("faStatusApproveFinal", faRequestDao.findByStatus(new String[] {"QA_APPROVE_FINAL_FA_REQUEST"}));
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            if(appUser.getRoleName().equals("qaEngineer") ||  appUser.getRoleName().equals("admin")) {
+                model.setViewName("FAMS/qaEngineerView");
+            } else {
+                model.setViewName("404");
+            }
+        } catch (Exception e) {
+            model.setViewName("FAMS/qaEngineerView");
+        }
+        return model;
+    }
+
+    @RequestMapping(value = "/fams/reviewDoc/{id}", method = RequestMethod.GET)
+    public ModelAndView qareviewDocumentFarequest(@PathVariable("id") Long id, ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        model.addObject("faRequest", faRequestDao.findById(id));
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            if(appUser.getRoleName().equals("qaEngineer") ||  appUser.getRoleName().equals("admin")) {
+                model.setViewName("FAMS/reviewDoc");
+            } else {
+                model.setViewName("404");
+            }
+        } catch (Exception e) {
+            model.setViewName("FAMS/reviewDoc");
+        }
+        return model;
+    }
 }

@@ -50,4 +50,12 @@
     <definition name="FAMS/qaFinal" extends="layout.bootstrap">
         <put-attribute name="body" value="/WEB-INF/views/FAMS/qaFinal.jsp" />
     </definition>
+
+    <definition name="FAMS/qaEngineerView" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/FAMS/qaEngineerView.jsp" />
+    </definition>
+
+    <definition name="FAMS/reviewDoc" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/FAMS/reviewDoc.jsp" />
+    </definition>
 </tiles-definitions>

@@ -29,6 +29,9 @@
                         <c:if test="${roleName eq 'admin' or roleName eq 'qa' or roleName eq 'qaEngineer'}">
                             <li><a href="${home}fams/qaView">QA View</a></li>
                         </c:if>
+                        <c:if test="${roleName eq 'admin' or roleName eq 'qaEngineer'}">
+                            <li><a href="${home}fams/qaEngineerView">Review Document</a></li>
+                        </c:if>
                     </ul>
                 </li>
                 <li><a href="${home}mtms">MTMS</a></li>
