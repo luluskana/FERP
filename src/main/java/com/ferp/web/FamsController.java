@@ -117,6 +117,8 @@ public class FamsController {
         viewService.addFaRequestStatusCreate(model);
         viewService.addFaRequestStatusEngineerWaiting(model);
         viewService.addFaRequestStatusEngineerApprove(model);
+        model.addObject("faStatusQaApproveFirst", faRequestDao.findByStatus(new String[] {"QA_APPROVE_FIRST_FA_REQUEST"}));
+        model.addObject("faStatusQaRejectFirst", faRequestDao.findByStatus(new String[] {"QA_REJECT_FIRST_FA_REQUEST"}));
         try {
             AppUser appUser = appUserDao.findByUsername(principal.getName());
             if(appUser.getRoleName().equals("engineer") ||  appUser.getRoleName().equals("admin")) {
@@ -194,6 +196,23 @@ public class FamsController {
             }
         } catch (Exception e) {
             model.setViewName("FAMS/qaFirstShot");
+        }
+        return model;
+    }
+
+    @RequestMapping(value = "/fams/engineerSendFinal/{id}", method = RequestMethod.GET)
+    public ModelAndView engineerSendFinalFarequest(@PathVariable("id") Long id, ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        model.addObject("faRequest", faRequestDao.findById(id));
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            if(appUser.getRoleName().equals("engineer") || appUser.getRoleName().equals("admin")) {
+                model.setViewName("FAMS/engineerSendFinal");
+            } else {
+                model.setViewName("404");
+            }
+        } catch (Exception e) {
+            model.setViewName("FAMS/engineerSendFinal");
         }
         return model;
     }

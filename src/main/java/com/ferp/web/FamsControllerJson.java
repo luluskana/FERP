@@ -149,4 +149,17 @@ public class FamsControllerJson {
             return new ResponseEntity<String>("{\"process\":\"fail\"}", headers, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @RequestMapping(value = "/fams/engineer/sendFinal", method = RequestMethod.POST, headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> engineerSendFinalFa(MultipartHttpServletRequest multipartHttpServletRequest) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        try {
+            famsService.engineerSendFinalFa(multipartHttpServletRequest);
+            return new ResponseEntity<String>("{\"process\":\"success\"}", headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("{\"process\":\"fail\"}", headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
