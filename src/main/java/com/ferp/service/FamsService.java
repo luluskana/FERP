@@ -484,4 +484,84 @@ public class FamsService {
         faRequest.setLogHistories(logHistories);
         faRequestDao.update(faRequest);
     }
+
+    public void qaApproveFinalFa(MultipartHttpServletRequest multipartHttpServletRequest) throws IOException {
+        String id = multipartHttpServletRequest.getParameter("id");
+        String reason = multipartHttpServletRequest.getParameter("reason");
+        MultipartFile file1 = multipartHttpServletRequest.getFile("file1");
+        MultipartFile file2 = multipartHttpServletRequest.getFile("file2");
+        Principal principal = multipartHttpServletRequest.getUserPrincipal();
+        AppUser appUser = appUserDao.findByUsername(principal.getName());
+        FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
+        Set<LogHistory> logHistories = faRequest.getLogHistories();
+        LogHistory logHistory = new LogHistory();
+        logHistory.setCreateDate(new Date());
+        if(appUser != null) {
+            faRequest.setUpdateBy(appUser);
+            logHistory.setCreateBy(appUser);
+        }
+
+        if(file1 != null) {
+            Long idInsert = saveFile(file1.getBytes(), file1.getOriginalFilename(), file1.getContentType());
+            faRequest.setFileData1(idInsert);
+            logHistory.setFileData1(idInsert);
+        }
+        if(file2 != null) {
+            Long idInsert = saveFile(file2.getBytes(), file2.getOriginalFilename(), file2.getContentType());
+            faRequest.setFileData1(idInsert);
+            logHistory.setFileData1(idInsert);
+        }
+
+        faRequest.setStatus("QA_APPROVE_FINAL_FA_REQUEST");
+        logHistory.setStatus("QA_APPROVE_FINAL_FA_REQUEST");
+        logHistory.setRemark(reason);
+        logHistory.setFaRequest(faRequest);
+        logHistories.add(logHistory);
+        faRequest.setLogHistories(logHistories);
+        faRequestDao.update(faRequest);
+    }
+
+    public void qaWaitingFinalFa(MultipartHttpServletRequest multipartHttpServletRequest) throws IOException {
+        String id = multipartHttpServletRequest.getParameter("id");
+        String reason = multipartHttpServletRequest.getParameter("reason");
+        Principal principal = multipartHttpServletRequest.getUserPrincipal();
+        AppUser appUser = appUserDao.findByUsername(principal.getName());
+        FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
+        Set<LogHistory> logHistories = faRequest.getLogHistories();
+        LogHistory logHistory = new LogHistory();
+        logHistory.setCreateDate(new Date());
+        if(appUser != null) {
+            faRequest.setUpdateBy(appUser);
+            logHistory.setCreateBy(appUser);
+        }
+        faRequest.setStatus("QA_WAITING_FINAL_FA_REQUEST");
+        logHistory.setStatus("QA_WAITING_FINAL_FA_REQUEST");
+        logHistory.setRemark(reason);
+        logHistory.setFaRequest(faRequest);
+        logHistories.add(logHistory);
+        faRequest.setLogHistories(logHistories);
+        faRequestDao.update(faRequest);
+    }
+
+    public void qaRejectFinalFa(MultipartHttpServletRequest multipartHttpServletRequest) throws IOException {
+        String id = multipartHttpServletRequest.getParameter("id");
+        String reason = multipartHttpServletRequest.getParameter("reason");
+        Principal principal = multipartHttpServletRequest.getUserPrincipal();
+        AppUser appUser = appUserDao.findByUsername(principal.getName());
+        FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
+        Set<LogHistory> logHistories = faRequest.getLogHistories();
+        LogHistory logHistory = new LogHistory();
+        logHistory.setCreateDate(new Date());
+        if(appUser != null) {
+            faRequest.setUpdateBy(appUser);
+            logHistory.setCreateBy(appUser);
+        }
+        faRequest.setStatus("QA_REJECT_FINAL_FA_REQUEST");
+        logHistory.setStatus("QA_REJECT_FINAL_FA_REQUEST");
+        logHistory.setRemark(reason);
+        logHistory.setFaRequest(faRequest);
+        logHistories.add(logHistory);
+        faRequest.setLogHistories(logHistories);
+        faRequestDao.update(faRequest);
+    }
 }

@@ -14,7 +14,7 @@
             <li><a data-toggle="tab" href="#engineerWaitingFirstShot">รอส่งตรวจ First Shot <span class="badge">${fn:length(faStatusEngineerApprove)}</span></a></li>
             <li><a data-toggle="tab" href="#engineerWaitingFinal">รอส่งตรวจ Final <span class="badge">${fn:length(faStatusQaApproveFirst)}</span></a></li>
             <li><a data-toggle="tab" href="#qaRejectFirst">QA Reject First Shot <span class="badge">${fn:length(faStatusQaRejectFirst)}</span></a></li>
-            <li><a data-toggle="tab" href="#qaRejectFinal">QA Reject Final <span class="badge">${fn:length(faStatusCreateList)}</span></a></li>
+            <li><a data-toggle="tab" href="#qaRejectFinal">QA Reject Final <span class="badge">${fn:length(faStatusQaRejectFinal)}</span></a></li>
         </ul>
         <div class="tab-content">
             <div id="saleRequest" class="tab-pane fade in active">
@@ -269,7 +269,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="faRequest" items="${faStatusEngineerApprove}" varStatus="loop">
+                                <c:forEach var="faRequest" items="${faStatusQaRejectFinal}" varStatus="loop">
                                     <tr>
                                         <td>${loop.index + 1}</td>
                                         <td>${faRequest.faNumber}</td>
@@ -281,7 +281,7 @@
                                         <c:set var="appuser" value="${faRequest.createBy}"/>
                                         <td>${appuser.name}</td>
                                         <td>
-                                            <a class="btn btn-primary btn-sm" href="${home}fams/engineerSendFirst/${faRequest.id}" role="button">
+                                            <a class="btn btn-primary btn-sm" href="${home}fams/engineerSendFinal/${faRequest.id}" role="button">
                                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                             </a>
                                         </td>
