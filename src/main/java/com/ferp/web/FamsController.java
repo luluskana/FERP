@@ -41,6 +41,8 @@ public class FamsController {
         viewService.addFaRequestStatusEngineerReject(model);
         viewService.addFaRequestStatusEngineerWaiting(model);
         viewService.addFaRequestStatusEngineerSendFirstShot(model);
+        model.addObject("faStatusQaApproveFirst", faRequestDao.findByStatus(new String[] {"QA_APPROVE_FIRST_FA_REQUEST"}));
+        model.addObject("faStatusQaRejectFirst", faRequestDao.findByStatus(new String[] {"QA_REJECT_FIRST_FA_REQUEST"}));
         model.setViewName("FAMS/home");
         return model;
     }
@@ -158,6 +160,40 @@ public class FamsController {
             }
         } catch (Exception e) {
             model.setViewName("FAMS/engineerSendFirst");
+        }
+        return model;
+    }
+
+    @RequestMapping(value = "/fams/qaView", method = RequestMethod.GET)
+    public ModelAndView listForQaView(ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        model.addObject("faStatusFirst", faRequestDao.findByStatus(new String[] {"ENGINEER_SEND_FIRST_FA_REQUEST"}));
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            if(appUser.getRoleName().equals("qaEngineer") ||  appUser.getRoleName().equals("admin") ||  appUser.getRoleName().equals("qa")) {
+                model.setViewName("FAMS/qaView");
+            } else {
+                model.setViewName("404");
+            }
+        } catch (Exception e) {
+            model.setViewName("FAMS/qaView");
+        }
+        return model;
+    }
+
+    @RequestMapping(value = "/fams/qaFirst/{id}", method = RequestMethod.GET)
+    public ModelAndView qaFirstFarequest(@PathVariable("id") Long id, ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        model.addObject("faRequest", faRequestDao.findById(id));
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            if(appUser.getRoleName().equals("qaEngineer") ||  appUser.getRoleName().equals("admin") ||  appUser.getRoleName().equals("qa")) {
+                model.setViewName("FAMS/qaFirstShot");
+            } else {
+                model.setViewName("404");
+            }
+        } catch (Exception e) {
+            model.setViewName("FAMS/qaFirstShot");
         }
         return model;
     }
