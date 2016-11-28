@@ -152,7 +152,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a role="button" data-toggle="collapse" data-parent="#accordionGoodFlow" href="#collapse4">
-                                QA ตรวจ First Shot ผ่านแล้ว Engineer กำลังทำงานเพื่อส่งตรวจครั้งสุดท้าย
+                                QA ตรวจ First Shot ผ่านแล้ว Engineer กำลังทำงานเพื่อส่งตรวจครั้งสุดท้าย <span class="badge">${fn:length(faStatusQaApproveFirst)}</span>
                             </a>
                         </h4>
                     </div>
@@ -174,28 +174,20 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
+                                    <c:forEach var="faRequest" items="${faStatusQaApproveFirst}" varStatus="loop">
+                                        <tr>
+                                            <td>${loop.index + 1}</td>
+                                            <td>${faRequest.faNumber}</td>
+                                            <td>${faRequest.partNo}</td>
+                                            <td>${faRequest.customer}</td>
+                                            <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${faRequest.createDate}" /></td>
+                                            <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${faRequest.needDate}" /></td>
+                                            <td>${faRequest.saleOut}</td>
+                                            <c:set var="appuserCreate" value="${faRequest.createBy}"/>
+                                            <td>${appuserCreate.name}</td>
+                                            <td><a href="${home}fams/detail/create/${faRequest.id}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -568,7 +560,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a role="button" data-toggle="collapse" data-parent="#accordionGoodFlow" href="#collapse12">
-                                QA Reject First Shot
+                                QA Reject First Shot <span class="badge">${fn:length(faStatusQaRejectFirst)}</span>
                             </a>
                         </h4>
                     </div>
@@ -590,28 +582,20 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
+                                    <c:forEach var="faRequest" items="${faStatusQaRejectFirst}" varStatus="loop">
+                                        <tr>
+                                            <td>${loop.index + 1}</td>
+                                            <td>${faRequest.faNumber}</td>
+                                            <td>${faRequest.partNo}</td>
+                                            <td>${faRequest.customer}</td>
+                                            <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${faRequest.createDate}" /></td>
+                                            <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${faRequest.needDate}" /></td>
+                                            <td>${faRequest.saleOut}</td>
+                                            <c:set var="appuserCreate" value="${faRequest.createBy}"/>
+                                            <td>${appuserCreate.name}</td>
+                                            <td><a href="${home}fams/detail/create/${faRequest.id}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

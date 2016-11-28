@@ -414,4 +414,48 @@ public class FamsService {
         faRequest.setLogHistories(logHistories);
         faRequestDao.update(faRequest);
     }
+
+    public void qaApproveFirstFa(MultipartHttpServletRequest multipartHttpServletRequest) {
+        String id = multipartHttpServletRequest.getParameter("id");
+        String reason = multipartHttpServletRequest.getParameter("reason");
+        Principal principal = multipartHttpServletRequest.getUserPrincipal();
+        AppUser appUser = appUserDao.findByUsername(principal.getName());
+        FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
+        Set<LogHistory> logHistories = faRequest.getLogHistories();
+        LogHistory logHistory = new LogHistory();
+        logHistory.setCreateDate(new Date());
+        if(appUser != null) {
+            faRequest.setUpdateBy(appUser);
+            logHistory.setCreateBy(appUser);
+        }
+        faRequest.setStatus("QA_APPROVE_FIRST_FA_REQUEST");
+        logHistory.setStatus("QA_APPROVE_FIRST_FA_REQUEST");
+        logHistory.setRemark(reason);
+        logHistory.setFaRequest(faRequest);
+        logHistories.add(logHistory);
+        faRequest.setLogHistories(logHistories);
+        faRequestDao.update(faRequest);
+    }
+
+    public void qaRejectFirstFa(MultipartHttpServletRequest multipartHttpServletRequest) {
+        String id = multipartHttpServletRequest.getParameter("id");
+        String reason = multipartHttpServletRequest.getParameter("reason");
+        Principal principal = multipartHttpServletRequest.getUserPrincipal();
+        AppUser appUser = appUserDao.findByUsername(principal.getName());
+        FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
+        Set<LogHistory> logHistories = faRequest.getLogHistories();
+        LogHistory logHistory = new LogHistory();
+        logHistory.setCreateDate(new Date());
+        if(appUser != null) {
+            faRequest.setUpdateBy(appUser);
+            logHistory.setCreateBy(appUser);
+        }
+        faRequest.setStatus("QA_REJECT_FIRST_FA_REQUEST");
+        logHistory.setStatus("QA_REJECT_FIRST_FA_REQUEST");
+        logHistory.setRemark(reason);
+        logHistory.setFaRequest(faRequest);
+        logHistories.add(logHistory);
+        faRequest.setLogHistories(logHistories);
+        faRequestDao.update(faRequest);
+    }
 }

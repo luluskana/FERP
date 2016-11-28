@@ -34,4 +34,12 @@
     <definition name="FAMS/engineerSendFirst" extends="layout.bootstrap">
         <put-attribute name="body" value="/WEB-INF/views/FAMS/engineerSendFirst.jsp" />
     </definition>
+
+    <definition name="FAMS/qaView" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/FAMS/qaView.jsp" />
+    </definition>
+
+    <definition name="FAMS/qaFirstShot" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/FAMS/qaFirstShot.jsp" />
+    </definition>
 </tiles-definitions>

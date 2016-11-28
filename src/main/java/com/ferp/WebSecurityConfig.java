@@ -52,6 +52,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests().antMatchers("/fams/engineer/sendFirstShot").authenticated()
                 .and().authorizeRequests().antMatchers("/fams/engineer/cancel").authenticated()
                 .and().authorizeRequests().antMatchers("/fams/qaView").authenticated()
+                .and().authorizeRequests().antMatchers("/fams/qa/approveFirst").authenticated()
+                .and().authorizeRequests().antMatchers("/fams/qa/rejectFirst").authenticated()
 
                 .and().csrf().disable().formLogin().loginPage("/login").loginProcessingUrl("/resources/j_spring_security_check").failureUrl("/login?error")
                 .defaultSuccessUrl("/", false).usernameParameter("username").passwordParameter("password").permitAll()
