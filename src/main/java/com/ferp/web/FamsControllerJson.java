@@ -230,11 +230,37 @@ public class FamsControllerJson {
 
     @RequestMapping(value = "/fams/saleCo/followUp", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
-    public ResponseEntity<String> qsaleCoFollowUpFa(MultipartHttpServletRequest multipartHttpServletRequest) {
+    public ResponseEntity<String> saleCoFollowUpFa(MultipartHttpServletRequest multipartHttpServletRequest) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         try {
             famsService.saleCoFollowUpFa(multipartHttpServletRequest);
+            return new ResponseEntity<String>("{\"process\":\"success\"}", headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("{\"process\":\"fail\"}", headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/fams/saleOut/approve", method = RequestMethod.POST, headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> saleOutApproveFa(MultipartHttpServletRequest multipartHttpServletRequest) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        try {
+            famsService.saleOutApproveFa(multipartHttpServletRequest);
+            return new ResponseEntity<String>("{\"process\":\"success\"}", headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("{\"process\":\"fail\"}", headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/fams/saleOut/reject", method = RequestMethod.POST, headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> saleOutRejectFa(MultipartHttpServletRequest multipartHttpServletRequest) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        try {
+            famsService.saleOutRejectFa(multipartHttpServletRequest);
             return new ResponseEntity<String>("{\"process\":\"success\"}", headers, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>("{\"process\":\"fail\"}", headers, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -77,4 +77,14 @@ public class FaRequestDao {
         c.add(case3);
         return c.list();
     }
+
+    public List<FaRequest> findByStatusAndUserSaleOut(String status, String name) {
+        Criteria c = ((Session) entityManager.getDelegate()).createCriteria(FaRequest.class);
+        Criterion case1 = Restrictions.eq("status", status);
+        Criterion case2 = Restrictions.eq("saleOut", name);
+        Criterion case3 = Restrictions.and(case1, case2);
+        c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        c.add(case3);
+        return c.list();
+    }
 }
