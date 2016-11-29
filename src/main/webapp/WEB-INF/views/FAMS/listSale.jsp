@@ -33,7 +33,7 @@
                             </thead>
                             <tbody>
                             <c:forEach var="faRequest" items="${faByUserList}" varStatus="loop">
-                                <c:if test="${faRequest.status ne 'SALE_CANCEL_FA_REQUEST'}">
+                                <c:if test="${faRequest.status eq 'CREATE_FA_REQUEST' or faRequest.status eq 'UPDATE_FA_REQUEST' or faRequest.status eq 'ENGINEER_REJECT_FA_REQUEST' or faRequest.status eq 'ENGINEER_CANCEL_FA_REQUEST'}">
                                     <tr>
                                         <td>${loop.index + 1}</td>
                                         <td>${faRequest.faNumber}</td>

@@ -521,7 +521,7 @@ public class FamsService {
         faRequestDao.update(faRequest);
     }
 
-    public void qaWaitingFinalFa(MultipartHttpServletRequest multipartHttpServletRequest) throws IOException {
+    public void qaWaitingFinalFa(MultipartHttpServletRequest multipartHttpServletRequest) {
         String id = multipartHttpServletRequest.getParameter("id");
         String reason = multipartHttpServletRequest.getParameter("reason");
         Principal principal = multipartHttpServletRequest.getUserPrincipal();
@@ -543,7 +543,7 @@ public class FamsService {
         faRequestDao.update(faRequest);
     }
 
-    public void qaRejectFinalFa(MultipartHttpServletRequest multipartHttpServletRequest) throws IOException {
+    public void qaRejectFinalFa(MultipartHttpServletRequest multipartHttpServletRequest) {
         String id = multipartHttpServletRequest.getParameter("id");
         String reason = multipartHttpServletRequest.getParameter("reason");
         Principal principal = multipartHttpServletRequest.getUserPrincipal();
@@ -565,7 +565,7 @@ public class FamsService {
         faRequestDao.update(faRequest);
     }
 
-    public void qaApproveDocumentFa(MultipartHttpServletRequest multipartHttpServletRequest) throws IOException {
+    public void qaApproveDocumentFa(MultipartHttpServletRequest multipartHttpServletRequest) {
         String id = multipartHttpServletRequest.getParameter("id");
         String reason = multipartHttpServletRequest.getParameter("reason");
         Principal principal = multipartHttpServletRequest.getUserPrincipal();
@@ -587,7 +587,7 @@ public class FamsService {
         faRequestDao.update(faRequest);
     }
 
-    public void qaRejectDocumentFa(MultipartHttpServletRequest multipartHttpServletRequest) throws IOException {
+    public void qaRejectDocumentFa(MultipartHttpServletRequest multipartHttpServletRequest) {
         String id = multipartHttpServletRequest.getParameter("id");
         String reason = multipartHttpServletRequest.getParameter("reason");
         Principal principal = multipartHttpServletRequest.getUserPrincipal();
@@ -603,6 +603,30 @@ public class FamsService {
         faRequest.setStatus("QA_REJECT_DOCUMENT_FA_REQUEST");
         logHistory.setStatus("QA_REJECT_DOCUMENT_FA_REQUEST");
         logHistory.setRemark(reason);
+        logHistory.setFaRequest(faRequest);
+        logHistories.add(logHistory);
+        faRequest.setLogHistories(logHistories);
+        faRequestDao.update(faRequest);
+    }
+
+    public void saleCoFollowUpFa(MultipartHttpServletRequest multipartHttpServletRequest) {
+        String id = multipartHttpServletRequest.getParameter("id");
+        String contractName = multipartHttpServletRequest.getParameter("contractName");
+        String invoice = multipartHttpServletRequest.getParameter("invoice");
+        Principal principal = multipartHttpServletRequest.getUserPrincipal();
+        AppUser appUser = appUserDao.findByUsername(principal.getName());
+        FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
+        Set<LogHistory> logHistories = faRequest.getLogHistories();
+        LogHistory logHistory = new LogHistory();
+        logHistory.setCreateDate(new Date());
+        if(appUser != null) {
+            faRequest.setUpdateBy(appUser);
+            logHistory.setCreateBy(appUser);
+        }
+        faRequest.setContractName(contractName);
+        faRequest.setInvoice(invoice);
+        faRequest.setStatus("SALE_CO_FOLLOW_UP_FA_REQUEST");
+        logHistory.setStatus("SALE_CO_FOLLOW_UP_FA_REQUEST");
         logHistory.setFaRequest(faRequest);
         logHistories.add(logHistory);
         faRequest.setLogHistories(logHistories);

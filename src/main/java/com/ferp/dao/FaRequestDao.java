@@ -62,9 +62,19 @@ public class FaRequestDao {
         Criteria c = ((Session) entityManager.getDelegate()).createCriteria(FaRequest.class);
         Criterion case1 = Restrictions.eq("id", id);
         Criterion case2 = Restrictions.eq("createBy", appUser);
-        Criterion case5 = Restrictions.and(case1, case2);
+        Criterion case3 = Restrictions.and(case1, case2);
         c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-        c.add(case5);
+        c.add(case3);
         return (FaRequest)c.uniqueResult();
+    }
+
+    public List<FaRequest> findByStatusAndUser(String status, AppUser appUser) {
+        Criteria c = ((Session) entityManager.getDelegate()).createCriteria(FaRequest.class);
+        Criterion case1 = Restrictions.eq("status", status);
+        Criterion case2 = Restrictions.eq("createBy", appUser);
+        Criterion case3 = Restrictions.and(case1, case2);
+        c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        c.add(case3);
+        return c.list();
     }
 }

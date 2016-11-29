@@ -58,4 +58,12 @@
     <definition name="FAMS/reviewDoc" extends="layout.bootstrap">
         <put-attribute name="body" value="/WEB-INF/views/FAMS/reviewDoc.jsp" />
     </definition>
+
+    <definition name="FAMS/listSaleCoFollow" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/FAMS/listSaleCoFollow.jsp" />
+    </definition>
+
+    <definition name="FAMS/saleCoFollow" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/FAMS/saleCoFollow.jsp" />
+    </definition>
 </tiles-definitions>
