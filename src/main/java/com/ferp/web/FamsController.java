@@ -47,6 +47,9 @@ public class FamsController {
         model.addObject("faStatusQaApproveFinal", faRequestDao.findByStatus(new String[] {"QA_APPROVE_FINAL_FA_REQUEST"}));
         model.addObject("faStatusQaRejectFinal", faRequestDao.findByStatus(new String[] {"QA_REJECT_FINAL_FA_REQUEST"}));
         model.addObject("faStatusQaWaiting", faRequestDao.findByStatus(new String[] {"QA_WAITING_FINAL_FA_REQUEST"}));
+        model.addObject("faStatusRejectDocument", faRequestDao.findByStatus(new String[] {"QA_REJECT_DOCUMENT_FA_REQUEST"}));
+        model.addObject("faStatusApproveDocument", faRequestDao.findByStatus(new String[] {"QA_APPROVE_DOCUMENT_FA_REQUEST"}));
+        model.addObject("faStatusSaleCoFollowUp", faRequestDao.findByStatus(new String[] {"SALE_CO_FOLLOW_UP_FA_REQUEST"}));
         model.setViewName("FAMS/home");
         return model;
     }
@@ -177,6 +180,7 @@ public class FamsController {
         model.addObject("faStatusFirst", faRequestDao.findByStatus(new String[] {"ENGINEER_SEND_FIRST_FA_REQUEST"}));
         model.addObject("faStatusFinal", faRequestDao.findByStatus(new String[] {"ENGINEER_SEND_FINAL_FA_REQUEST"}));
         model.addObject("faStatusWaiting", faRequestDao.findByStatus(new String[] {"QA_WAITING_FINAL_FA_REQUEST"}));
+        model.addObject("faStatusRejectDocument", faRequestDao.findByStatus(new String[] {"QA_REJECT_DOCUMENT_FA_REQUEST"}));
         try {
             AppUser appUser = appUserDao.findByUsername(principal.getName());
             if(appUser.getRoleName().equals("qaEngineer") ||  appUser.getRoleName().equals("admin") ||  appUser.getRoleName().equals("qa")) {
@@ -259,7 +263,7 @@ public class FamsController {
     }
 
     @RequestMapping(value = "/fams/reviewDoc/{id}", method = RequestMethod.GET)
-    public ModelAndView qareviewDocumentFarequest(@PathVariable("id") Long id, ModelAndView model, Principal principal) {
+    public ModelAndView qaReviewDocumentFarequest(@PathVariable("id") Long id, ModelAndView model, Principal principal) {
         viewService.addMenuAndName(model, principal);
         model.addObject("faRequest", faRequestDao.findById(id));
         try {
@@ -271,6 +275,40 @@ public class FamsController {
             }
         } catch (Exception e) {
             model.setViewName("FAMS/reviewDoc");
+        }
+        return model;
+    }
+
+    @RequestMapping(value = "/fams/listSaleCoFollow", method = RequestMethod.GET)
+    public ModelAndView listSaleCoFollow(ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            model.addObject("faStatusApproveDocument", faRequestDao.findByStatusAndUser("QA_APPROVE_DOCUMENT_FA_REQUEST", appUser));
+            if(appUser.getRoleName().equals("saleCo") || appUser.getRoleName().equals("saleOut") ||  appUser.getRoleName().equals("admin")) {
+                model.setViewName("FAMS/listSaleCoFollow");
+            } else {
+                model.setViewName("404");
+            }
+        } catch (Exception e) {
+            model.setViewName("FAMS/listSaleCoFollow");
+        }
+        return model;
+    }
+
+    @RequestMapping(value = "/fams/saleCoFollow/{id}", method = RequestMethod.GET)
+    public ModelAndView saleCoFollowFarequest(@PathVariable("id") Long id, ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        model.addObject("faRequest", faRequestDao.findById(id));
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            if(appUser.getRoleName().equals("saleCo") || appUser.getRoleName().equals("saleOut") ||  appUser.getRoleName().equals("admin")) {
+                model.setViewName("FAMS/saleCoFollow");
+            } else {
+                model.setViewName("404");
+            }
+        } catch (Exception e) {
+            model.setViewName("FAMS/saleCoFollow");
         }
         return model;
     }

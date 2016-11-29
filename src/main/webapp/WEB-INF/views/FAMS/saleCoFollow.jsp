@@ -209,22 +209,35 @@
                             </div>
                         </div>
                     </c:if>
-                    <c:if test="${not empty faRequest.contractName}">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Contract :</label>
-                            <div class="col-sm-8">
-                                <label class="form-control-static">${faRequest.contractName}</label>
-                            </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="inputContract" class="col-sm-3 control-label">Contact Person :</label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputContract" placeholder="Name" autocomplete="off" required>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
                         </div>
-                    </c:if>
-                    <c:if test="${not empty faRequest.invoice}">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Invoice :</label>
-                            <div class="col-sm-8">
-                                <label class="form-control-static">${faRequest.invoice}</label>
-                            </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputInvoice" class="col-sm-3 control-label">Invoice No. :</label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputInvoice" placeholder="Invoice No" autocomplete="off" required>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-list"></span></span>
                         </div>
-                    </c:if>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-4" align="center">
+                        <button type="button" id="btnApprove" class="btn btn-success">Save Data</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -267,3 +280,56 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="alertApproveModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title">Save</h4>
+            </div>
+            <div class="modal-body">
+                Confirm save
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnApproveReason">confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+
+        $("#btnApprove").click(function() {
+            $("#alertApproveModal").modal({show:true});
+        });
+
+        $("#btnApproveReason").click(function() {
+            var formData = new FormData();
+            formData.append("id", "${faRequest.id}");
+            formData.append("contractName", $("#inputContract").val());
+            formData.append("invoice", $("#inputInvoice").val());
+
+            $.ajax({
+                type: "POST",
+                headers: {
+                    Accept: "application/json",
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "${home}fams/saleCo/followUp",
+                processData: false,
+                contentType: false,
+                data: formData,
+                async: false,
+                success: function(data){
+                    window.location.href = "${home}fams/listSaleCoFollow";
+                },
+                error: function(data){
+                    alert("Error");
+                    return false;
+                }
+            });
+            return false;
+        });
+    });
+</script>

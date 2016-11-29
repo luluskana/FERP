@@ -135,6 +135,12 @@ public class FaRequest implements Serializable {
     @Column(name = "fileData2")
     private Long fileData2;
 
+    @Column(name="contractName")
+    private String contractName;
+
+    @Column(name="invoice")
+    private String invoice;
+
     @OrderBy("createDate")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "faRequest")
     private Set<LogHistory> logHistories = new HashSet<LogHistory>();
@@ -425,5 +431,21 @@ public class FaRequest implements Serializable {
 
     public void setFileData2(Long fileData2) {
         this.fileData2 = fileData2;
+    }
+
+    public String getContractName() {
+        return contractName;
+    }
+
+    public void setContractName(String contractName) {
+        this.contractName = contractName;
+    }
+
+    public String getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(String invoice) {
+        this.invoice = invoice;
     }
 }
