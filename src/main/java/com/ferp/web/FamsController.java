@@ -346,4 +346,30 @@ public class FamsController {
         }
         return model;
     }
+
+    @RequestMapping(value = "/fams/search", method = RequestMethod.GET)
+    public ModelAndView search(ModelAndView model, Principal principal) {
+        try {
+            principal.getName();
+            viewService.addMenuAndName(model, principal);
+        } catch (Exception e) {
+            viewService.addLogin(model);
+        }
+        model.addObject("faRequestAllList", faRequestDao.findAll());
+        model.setViewName("FAMS/search");
+        return model;
+    }
+
+    @RequestMapping(value = "/fams/approveList", method = RequestMethod.GET)
+    public ModelAndView approveList(ModelAndView model, Principal principal) {
+        try {
+            principal.getName();
+            viewService.addMenuAndName(model, principal);
+        } catch (Exception e) {
+            viewService.addLogin(model);
+        }
+        model.addObject("faRequestApproveList", faRequestDao.findByStatus(new String[] {"SALE_OUT_APPROVE_FA_REQUEST"}));
+        model.setViewName("FAMS/approveList");
+        return model;
+    }
 }

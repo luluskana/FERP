@@ -74,4 +74,12 @@
     <definition name="FAMS/saleOutFollow" extends="layout.bootstrap">
         <put-attribute name="body" value="/WEB-INF/views/FAMS/saleOutFollow.jsp" />
     </definition>
+
+    <definition name="FAMS/approveList" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/FAMS/approveList.jsp" />
+    </definition>
+
+    <definition name="FAMS/search" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/FAMS/search.jsp" />
+    </definition>
 </tiles-definitions>

@@ -19,6 +19,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">FAMS <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="${home}fams">Status</a></li>
+                        <li><a href="${home}fams/search">FA Search</a></li>
+                        <li><a href="${home}fams/approveList">FA Approve</a></li>
                         <c:if test="${roleName eq 'admin' or roleName eq 'saleCo' or roleName eq 'saleOut' or roleName eq 'user'}">
                             <li><a href="${home}fams/request">Request FA</a></li>
                             <li><a href="${home}fams/listSale">List For Update</a></li>

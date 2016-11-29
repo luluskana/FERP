@@ -87,4 +87,10 @@ public class FaRequestDao {
         c.add(case3);
         return c.list();
     }
+
+    public List<FaRequest> findAll() {
+        Criteria c = ((Session) entityManager.getDelegate()).createCriteria(FaRequest.class);
+        c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        return c.list();
+    }
 }
