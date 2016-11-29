@@ -40,6 +40,32 @@ public class FamsContrillerTests extends AbstractTestController {
     }
 
     @Test
+    public void famsPageFaAllListTest() throws Exception {
+
+        this.mockMvc.perform(get("/fams/approveList"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("FAMS/approveList"))
+                .andExpect(model().attribute("faRequestApproveList", notNullValue()))
+                .andExpect(model().attribute("name", nullValue()))
+                .andExpect(model().attribute("logout", nullValue()))
+                .andExpect(model().attribute("login", "on"))
+                .andExpect(model().attribute("roleName", nullValue()));
+    }
+
+    @Test
+    public void famsPageFaSearchListTest() throws Exception {
+
+        this.mockMvc.perform(get("/fams/search"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("FAMS/search"))
+                .andExpect(model().attribute("faRequestAllList", notNullValue()))
+                .andExpect(model().attribute("name", nullValue()))
+                .andExpect(model().attribute("logout", nullValue()))
+                .andExpect(model().attribute("login", "on"))
+                .andExpect(model().attribute("roleName", nullValue()));
+    }
+
+    @Test
     public void famsPageRequestFaTest() throws Exception {
 
         this.mockMvc.perform(get("/fams/request").principal(principal))

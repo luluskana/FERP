@@ -224,6 +224,7 @@
                             <th>Remark</th>
                             <th>Tooling No</th>
                             <th>Qty</th>
+                            <th>Pick slip</th>
                             <th>Update By</th>
                         </tr>
                         </thead>
@@ -233,10 +234,66 @@
                             <tr>
                                 <td>${loop.index + 1}</td>
                                 <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${documentHistory.createDate}" /></td>
-                                <td>${documentHistory.status}</td>
+                                <td>
+                                    <c:if test="${documentHistory.status eq 'CREATE_FA_REQUEST'}">
+                                        <span class="label label-primary">create</span>
+                                    </c:if>
+                                    <c:if test="${documentHistory.status eq 'UPDATE_FA_REQUEST'}">
+                                        <span class="label label-primary">update</span>
+                                    </c:if>
+                                    <c:if test="${documentHistory.status eq 'ENGINEER_APPROVE_FA_REQUEST'}">
+                                        <span class="label label-success">engineer approve</span>
+                                     </c:if>
+                                    <c:if test="${documentHistory.status eq 'ENGINEER_WAITING_FA_REQUEST'}">
+                                        <span class="label label-warning">engineer waiting</span>
+                                    </c:if>
+                                    <c:if test="${documentHistory.status eq 'ENGINEER_REJECT_FA_REQUEST'}">
+                                        <span class="label label-danger">engineer reject</span>
+                                    </c:if>
+                                    <c:if test="${documentHistory.status eq 'ENGINEER_SEND_FIRST_FA_REQUEST'}">
+                                        <span class="label label-success">first shot</span>
+                                    </c:if>
+                                    <c:if test="${documentHistory.status eq 'ENGINEER_CANCEL_FA_REQUEST'}">
+                                        <span class="label label-danger">engineer cancel</span>
+                                    </c:if>
+                                    <c:if test="${documentHistory.status eq 'QA_APPROVE_FIRST_FA_REQUEST'}">
+                                        <span class="label label-success">qa approve first</span>
+                                    </c:if>
+                                    <c:if test="${documentHistory.status eq 'QA_REJECT_FIRST_FA_REQUEST'}">
+                                        <span class="label label-danger">qa reject first</span>
+                                    </c:if>
+                                    <c:if test="${documentHistory.status eq 'ENGINEER_SEND_FINAL_FA_REQUEST'}">
+                                        <span class="label label-success">engineer send final</span>
+                                    </c:if>
+                                    <c:if test="${documentHistory.status eq 'QA_APPROVE_FINAL_FA_REQUEST'}">
+                                        <span class="label label-success">qa approve final</span>
+                                    </c:if>
+                                    <c:if test="${documentHistory.status eq 'QA_REJECT_FINAL_FA_REQUEST'}">
+                                        <span class="label label-danger">qa reject final</span>
+                                    </c:if>
+                                    <c:if test="${documentHistory.status eq 'QA_WAITING_FINAL_FA_REQUEST'}">
+                                        <span class="label label-warning">qa waiting</span>
+                                    </c:if>
+                                    <c:if test="${documentHistory.status eq 'QA_REJECT_DOCUMENT_FA_REQUEST'}">
+                                        <span class="label label-danger">qa reject document</span>
+                                    </c:if>
+                                    <c:if test="${documentHistory.status eq 'QA_APPROVE_DOCUMENT_FA_REQUEST'}">
+                                        <span class="label label-success">qa approve document</span>
+                                    </c:if>
+                                    <c:if test="${documentHistory.status eq 'SALE_CO_FOLLOW_UP_FA_REQUEST'}">
+                                        <span class="label label-success">sale follow</span>
+                                    </c:if>
+                                    <c:if test="${documentHistory.status eq 'SALE_OUT_APPROVE_FA_REQUEST'}">
+                                        <span class="label label-success">customer approve</span>
+                                    </c:if>
+                                    <c:if test="${documentHistory.status eq 'SALE_OUT_REJECT_FA_REQUEST'}">
+                                        <span class="label label-danger">customer reject</span>
+                                    </c:if>
+                                </td>
                                 <td>${documentHistory.remark}</td>
                                 <td>${documentHistory.methodFirst}</td>
                                 <td>${documentHistory.qtyFirst}</td>
+                                <td>${documentHistory.slipMatNo}</td>
                                 <c:set var="createBy" value="${documentHistory.createBy}"/>
                                 <td>${createBy.name}</td>
                             </tr>
