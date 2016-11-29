@@ -312,4 +312,38 @@ public class FamsController {
         }
         return model;
     }
+
+    @RequestMapping(value = "/fams/listSaleOutFollow", method = RequestMethod.GET)
+    public ModelAndView listSaleOutFollowView(ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            model.addObject("faStatusSaleCoFollowUp", faRequestDao.findByStatusAndUserSaleOut("SALE_CO_FOLLOW_UP_FA_REQUEST", appUser.getName()));
+            if(appUser.getRoleName().equals("saleOut") ||  appUser.getRoleName().equals("admin")) {
+                model.setViewName("FAMS/listSaleOutFollow");
+            } else {
+                model.setViewName("404");
+            }
+        } catch (Exception e) {
+            model.setViewName("FAMS/listSaleOutFollow");
+        }
+        return model;
+    }
+
+    @RequestMapping(value = "/fams/saleOutFollow/{id}", method = RequestMethod.GET)
+    public ModelAndView saleOutFollowFarequest(@PathVariable("id") Long id, ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        model.addObject("faRequest", faRequestDao.findById(id));
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            if(appUser.getRoleName().equals("saleOut") ||  appUser.getRoleName().equals("admin")) {
+                model.setViewName("FAMS/saleOutFollow");
+            } else {
+                model.setViewName("404");
+            }
+        } catch (Exception e) {
+            model.setViewName("FAMS/saleOutFollow");
+        }
+        return model;
+    }
 }
