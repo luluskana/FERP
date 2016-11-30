@@ -82,4 +82,8 @@
     <definition name="FAMS/search" extends="layout.bootstrap">
         <put-attribute name="body" value="/WEB-INF/views/FAMS/search.jsp" />
     </definition>
+
+    <definition name="FAMS/report" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/FAMS/report.jsp" />
+    </definition>
 </tiles-definitions>

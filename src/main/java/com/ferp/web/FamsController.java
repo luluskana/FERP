@@ -3,15 +3,18 @@ package com.ferp.web;
 import com.ferp.dao.AppUserDao;
 import com.ferp.dao.FaRequestDao;
 import com.ferp.domain.AppUser;
+import com.ferp.domain.FileData;
+import com.ferp.service.FamsService;
 import com.ferp.service.ViewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by apichat on 11/16/2016 AD.
@@ -27,6 +30,9 @@ public class FamsController {
 
     @Autowired
     private FaRequestDao faRequestDao;
+
+    @Autowired
+    private FamsService famsService;
 
     @RequestMapping(value = "/fams", method = RequestMethod.GET)
     public ModelAndView index(ModelAndView model, Principal principal) {
@@ -64,6 +70,19 @@ public class FamsController {
         }
         viewService.addFaRequest(model, id);
         model.setViewName("FAMS/detailCreate");
+        return model;
+    }
+
+    @RequestMapping(value = "/fams/report", method = RequestMethod.GET)
+    public ModelAndView famsReoirt(ModelAndView model, Principal principal) {
+        try {
+            principal.getName();
+            viewService.addMenuAndName(model, principal);
+        } catch (Exception e) {
+            viewService.addLogin(model);
+        }
+        viewService.addGraphSummary(model);
+        model.setViewName("FAMS/report");
         return model;
     }
 
@@ -371,5 +390,27 @@ public class FamsController {
         model.addObject("faRequestApproveList", faRequestDao.findByStatus(new String[] {"SALE_OUT_APPROVE_FA_REQUEST"}));
         model.setViewName("FAMS/approveList");
         return model;
+    }
+
+    @RequestMapping(value = "/fams/excelReport", method = RequestMethod.GET)
+    @ResponseBody
+    public void excelReport(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate, HttpServletResponse response) {
+        try {
+            FileData fileData = famsService.getExcelFile(convertToDate(startDate), convertToDate(endDate));
+            response.setContentType(fileData.getContentType());
+            response.setHeader("Content-Disposition", "attachment;filename=" + fileData.getFileName());
+            response.getOutputStream().write(fileData.getDataFile());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Date convertToDate(String dateString) {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            return formatter.parse(dateString);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

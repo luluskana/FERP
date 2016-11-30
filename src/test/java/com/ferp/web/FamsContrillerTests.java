@@ -53,6 +53,18 @@ public class FamsContrillerTests extends AbstractTestController {
     }
 
     @Test
+    public void famsPageReportTest() throws Exception {
+
+        this.mockMvc.perform(get("/fams/report"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("FAMS/report"))
+                .andExpect(model().attribute("name", nullValue()))
+                .andExpect(model().attribute("logout", nullValue()))
+                .andExpect(model().attribute("login", "on"))
+                .andExpect(model().attribute("roleName", nullValue()));
+    }
+
+    @Test
     public void famsPageFaSearchListTest() throws Exception {
 
         this.mockMvc.perform(get("/fams/search"))
