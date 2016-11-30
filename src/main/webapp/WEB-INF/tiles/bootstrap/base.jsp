@@ -21,10 +21,12 @@
     <spring:url value="/resources/js/jquery.min.js" var="jqueryJs" />
     <spring:url value="/resources/js/jquery.dataTables.min.js" var="dataTablesJs" />
     <spring:url value="/resources/js/jquery-ui.min.js" var="jqueryUiJs" />
+    <spring:url value="/resources/js/Chart.min.js" var="chartJs" />
     <spring:url value="/resources/js/bootstrap.min.js" var="bootstrapJs" />
     <script src="${jqueryJs}"></script>
     <script src="${dataTablesJs}"></script>
     <script src="${jqueryUiJs}"></script>
+    <script src="${chartJs}"></script>
     <script src="${bootstrapJs}"></script>
 </head>
 <body>

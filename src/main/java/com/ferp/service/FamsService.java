@@ -2,10 +2,11 @@ package com.ferp.service;
 
 import com.ferp.dao.AppUserDao;
 import com.ferp.dao.FaRequestDao;
-import com.ferp.domain.AppUser;
-import com.ferp.domain.FaRequest;
-import com.ferp.domain.InformationFileData;
-import com.ferp.domain.LogHistory;
+import com.ferp.domain.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
@@ -36,6 +38,9 @@ public class FamsService {
 
     @Autowired
     private InformationFileDataService informationFileDataService;
+
+    @Autowired
+    private DownloadFileServiec downloadFileServiec;
 
     public void createFa(MultipartHttpServletRequest multipartHttpServletRequest) {
         try {
@@ -673,5 +678,64 @@ public class FamsService {
         logHistories.add(logHistory);
         faRequest.setLogHistories(logHistories);
         faRequestDao.update(faRequest);
+    }
+
+    public FileData getExcelFile(Date startDate, Date endDate) throws IOException {
+
+        List<FaRequest> faRequestList = faRequestDao.findByStartDateAndEndDate(startDate, endDate);
+
+        XSSFWorkbook wb = new XSSFWorkbook();
+        Sheet sheet = wb.createSheet();
+        Row row1 = sheet.createRow(0);
+
+        row1.createCell(0).setCellValue("FA Number");
+        row1.createCell(1).setCellValue("Request Date");
+        row1.createCell(2).setCellValue("Customer");
+        row1.createCell(3).setCellValue("Part Number");
+        row1.createCell(4).setCellValue("Part Name");
+        row1.createCell(5).setCellValue("Sale Out");
+        row1.createCell(6).setCellValue("FA Approve");
+        row1.createCell(7).setCellValue("FA For Sell");
+        row1.createCell(8).setCellValue("Sample Test");
+        row1.createCell(9).setCellValue("Sample Pcc");
+
+        int rowIndex = 1;
+        for(FaRequest faRequest: faRequestList) {
+            Row row = sheet.createRow(rowIndex);
+
+            row.createCell(0).setCellValue(faRequest.getFaNumber());
+            row.createCell(1).setCellValue("'" + convertDateToString(faRequest.getCreateDate()));
+            row.createCell(2).setCellValue(faRequest.getCustomer());
+            row.createCell(3).setCellValue(faRequest.getPartNo());
+            row.createCell(4).setCellValue(faRequest.getPartName());
+            row.createCell(5).setCellValue(faRequest.getSaleOut());
+            row.createCell(6).setCellValue(faRequest.getFaApproveQty());
+            row.createCell(7).setCellValue(faRequest.getFaForSellQty());
+            row.createCell(8).setCellValue(faRequest.getSamplTestQty());
+            row.createCell(9).setCellValue(faRequest.getSamplePccQty());
+
+            rowIndex = rowIndex + 1;
+        }
+
+        for (int i=0; i < 10; i++){
+            sheet.autoSizeColumn(i);
+        }
+
+        String workingDir = System.getProperty("user.dir") + "/fileExcel/";
+        File convFile = new File(workingDir + "workbook.xlsx");
+        convFile.getParentFile().mkdirs();
+        FileOutputStream fos = new FileOutputStream(convFile);
+        wb.write(fos);
+        fos.close();
+        return downloadFileServiec.getExcelFile();
+    }
+
+    public String convertDateToString(Date date) {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            return formatter.format(date);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

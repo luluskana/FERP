@@ -166,4 +166,49 @@ public class ViewService {
             e.printStackTrace();
         }
     }
+
+    public void addGraphSummary(ModelAndView model) {
+
+        model.addObject("january", faRequestDao.findByStartDateAndEndDate(getDate("start", 0), getDate("end", 0)).size());
+        model.addObject("february", faRequestDao.findByStartDateAndEndDate(getDate("start", 1), getDate("end", 1)).size());
+        model.addObject("march", faRequestDao.findByStartDateAndEndDate(getDate("start", 2), getDate("end", 2)).size());
+        model.addObject("april", faRequestDao.findByStartDateAndEndDate(getDate("start", 3), getDate("end", 3)).size());
+        model.addObject("may", faRequestDao.findByStartDateAndEndDate(getDate("start", 4), getDate("end", 4)).size());
+        model.addObject("june", faRequestDao.findByStartDateAndEndDate(getDate("start", 5), getDate("end", 5)).size());
+        model.addObject("july", faRequestDao.findByStartDateAndEndDate(getDate("start", 6), getDate("end", 6)).size());
+        model.addObject("august", faRequestDao.findByStartDateAndEndDate(getDate("start", 7), getDate("end", 7)).size());
+        model.addObject("september", faRequestDao.findByStartDateAndEndDate(getDate("start", 8), getDate("end", 8)).size());
+        model.addObject("october", faRequestDao.findByStartDateAndEndDate(getDate("start", 9), getDate("end", 9)).size());
+        model.addObject("november", faRequestDao.findByStartDateAndEndDate(getDate("start", 10), getDate("end", 10)).size());
+        model.addObject("december", faRequestDao.findByStartDateAndEndDate(getDate("start", 11), getDate("end", 11)).size());
+
+    }
+
+    public Date getDate(String month, int m) {
+
+        Calendar calCurrent = Calendar.getInstance();
+        calCurrent.setTime(new Date());
+        int year = calCurrent.get(Calendar.YEAR);
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+
+        if(month.equals("start")) {
+            cal.set(Calendar.MONTH, m);
+            cal.set(Calendar.DAY_OF_MONTH, 1);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            return cal.getTime();
+        } else if(month.equals("end")) {
+            cal.set(Calendar.MONTH, m);
+            cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+            cal.set(Calendar.HOUR_OF_DAY, 23);
+            cal.set(Calendar.MINUTE, 59);
+            cal.set(Calendar.SECOND, 59);
+            return cal.getTime();
+        } else {
+            return null;
+        }
+    }
 }

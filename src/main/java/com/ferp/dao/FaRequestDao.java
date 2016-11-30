@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -91,6 +92,14 @@ public class FaRequestDao {
     public List<FaRequest> findAll() {
         Criteria c = ((Session) entityManager.getDelegate()).createCriteria(FaRequest.class);
         c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        return c.list();
+    }
+
+    public List<FaRequest> findByStartDateAndEndDate(Date start, Date end) {
+        Criteria c = ((Session)entityManager.getDelegate()).createCriteria(FaRequest.class);
+        Criterion case1 = Restrictions.between("createDate", start, end);
+        c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        c.add(Restrictions.and(case1));
         return c.list();
     }
 }

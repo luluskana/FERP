@@ -35,4 +35,16 @@ public class DownloadFileServiec {
         fileData.setDataFile(data);
         return fileData;
     }
+
+    public FileData getExcelFile() throws IOException {
+        String workingDir = System.getProperty("user.dir") + "/fileExcel/";
+        File file = new File(workingDir + "workbook.xlsx");
+        FileInputStream fis = new FileInputStream(file);
+        byte[] data = IOUtils.toByteArray(fis);
+        FileData fileData = new FileData();
+        fileData.setFileName("workbook.xlsx");
+        fileData.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        fileData.setDataFile(data);
+        return fileData;
+    }
 }
