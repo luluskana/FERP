@@ -14,7 +14,6 @@ import java.util.Date;
 public class LogHistory implements Serializable {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name="id")
     private Long id;
 

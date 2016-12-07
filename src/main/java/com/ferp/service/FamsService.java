@@ -2,6 +2,7 @@ package com.ferp.service;
 
 import com.ferp.dao.AppUserDao;
 import com.ferp.dao.FaRequestDao;
+import com.ferp.dao.LogHistoryDao;
 import com.ferp.domain.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -42,6 +43,9 @@ public class FamsService {
     @Autowired
     private DownloadFileServiec downloadFileServiec;
 
+    @Autowired
+    private LogHistoryDao logHistoryDao;
+
     public void createFa(MultipartHttpServletRequest multipartHttpServletRequest) {
         try {
             String customer = validateString(multipartHttpServletRequest.getParameter("customer"));
@@ -72,7 +76,7 @@ public class FamsService {
 
             FaRequest faRequest = new FaRequest();
             Set<LogHistory> logHistories = faRequest.getLogHistories();
-            LogHistory logHistory = new LogHistory();
+            LogHistory logHistory = logHistoryDao.getNewLogHistory();
 
             faRequestDao.create(faRequest);
 
@@ -179,7 +183,7 @@ public class FamsService {
             FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
 
             Set<LogHistory> logHistories = faRequest.getLogHistories();
-            LogHistory logHistory = new LogHistory();
+            LogHistory logHistory = logHistoryDao.getNewLogHistory();
 
             logHistory.setCreateDate(new Date());
             if(appUser != null) {
@@ -292,7 +296,7 @@ public class FamsService {
         faRequest.setEngineerCommitDate(convertToDate(commitDate));
         faRequest.setProcess(process);
         Set<LogHistory> logHistories = faRequest.getLogHistories();
-        LogHistory logHistory = new LogHistory();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);
@@ -313,7 +317,7 @@ public class FamsService {
         AppUser appUser = appUserDao.findByUsername(principal.getName());
         FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
         Set<LogHistory> logHistories = faRequest.getLogHistories();
-        LogHistory logHistory = new LogHistory();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);
@@ -335,7 +339,7 @@ public class FamsService {
         AppUser appUser = appUserDao.findByUsername(principal.getName());
         FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
         Set<LogHistory> logHistories = faRequest.getLogHistories();
-        LogHistory logHistory = new LogHistory();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);
@@ -357,7 +361,7 @@ public class FamsService {
         AppUser appUser = appUserDao.findByUsername(principal.getName());
         FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
         Set<LogHistory> logHistories = faRequest.getLogHistories();
-        LogHistory logHistory = new LogHistory();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);
@@ -381,7 +385,7 @@ public class FamsService {
         AppUser appUser = appUserDao.findByUsername(principal.getName());
         FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
         Set<LogHistory> logHistories = faRequest.getLogHistories();
-        LogHistory logHistory = new LogHistory();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);
@@ -405,7 +409,7 @@ public class FamsService {
         AppUser appUser = appUserDao.findByUsername(principal.getName());
         FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
         Set<LogHistory> logHistories = faRequest.getLogHistories();
-        LogHistory logHistory = new LogHistory();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);
@@ -427,7 +431,7 @@ public class FamsService {
         AppUser appUser = appUserDao.findByUsername(principal.getName());
         FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
         Set<LogHistory> logHistories = faRequest.getLogHistories();
-        LogHistory logHistory = new LogHistory();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);
@@ -449,7 +453,7 @@ public class FamsService {
         AppUser appUser = appUserDao.findByUsername(principal.getName());
         FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
         Set<LogHistory> logHistories = faRequest.getLogHistories();
-        LogHistory logHistory = new LogHistory();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);
@@ -473,7 +477,7 @@ public class FamsService {
         AppUser appUser = appUserDao.findByUsername(principal.getName());
         FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
         Set<LogHistory> logHistories = faRequest.getLogHistories();
-        LogHistory logHistory = new LogHistory();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);
@@ -499,7 +503,7 @@ public class FamsService {
         AppUser appUser = appUserDao.findByUsername(principal.getName());
         FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
         Set<LogHistory> logHistories = faRequest.getLogHistories();
-        LogHistory logHistory = new LogHistory();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);
@@ -533,7 +537,7 @@ public class FamsService {
         AppUser appUser = appUserDao.findByUsername(principal.getName());
         FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
         Set<LogHistory> logHistories = faRequest.getLogHistories();
-        LogHistory logHistory = new LogHistory();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);
@@ -555,7 +559,7 @@ public class FamsService {
         AppUser appUser = appUserDao.findByUsername(principal.getName());
         FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
         Set<LogHistory> logHistories = faRequest.getLogHistories();
-        LogHistory logHistory = new LogHistory();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);
@@ -577,7 +581,7 @@ public class FamsService {
         AppUser appUser = appUserDao.findByUsername(principal.getName());
         FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
         Set<LogHistory> logHistories = faRequest.getLogHistories();
-        LogHistory logHistory = new LogHistory();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);
@@ -599,7 +603,7 @@ public class FamsService {
         AppUser appUser = appUserDao.findByUsername(principal.getName());
         FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
         Set<LogHistory> logHistories = faRequest.getLogHistories();
-        LogHistory logHistory = new LogHistory();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);
@@ -622,7 +626,7 @@ public class FamsService {
         AppUser appUser = appUserDao.findByUsername(principal.getName());
         FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
         Set<LogHistory> logHistories = faRequest.getLogHistories();
-        LogHistory logHistory = new LogHistory();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);
@@ -644,7 +648,7 @@ public class FamsService {
         AppUser appUser = appUserDao.findByUsername(principal.getName());
         FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
         Set<LogHistory> logHistories = faRequest.getLogHistories();
-        LogHistory logHistory = new LogHistory();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);
@@ -665,7 +669,7 @@ public class FamsService {
         AppUser appUser = appUserDao.findByUsername(principal.getName());
         FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
         Set<LogHistory> logHistories = faRequest.getLogHistories();
-        LogHistory logHistory = new LogHistory();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);

@@ -18,7 +18,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class AppUser implements Serializable {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name="id")
     private Long id;
 

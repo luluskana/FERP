@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by apichat on 10/26/2016 AD.
@@ -23,6 +25,15 @@ public class AppUserDao {
     private EntityManager entityManager;
 
     public void create(AppUser appUser) {
+        Session session = (Session) entityManager.getDelegate();
+        String sqlSelect = "SELECT ID FROM APP_USER ORDER BY ID DESC LIMIT 1";
+        List lists = session.createSQLQuery(sqlSelect).list();
+        if(lists.size() <= 0) {
+            appUser.setId(1L);
+        } else {
+            Long id = ((BigInteger)lists.get(0)).longValue() + 1;
+            appUser.setId(id);
+        }
         entityManager.persist(appUser);
     }
 

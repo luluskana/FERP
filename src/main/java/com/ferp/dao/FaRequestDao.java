@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,15 @@ public class FaRequestDao {
     private EntityManager entityManager;
 
     public void create(FaRequest faRequest) {
+        Session session = (Session) entityManager.getDelegate();
+        String sqlSelect = "SELECT ID FROM FaRequest ORDER BY ID DESC LIMIT 1";
+        List lists = session.createSQLQuery(sqlSelect).list();
+        if(lists.size() <= 0) {
+            faRequest.setId(1L);
+        } else {
+            Long id = ((BigInteger)lists.get(0)).longValue() + 1;
+            faRequest.setId(id);
+        }
         entityManager.persist(faRequest);
     }
 

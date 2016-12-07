@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -23,6 +24,15 @@ public class MaterialTypeDao {
     private EntityManager entityManager;
 
     public void create(MaterialType materialType) {
+        Session session = (Session) entityManager.getDelegate();
+        String sqlSelect = "SELECT ID FROM MATERIAL_TYPE ORDER BY ID DESC LIMIT 1";
+        List lists = session.createSQLQuery(sqlSelect).list();
+        if(lists.size() <= 0) {
+            materialType.setId(1L);
+        } else {
+            Long id = ((BigInteger)lists.get(0)).longValue() + 1;
+            materialType.setId(id);
+        }
         entityManager.persist(materialType);
     }
 

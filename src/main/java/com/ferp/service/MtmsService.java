@@ -1,9 +1,6 @@
 package com.ferp.service;
 
-import com.ferp.dao.AppUserDao;
-import com.ferp.dao.MaterialDao;
-import com.ferp.dao.MaterialTypeDao;
-import com.ferp.dao.SapCodeDao;
+import com.ferp.dao.*;
 import com.ferp.domain.*;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +38,9 @@ public class MtmsService {
     @Autowired
     private SapCodeDao sapCodeDao;
 
+    @Autowired
+    private LogHistoryDao logHistoryDao;
+
     public MaterialType createMaterialType(MultipartHttpServletRequest multipartHttpServletRequest) {
         try {
             String typeName = multipartHttpServletRequest.getParameter("typeName");
@@ -53,7 +53,7 @@ public class MtmsService {
             materialType.setTypeName(typeName);
 
             Set<LogHistory> logHistories = materialType.getLogHistories();
-            LogHistory logHistory = new LogHistory();
+            LogHistory logHistory = logHistoryDao.getNewLogHistory();
             logHistory.setCreateDate(new Date());
             logHistory.setCreateBy(appUser);
             logHistory.setActionTYpe("Create Material Type");
@@ -83,7 +83,7 @@ public class MtmsService {
             materialType.setTypeName(typeName);
 
             Set<LogHistory> logHistories = materialType.getLogHistories();
-            LogHistory logHistory = new LogHistory();
+            LogHistory logHistory = logHistoryDao.getNewLogHistory();
             logHistory.setCreateDate(new Date());
             logHistory.setCreateBy(appUser);
             logHistory.setActionTYpe("Create Update Type");
@@ -123,10 +123,10 @@ public class MtmsService {
             Calendar cal = Calendar.getInstance();
 
             MaterialType materialType = materialTypeDao.findById(Long.parseLong(id));
-            Material material = new Material();
+            Material material = materialDao.getNewMaterial();
 
             Set<LogHistory> logHistories = material.getLogHistories();
-            LogHistory logHistory = new LogHistory();
+            LogHistory logHistory = logHistoryDao.getNewLogHistory();
 
             material.setCreateDate(new Date());
             if(appUser != null) {
@@ -254,7 +254,7 @@ public class MtmsService {
             material.setHalogenEndDateTest(null);
 
             Set<LogHistory> logHistories = material.getLogHistories();
-            LogHistory logHistory = new LogHistory();
+            LogHistory logHistory = logHistoryDao.getNewLogHistory();
 
             material.setUpdateDate(new Date());
             if(appUser != null) {
@@ -380,7 +380,7 @@ public class MtmsService {
             Material material = materialDao.findById(Long.parseLong(id));
 
             Set<LogHistory> logHistories = material.getLogHistories();
-            LogHistory logHistory = new LogHistory();
+            LogHistory logHistory = logHistoryDao.getNewLogHistory();
 
             material.setUpdateDate(new Date());
             if(appUser != null) {
@@ -417,7 +417,7 @@ public class MtmsService {
             Material material = materialDao.findById(Long.parseLong(id));
 
             Set<LogHistory> logHistories = material.getLogHistories();
-            LogHistory logHistory = new LogHistory();
+            LogHistory logHistory = logHistoryDao.getNewLogHistory();
 
             material.setUpdateDate(new Date());
             if(appUser != null) {
@@ -453,7 +453,7 @@ public class MtmsService {
         Material material = materialDao.findById(Long.parseLong(id));
 
         Set<SapCode> sapCodes = material.getSapCodes();
-        SapCode sapCode = new SapCode();
+        SapCode sapCode = sapCodeDao.getNewSapCode();
         sapCode.setCreateBy(appUser);
         sapCode.setCreateDate(new Date());
         sapCode.setName(name);

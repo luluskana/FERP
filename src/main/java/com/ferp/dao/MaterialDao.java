@@ -18,6 +18,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -31,6 +32,20 @@ public class MaterialDao {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    public Material getNewMaterial() {
+        Material material = new Material();
+        Session session = (Session) entityManager.getDelegate();
+        String sqlSelect = "SELECT ID FROM MATERIAL ORDER BY ID DESC LIMIT 1";
+        List lists = session.createSQLQuery(sqlSelect).list();
+        if(lists.size() <= 0) {
+            material.setId(1L);
+        } else {
+            Long id = ((BigInteger)lists.get(0)).longValue() + 1;
+            material.setId(id);
+        }
+        return material;
+    }
 
     public void update(Material material) {
         entityManager.merge(material);

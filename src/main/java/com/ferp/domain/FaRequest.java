@@ -17,7 +17,6 @@ import java.util.Set;
 public class FaRequest implements Serializable {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name="id")
     private Long id;
 

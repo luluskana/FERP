@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * Created by apichat on 11/15/2016 AD.
@@ -20,6 +22,20 @@ public class SapCodeDao {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    public SapCode getNewSapCode() {
+        SapCode sapCode = new SapCode();
+        Session session = (Session) entityManager.getDelegate();
+        String sqlSelect = "SELECT ID FROM SAP_CODE ORDER BY ID DESC LIMIT 1";
+        List lists = session.createSQLQuery(sqlSelect).list();
+        if(lists.size() <= 0) {
+            sapCode.setId(1L);
+        } else {
+            Long id = ((BigInteger)lists.get(0)).longValue() + 1;
+            sapCode.setId(id);
+        }
+        return sapCode;
+    }
 
     public SapCode findByName(String name) {
         Criteria c = ((Session) entityManager.getDelegate()).createCriteria(SapCode.class);
