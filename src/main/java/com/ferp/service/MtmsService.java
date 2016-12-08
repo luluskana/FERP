@@ -183,7 +183,7 @@ public class MtmsService {
                 logHistory.setRedPhosphorus(idRedPhosphorus);
             }
 
-            if(spec != null && msds != null && rohs != null && halogen != null) {
+            if(spec != null && msds != null && rohs != null) {
                 material.setStatus("CREATE_MATERIAL_DOCUMENT_FULL");
                 logHistory.setStatus("CREATE_MATERIAL_DOCUMENT_FULL");
                 logHistory.setActionTYpe("User create material attach document full");
@@ -312,7 +312,7 @@ public class MtmsService {
                 logHistory.setRedPhosphorus(idRedPhosphorus);
             }
 
-            if(spec != null && msds != null && rohs != null && halogen != null) {
+            if(spec != null && msds != null && rohs != null) {
                 material.setStatus("UPDATE_MATERIAL_DOCUMENT_FULL");
                 logHistory.setStatus("UPDATE_MATERIAL_DOCUMENT_FULL");
                 logHistory.setActionTYpe("User update material attach document full");
