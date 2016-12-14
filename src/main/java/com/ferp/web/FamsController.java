@@ -74,7 +74,7 @@ public class FamsController {
     }
 
     @RequestMapping(value = "/fams/report", method = RequestMethod.GET)
-    public ModelAndView famsReoirt(ModelAndView model, Principal principal) {
+    public ModelAndView famsReport(ModelAndView model, Principal principal) {
         try {
             principal.getName();
             viewService.addMenuAndName(model, principal);
@@ -83,6 +83,19 @@ public class FamsController {
         }
         viewService.addGraphSummary(model);
         model.setViewName("FAMS/report");
+        return model;
+    }
+
+    @RequestMapping(value = "/fams/qareport", method = RequestMethod.GET)
+    public ModelAndView qafamsReport(ModelAndView model, Principal principal) {
+        try {
+            principal.getName();
+            viewService.addMenuAndName(model, principal);
+        } catch (Exception e) {
+            viewService.addLogin(model);
+        }
+        viewService.addGraphFa(model);
+        model.setViewName("FAMS/faSummary");
         return model;
     }
 

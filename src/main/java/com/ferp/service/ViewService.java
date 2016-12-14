@@ -1,10 +1,8 @@
 package com.ferp.service;
 
-import com.ferp.dao.CustomerDao;
-import com.ferp.dao.FaRequestDao;
-import com.ferp.dao.MaterialDao;
-import com.ferp.dao.MaterialTypeDao;
+import com.ferp.dao.*;
 import com.ferp.domain.AppUser;
+import com.ferp.domain.LogHistory;
 import com.ferp.domain.Material;
 import com.ferp.domain.MaterialType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +32,9 @@ public class ViewService {
 
     @Autowired
     private FaRequestDao faRequestDao;
+
+    @Autowired
+    private LogHistoryDao logHistoryDao;
 
     public void addLogin(ModelAndView model) {
         model.addObject("login", "on");
@@ -181,6 +182,62 @@ public class ViewService {
         model.addObject("october", faRequestDao.findByStartDateAndEndDate(getDate("start", 9), getDate("end", 9)).size());
         model.addObject("november", faRequestDao.findByStartDateAndEndDate(getDate("start", 10), getDate("end", 10)).size());
         model.addObject("december", faRequestDao.findByStartDateAndEndDate(getDate("start", 11), getDate("end", 11)).size());
+
+    }
+
+    public void addGraphFa(ModelAndView model) {
+
+        model.addObject("qaRejectFirstShotJanuary", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 0), getDate("end", 0), "QA_REJECT_FIRST_FA_REQUEST").size());
+        model.addObject("qaRejectFirstShotFebruary", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 1), getDate("end", 1), "QA_REJECT_FIRST_FA_REQUEST").size());
+        model.addObject("qaRejectFirstShotMarch", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 2), getDate("end", 2), "QA_REJECT_FIRST_FA_REQUEST").size());
+        model.addObject("qaRejectFirstShotApril", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 3), getDate("end", 3), "QA_REJECT_FIRST_FA_REQUEST").size());
+        model.addObject("qaRejectFirstShotMay", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 4), getDate("end", 4), "QA_REJECT_FIRST_FA_REQUEST").size());
+        model.addObject("qaRejectFirstShotJune", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 5), getDate("end", 5), "QA_REJECT_FIRST_FA_REQUEST").size());
+        model.addObject("qaRejectFirstShotJuly", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 6), getDate("end", 6), "QA_REJECT_FIRST_FA_REQUEST").size());
+        model.addObject("qaRejectFirstShotAugust", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 7), getDate("end", 7), "QA_REJECT_FIRST_FA_REQUEST").size());
+        model.addObject("qaRejectFirstShotSeptember", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 8), getDate("end", 8), "QA_REJECT_FIRST_FA_REQUEST").size());
+        model.addObject("qaRejectFirstShotOctober", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 9), getDate("end", 9), "QA_REJECT_FIRST_FA_REQUEST").size());
+        model.addObject("qaRejectFirstShotNovember", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 10), getDate("end", 10), "QA_REJECT_FIRST_FA_REQUEST").size());
+        model.addObject("qaRejectFirstShotDecember", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 11), getDate("end", 11), "QA_REJECT_FIRST_FA_REQUEST").size());
+
+        model.addObject("qaApproveFirstShotJanuary", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 0), getDate("end", 0), "QA_APPROVE_FIRST_FA_REQUEST").size());
+        model.addObject("qaApproveFirstShotFebruary", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 1), getDate("end", 1), "QA_APPROVE_FIRST_FA_REQUEST").size());
+        model.addObject("qaApproveFirstShotMarch", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 2), getDate("end", 2), "QA_APPROVE_FIRST_FA_REQUEST").size());
+        model.addObject("qaApproveFirstShotApril", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 3), getDate("end", 3), "QA_APPROVE_FIRST_FA_REQUEST").size());
+        model.addObject("qaApproveFirstShotMay", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 4), getDate("end", 4), "QA_APPROVE_FIRST_FA_REQUEST").size());
+        model.addObject("qaApproveFirstShotJune", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 5), getDate("end", 5), "QA_APPROVE_FIRST_FA_REQUEST").size());
+        model.addObject("qaApproveFirstShotJuly", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 6), getDate("end", 6), "QA_APPROVE_FIRST_FA_REQUEST").size());
+        model.addObject("qaApproveFirstShotAugust", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 7), getDate("end", 7), "QA_APPROVE_FIRST_FA_REQUEST").size());
+        model.addObject("qaApproveFirstShotSeptember", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 8), getDate("end", 8), "QA_APPROVE_FIRST_FA_REQUEST").size());
+        model.addObject("qaApproveFirstShotOctober", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 9), getDate("end", 9), "QA_APPROVE_FIRST_FA_REQUEST").size());
+        model.addObject("qaApproveFirstShotNovember", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 10), getDate("end", 10), "QA_APPROVE_FIRST_FA_REQUEST").size());
+        model.addObject("qaApproveFirstShotDecember", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 11), getDate("end", 11), "QA_APPROVE_FIRST_FA_REQUEST").size());
+
+        model.addObject("qaRejectFinalJanuary", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 0), getDate("end", 0), "QA_REJECT_FINAL_FA_REQUEST").size());
+        model.addObject("qaRejectFinalFebruary", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 1), getDate("end", 1), "QA_REJECT_FINAL_FA_REQUEST").size());
+        model.addObject("qaRejectFinalMarch", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 2), getDate("end", 2), "QA_REJECT_FINAL_FA_REQUEST").size());
+        model.addObject("qaRejectFinalApril", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 3), getDate("end", 3), "QA_REJECT_FINAL_FA_REQUEST").size());
+        model.addObject("qaRejectFinalMay", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 4), getDate("end", 4), "QA_REJECT_FINAL_FA_REQUEST").size());
+        model.addObject("qaRejectFinalJune", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 5), getDate("end", 5), "QA_REJECT_FINAL_FA_REQUEST").size());
+        model.addObject("qaRejectFinalJuly", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 6), getDate("end", 6), "QA_REJECT_FINAL_FA_REQUEST").size());
+        model.addObject("qaRejectFinalAugust", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 7), getDate("end", 7), "QA_REJECT_FINAL_FA_REQUEST").size());
+        model.addObject("qaRejectFinalSeptember", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 8), getDate("end", 8), "QA_REJECT_FINAL_FA_REQUEST").size());
+        model.addObject("qaRejectFinalOctober", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 9), getDate("end", 9), "QA_REJECT_FINAL_FA_REQUEST").size());
+        model.addObject("qaRejectFinalNovember", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 10), getDate("end", 10), "QA_REJECT_FINAL_FA_REQUEST").size());
+        model.addObject("qaRejectFinalDecember", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 11), getDate("end", 11), "QA_REJECT_FINAL_FA_REQUEST").size());
+
+        model.addObject("qaApproveFinalJanuary", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 0), getDate("end", 0), "QA_APPROVE_FINAL_FA_REQUEST").size());
+        model.addObject("qaApproveFinalFebruary", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 1), getDate("end", 1), "QA_APPROVE_FINAL_FA_REQUEST").size());
+        model.addObject("qaApproveFinalMarch", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 2), getDate("end", 2), "QA_APPROVE_FINAL_FA_REQUEST").size());
+        model.addObject("qaApproveFinalApril", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 3), getDate("end", 3), "QA_APPROVE_FINAL_FA_REQUEST").size());
+        model.addObject("qaApproveFinalMay", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 4), getDate("end", 4), "QA_APPROVE_FINAL_FA_REQUEST").size());
+        model.addObject("qaApproveFinalJune", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 5), getDate("end", 5), "QA_APPROVE_FINAL_FA_REQUEST").size());
+        model.addObject("qaApproveFinalJuly", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 6), getDate("end", 6), "QA_APPROVE_FINAL_FA_REQUEST").size());
+        model.addObject("qaApproveFinalAugust", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 7), getDate("end", 7), "QA_APPROVE_FINAL_FA_REQUEST").size());
+        model.addObject("qaApproveFinalSeptember", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 8), getDate("end", 8), "QA_APPROVE_FINAL_FA_REQUEST").size());
+        model.addObject("qaApproveFinalOctober", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 9), getDate("end", 9), "QA_APPROVE_FINAL_FA_REQUEST").size());
+        model.addObject("qaApproveFinalNovember", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 10), getDate("end", 10), "QA_APPROVE_FINAL_FA_REQUEST").size());
+        model.addObject("qaApproveFinalDecember", logHistoryDao.findByStartDateEndDateAndStatus(getDate("start", 11), getDate("end", 11), "QA_APPROVE_FINAL_FA_REQUEST").size());
 
     }
 
