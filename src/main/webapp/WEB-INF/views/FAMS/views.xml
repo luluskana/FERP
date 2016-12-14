@@ -86,4 +86,8 @@
     <definition name="FAMS/report" extends="layout.bootstrap">
         <put-attribute name="body" value="/WEB-INF/views/FAMS/report.jsp" />
     </definition>
+
+    <definition name="FAMS/faSummary" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/FAMS/faSummary.jsp" />
+    </definition>
 </tiles-definitions>
