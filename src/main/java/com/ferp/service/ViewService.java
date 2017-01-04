@@ -48,6 +48,7 @@ public class ViewService {
             AppUser appUser = appUserService.findByUsername(principal.getName());
             model.addObject("name", appUser.getName());
             model.addObject("roleName", appUser.getRoleName());
+            model.addObject("appUser", appUser);
         }
         model.addObject("logout", "on");
     }

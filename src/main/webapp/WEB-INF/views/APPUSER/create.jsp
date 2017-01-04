@@ -7,6 +7,12 @@
     <form class="form-horizontal well" id="appUserId" action="" method="GET">
         <legend>Create User</legend>
         <div class="form-group">
+            <label for="inputEmployeeID" class="col-sm-2 control-label">Employee ID</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control input-group-sm" id="inputEmployeeID" placeholder="Employee ID" required="required" autocomplete="off">
+            </div>
+        </div>
+        <div class="form-group">
             <label for="inputUser" class="col-sm-2 control-label">Username</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control input-group-sm" id="inputUser" placeholder="Username" required="required" autocomplete="off">
@@ -22,6 +28,15 @@
             <label for="inputName" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control input-group-sm" id="inputName" placeholder="Name" required="required" autocomplete="off">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputSex" class="col-sm-2 control-label">Sex</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="inputSex">
+                    <option>Male</option>
+                    <option>Female</option>
+                </select>
             </div>
         </div>
         <div class="form-group">
@@ -74,9 +89,11 @@
     $(document).ready(function() {
         $("#appUserId").submit(function() {
             var formData = new FormData();
+            formData.append("employeeID", $("#inputEmployeeID").val());
             formData.append("username", $("#inputUser").val());
             formData.append("password", $("#inputPassword").val());
             formData.append("name", $("#inputName").val());
+            formData.append("sex", $("#inputSex").val());
             formData.append("department", $("#inputDepartment").val());
             formData.append("emailAddress", $("#inputEmail").val());
             formData.append("phoneNumber", $("#inputTelephoneNumber").val());

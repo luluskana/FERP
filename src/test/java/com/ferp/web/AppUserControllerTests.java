@@ -42,9 +42,11 @@ public class AppUserControllerTests extends AbstractTestController {
     public void appUserUpdatePage() throws Exception {
 
         MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("employeeID", "appUserUpdatePage");
         multipartHttpServletRequestWrapper.setParameter("username", "kopeenoAppUserUpdatePage");
         multipartHttpServletRequestWrapper.setParameter("password", "password");
         multipartHttpServletRequestWrapper.setParameter("name", "Apichat Eakwongsa");
+        multipartHttpServletRequestWrapper.setParameter("sex", "Male");
         multipartHttpServletRequestWrapper.setParameter("department", "MIS");
         multipartHttpServletRequestWrapper.setParameter("emailAddress", "apichat.kop@gmail.com");
         multipartHttpServletRequestWrapper.setParameter("phoneNumber", "0800103329");
@@ -66,9 +68,11 @@ public class AppUserControllerTests extends AbstractTestController {
     public void appUserListPage() throws Exception {
 
         MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("employeeID", "appUserListPage");
         multipartHttpServletRequestWrapper.setParameter("username", "kopeenoAppUserListPage");
         multipartHttpServletRequestWrapper.setParameter("password", "password");
         multipartHttpServletRequestWrapper.setParameter("name", "Apichat Eakwongsa");
+        multipartHttpServletRequestWrapper.setParameter("sex", "Male");
         multipartHttpServletRequestWrapper.setParameter("department", "MIS");
         multipartHttpServletRequestWrapper.setParameter("emailAddress", "apichat.kop@gmail.com");
         multipartHttpServletRequestWrapper.setParameter("phoneNumber", "0800103329");
