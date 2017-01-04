@@ -27,9 +27,11 @@ public class AppUserService {
 
     public AppUser create(MultipartHttpServletRequest multipartHttpServletRequest) {
         try {
+            String employeeID = validateString(multipartHttpServletRequest.getParameter("employeeID"));
             String username = validateString(multipartHttpServletRequest.getParameter("username"));
             String password = validateString(multipartHttpServletRequest.getParameter("password"));
             String name = validateString(multipartHttpServletRequest.getParameter("name"));
+            String sex = validateString(multipartHttpServletRequest.getParameter("sex"));
             String department = validateString(multipartHttpServletRequest.getParameter("department"));
             String emailAddress = validateString(multipartHttpServletRequest.getParameter("emailAddress"));
             String phoneNumber = validateString(multipartHttpServletRequest.getParameter("phoneNumber"));
@@ -44,9 +46,11 @@ public class AppUserService {
             } else {
                 appUser.setCreateBy(principal.getName());
             }
+            appUser.setEmployeeID(employeeID);
             appUser.setUsername(username);
             appUser.setPassword(password);
             appUser.setName(name);
+            appUser.setSex(sex);
             appUser.setDepartment(department);
             appUser.setEmailAddress(emailAddress);
             appUser.setPhoneNumber(phoneNumber);
@@ -72,9 +76,11 @@ public class AppUserService {
     public void update(MultipartHttpServletRequest multipartHttpServletRequest) {
         try {
             String id = validateString(multipartHttpServletRequest.getParameter("id"));
+            String employeeID = validateString(multipartHttpServletRequest.getParameter("employeeID"));
             String username = validateString(multipartHttpServletRequest.getParameter("username"));
             String password = validateString(multipartHttpServletRequest.getParameter("password"));
             String name = validateString(multipartHttpServletRequest.getParameter("name"));
+            String sex = validateString(multipartHttpServletRequest.getParameter("sex"));
             String department = validateString(multipartHttpServletRequest.getParameter("department"));
             String emailAddress = validateString(multipartHttpServletRequest.getParameter("emailAddress"));
             String phoneNumber = validateString(multipartHttpServletRequest.getParameter("phoneNumber"));
@@ -89,9 +95,11 @@ public class AppUserService {
             } else {
                 appUser.setUpdateBy(principal.getName());
             }
+            appUser.setEmployeeID(employeeID);
             appUser.setUsername(username);
             appUser.setPassword(password);
             appUser.setName(name);
+            appUser.setSex(sex);
             appUser.setDepartment(department);
             appUser.setEmailAddress(emailAddress);
             appUser.setPhoneNumber(phoneNumber);

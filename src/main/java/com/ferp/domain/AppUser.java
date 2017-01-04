@@ -37,6 +37,9 @@ public class AppUser implements Serializable {
     @Column(name="updateBy")
     private String updateBy;
 
+    @Column(name="employeeID")
+    private String employeeID;
+
     @Column(name="username", unique = true)
     private String username;
 
@@ -45,6 +48,9 @@ public class AppUser implements Serializable {
 
     @Column(name="name")
     private String name;
+
+    @Column(name="sex")
+    private String sex;
 
     @Column(name="department")
     private String department;
@@ -106,6 +112,14 @@ public class AppUser implements Serializable {
         this.updateBy = updateBy;
     }
 
+    public String getEmployeeID() {
+        return employeeID;
+    }
+
+    public void setEmployeeID(String employeeID) {
+        this.employeeID = employeeID;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -120,6 +134,14 @@ public class AppUser implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public String getName() {

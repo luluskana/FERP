@@ -34,9 +34,11 @@ public class AppUserServiceTests {
     @Test
     public void createAppUserTest() throws Exception {
         MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("employeeID", "createAppUserTest");
         multipartHttpServletRequestWrapper.setParameter("username", "apichat");
         multipartHttpServletRequestWrapper.setParameter("password", "password");
         multipartHttpServletRequestWrapper.setParameter("name", "Apichat Eakwongsa");
+        multipartHttpServletRequestWrapper.setParameter("sex", "Male");
         multipartHttpServletRequestWrapper.setParameter("department", "MIS");
         multipartHttpServletRequestWrapper.setParameter("emailAddress", "apichat.kop@gmail.com");
         multipartHttpServletRequestWrapper.setParameter("phoneNumber", "0800103329");
@@ -51,9 +53,11 @@ public class AppUserServiceTests {
     public void findByUsernameAppUserTest() throws Exception {
 
         MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("employeeID", "findByUsernameAppUserTest");
         multipartHttpServletRequestWrapper.setParameter("username", "kopeeno2");
         multipartHttpServletRequestWrapper.setParameter("password", "password");
         multipartHttpServletRequestWrapper.setParameter("name", "Apichat Eakwongsa");
+        multipartHttpServletRequestWrapper.setParameter("sex", "Male");
         multipartHttpServletRequestWrapper.setParameter("department", "MIS");
         multipartHttpServletRequestWrapper.setParameter("emailAddress", "apichat.kop@gmail.com");
         multipartHttpServletRequestWrapper.setParameter("phoneNumber", "0800103329");
@@ -74,9 +78,11 @@ public class AppUserServiceTests {
     @Test
     public void updateAppUserTest() throws Exception {
         MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("employeeID", "updateAppUserTest");
         multipartHttpServletRequestWrapper.setParameter("username", "kopeeno3");
         multipartHttpServletRequestWrapper.setParameter("password", "password");
         multipartHttpServletRequestWrapper.setParameter("name", "Apichat Eakwongsa");
+        multipartHttpServletRequestWrapper.setParameter("sex", "Male");
         multipartHttpServletRequestWrapper.setParameter("department", "MIS");
         multipartHttpServletRequestWrapper.setParameter("emailAddress", "apichat.kop@gmail.com");
         multipartHttpServletRequestWrapper.setParameter("phoneNumber", "0800103329");
@@ -88,9 +94,11 @@ public class AppUserServiceTests {
 
         MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper2 = new MultipartHttpServletRequestWrapper();
         multipartHttpServletRequestWrapper2.setParameter("id", "" + appUserKopeeno3.getId());
+        multipartHttpServletRequestWrapper2.setParameter("employeeID", "updateAppUserTest");
         multipartHttpServletRequestWrapper2.setParameter("username", "kopeeno3");
         multipartHttpServletRequestWrapper2.setParameter("password", "password");
         multipartHttpServletRequestWrapper2.setParameter("name", "AAAA");
+        multipartHttpServletRequestWrapper2.setParameter("sex", "Male");
         multipartHttpServletRequestWrapper2.setParameter("department", "MK");
         multipartHttpServletRequestWrapper2.setParameter("emailAddress", "apichat.kop@gmail.com");
         multipartHttpServletRequestWrapper2.setParameter("phoneNumber", "0800103329");
@@ -108,9 +116,11 @@ public class AppUserServiceTests {
     @Test
     public void findByIdAppUserTest() throws Exception {
         MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("employeeID", "updateAppUserTest");
         multipartHttpServletRequestWrapper.setParameter("username", "kopeeno4");
         multipartHttpServletRequestWrapper.setParameter("password", "password");
         multipartHttpServletRequestWrapper.setParameter("name", "Apichat Eakwongsa");
+        multipartHttpServletRequestWrapper.setParameter("sex", "Male");
         multipartHttpServletRequestWrapper.setParameter("department", "MIS");
         multipartHttpServletRequestWrapper.setParameter("emailAddress", "apichat.kop@gmail.com");
         multipartHttpServletRequestWrapper.setParameter("phoneNumber", "0800103329");
@@ -128,9 +138,11 @@ public class AppUserServiceTests {
     @Test
     public void findAppUserInRoleNameTest() throws Exception {
         MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper.setParameter("employeeID", "findAppUserInRoleNameTest");
         multipartHttpServletRequestWrapper.setParameter("username", "find01");
         multipartHttpServletRequestWrapper.setParameter("password", "password");
         multipartHttpServletRequestWrapper.setParameter("name", "Apichat Eakwongsa");
+        multipartHttpServletRequestWrapper.setParameter("sex", "Male");
         multipartHttpServletRequestWrapper.setParameter("department", "MIS");
         multipartHttpServletRequestWrapper.setParameter("emailAddress", "apichat.kop@gmail.com");
         multipartHttpServletRequestWrapper.setParameter("phoneNumber", "0800103329");
@@ -141,9 +153,11 @@ public class AppUserServiceTests {
         assertEquals("find01", appUser.getUsername());
 
         MultipartHttpServletRequestWrapper multipartHttpServletRequestWrapper2 = new MultipartHttpServletRequestWrapper();
+        multipartHttpServletRequestWrapper2.setParameter("employeeID", "findAppUserInRoleNameTest02");
         multipartHttpServletRequestWrapper2.setParameter("username", "find02");
         multipartHttpServletRequestWrapper2.setParameter("password", "password");
         multipartHttpServletRequestWrapper2.setParameter("name", "Apichat Eakwongsa");
+        multipartHttpServletRequestWrapper2.setParameter("sex", "Male");
         multipartHttpServletRequestWrapper2.setParameter("department", "MIS");
         multipartHttpServletRequestWrapper2.setParameter("emailAddress", "apichat.kop@gmail.com");
         multipartHttpServletRequestWrapper2.setParameter("phoneNumber", "0800103329");

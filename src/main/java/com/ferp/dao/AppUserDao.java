@@ -43,6 +43,12 @@ public class AppUserDao {
         return (AppUser)c.uniqueResult();
     }
 
+    public AppUser findByEmployeeID(String employeeID) {
+        Criteria c = ((Session) entityManager.getDelegate()).createCriteria(AppUser.class);
+        c.add(Restrictions.eq("employeeID", employeeID));
+        return (AppUser)c.uniqueResult();
+    }
+
     public void update(AppUser appUser) {
         entityManager.merge(appUser);
         entityManager.flush();
