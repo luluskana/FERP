@@ -1,10 +1,7 @@
 package com.ferp.service;
 
 import com.ferp.dao.*;
-import com.ferp.domain.AppUser;
-import com.ferp.domain.LogHistory;
-import com.ferp.domain.Material;
-import com.ferp.domain.MaterialType;
+import com.ferp.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,6 +32,9 @@ public class ViewService {
 
     @Autowired
     private LogHistoryDao logHistoryDao;
+
+    @Autowired
+    private SapCodeDao sapCodeDao;
 
     public void addLogin(ModelAndView model) {
         model.addObject("login", "on");
@@ -100,6 +100,14 @@ public class ViewService {
     public void addMaterialsExpired(ModelAndView model) {
         try {
             model.addObject("materialsExpiredList",materialDao.findAllMaterialGe(new Date()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addSapCode(ModelAndView model) {
+        try {
+            model.addObject("sapCodes", sapCodeDao.findAll());
         } catch (Exception e) {
             e.printStackTrace();
         }

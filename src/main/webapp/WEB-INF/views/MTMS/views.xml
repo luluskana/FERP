@@ -42,4 +42,8 @@
     <definition name="MTMS/materialExpiredList" extends="layout.bootstrap">
         <put-attribute name="body" value="/WEB-INF/views/MTMS/materialExpiredList.jsp" />
     </definition>
+
+    <definition name="MTMS/sapCodeList" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/MTMS/sapCodeList.jsp" />
+    </definition>
 </tiles-definitions>

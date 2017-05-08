@@ -53,4 +53,8 @@ public class SapCodeDao {
         query1.setParameter("id", id);
         query1.executeUpdate();
     }
+
+    public List<SapCode> findAll() {
+        return entityManager.createQuery("SELECT o FROM SapCode o order by createDate", SapCode.class).getResultList();
+    }
 }

@@ -428,7 +428,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a role="button" data-toggle="collapse" data-parent="#accordionGoodFlow" href="#collapse10">
-                                QA ติดปัญหากำลังหาทางแก้ไข <span class="badge">${fn:length(faStatusQaWaiting)}</span>
+                                ปัญหารอเอกสาร update จากแผนกที่เกี่ยวข้อง <span class="badge">${fn:length(faStatusQaWaiting)}</span>
                             </a>
                         </h4>
                     </div>
