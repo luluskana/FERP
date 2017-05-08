@@ -127,6 +127,10 @@
                             <span class="badge">${fn:length(materialsExpiredList)}</span>
                             Material Expired
                         </a>
+                        <a href="${home}mtms/sapCodeList" class="list-group-item list-group-item-text">
+                            <span class="badge">${fn:length(sapCodes)}</span>
+                            Search by SAP code
+                        </a>
                     </div>
                 </div>
             </div>

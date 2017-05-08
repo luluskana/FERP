@@ -50,6 +50,7 @@ public class MtmsController {
         viewService.addMaterialAdditionalOrReject(model);
         viewService.addMaterialApproveList(model);
         viewService.addMaterialsExpired(model);
+        viewService.addSapCode(model);
         model.setViewName("MTMS/home");
         return model;
     }
@@ -193,6 +194,19 @@ public class MtmsController {
         }
         viewService.addMaterialsExpired(model);
         model.setViewName("MTMS/materialExpiredList");
+        return model;
+    }
+
+    @RequestMapping(value = "/mtms/sapCodeList", method = RequestMethod.GET)
+    public ModelAndView sapCodeList(ModelAndView model, Principal principal) {
+        try {
+            principal.getName();
+            viewService.addMenuAndName(model, principal);
+        } catch (Exception e) {
+            viewService.addLogin(model);
+        }
+        viewService.addSapCode(model);
+        model.setViewName("MTMS/sapCodeList");
         return model;
     }
 }
