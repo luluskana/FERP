@@ -260,7 +260,7 @@
                                         <th>Customer</th>
                                         <th>Request Date</th>
                                         <th>Need Date</th>
-                                        <th>Sale Out</th>
+                                        <th>Final Approve date</th>
                                         <th>Request By</th>
                                         <th></th>
                                     </tr>
@@ -274,7 +274,10 @@
                                             <td>${faRequest.customer}</td>
                                             <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${faRequest.createDate}" /></td>
                                             <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${faRequest.needDate}" /></td>
-                                            <td>${faRequest.saleOut}</td>
+                                            <c:forEach var="his" items="${faRequest.logHistories}" varStatus="loop">
+                                                <c:set var="updateDate" value="${his.createDate}"/>
+                                            </c:forEach>
+                                            <td><fmt:formatDate pattern="dd-MM-yyyy"  value="${updateDate}" /></td>
                                             <c:set var="appuserCreate" value="${faRequest.createBy}"/>
                                             <td>${appuserCreate.name}</td>
                                             <td><a href="${home}fams/detail/create/${faRequest.id}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
