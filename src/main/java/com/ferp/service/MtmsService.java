@@ -236,22 +236,17 @@ public class MtmsService {
             String dateRohs = multipartHttpServletRequest.getParameter("inputDateRoHs");
             String dateHalogen = multipartHttpServletRequest.getParameter("inputDateHF");
 
+            String currentSpecFile = multipartHttpServletRequest.getParameter("currentSpecFile");
+            String currentRoshFile = multipartHttpServletRequest.getParameter("currentRoshFile");
+            String currentMsdsFile = multipartHttpServletRequest.getParameter("currentMsdsFile");
+            String currentHalogenFile = multipartHttpServletRequest.getParameter("currentHalogenFile");
+            String currentGuaruntreeLetterFile = multipartHttpServletRequest.getParameter("currentGuaruntreeLetterFile");
+            String currentRedPhosphorusFile = multipartHttpServletRequest.getParameter("currentRedPhosphorusFile");
+
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             Calendar cal = Calendar.getInstance();
 
             Material material = materialDao.findById(Long.parseLong(id));
-            material.setSpec(null);
-            material.setMsds(null);
-            material.setRosh(null);
-            material.setHalogen(null);
-            material.setGuaranteeLetter(null);
-            material.setRedPhosphorus(null);
-            material.setRohsDateTest(null);
-            material.setRohsAlertDateTest(null);
-            material.setRohsEndDateTest(null);
-            material.setHalogenDateTest(null);
-            material.setHalogenAlertDateTest(null);
-            material.setHalogenEndDateTest(null);
 
             Set<LogHistory> logHistories = material.getLogHistories();
             LogHistory logHistory = logHistoryDao.getNewLogHistory();
@@ -264,64 +259,103 @@ public class MtmsService {
             material.setManufacturing(manufacturing);
             material.setUlNumber(ulNumber);
 
-            if(spec != null) {
-                Long idSpec = saveFile(spec.getBytes(), spec.getOriginalFilename(), spec.getContentType());
-                material.setSpec(idSpec);
-                logHistory.setSpec(idSpec);
-            }
-            if(rohs != null) {
-                Long idRohs = saveFile(rohs.getBytes(), rohs.getOriginalFilename(), rohs.getContentType());
-                material.setRosh(idRohs);
-                logHistory.setRosh(idRohs);
-
-                Date date = df.parse(dateRohs);
-                material.setRohsDateTest(date);
-                cal.setTime(date);
-                cal.add(Calendar.YEAR, 1);
-                material.setRohsEndDateTest(cal.getTime());
-                cal.add(Calendar.MONTH, -3);
-                material.setRohsAlertDateTest(cal.getTime());
-            }
-            if(msds != null) {
-                Long idMsds = saveFile(msds.getBytes(), msds.getOriginalFilename(), msds.getContentType());
-                material.setMsds(idMsds);
-                logHistory.setMsds(idMsds);
-            }
-            if(halogen != null) {
-                Long idHalogen = saveFile(halogen.getBytes(), halogen.getOriginalFilename(), halogen.getContentType());
-                material.setHalogen(idHalogen);
-                logHistory.setHalogen(idHalogen);
-
-                Date date = df.parse(dateHalogen);
-                material.setHalogenDateTest(date);
-                cal.setTime(date);
-                cal.add(Calendar.YEAR, 1);
-                material.setHalogenEndDateTest(cal.getTime());
-                cal.add(Calendar.MONTH, -3);
-                material.setHalogenAlertDateTest(cal.getTime());
-            }
-            if(guaranteeLetter != null) {
-                Long idGuaranteeLetter = saveFile(guaranteeLetter.getBytes(), guaranteeLetter.getOriginalFilename(), guaranteeLetter.getContentType());
-                material.setGuaranteeLetter(idGuaranteeLetter);
-                logHistory.setGuaranteeLetter(idGuaranteeLetter);
-            }
-
-            if(redPhosphorus != null) {
-                Long idRedPhosphorus = saveFile(redPhosphorus.getBytes(), redPhosphorus.getOriginalFilename(), redPhosphorus.getContentType());
-                material.setRedPhosphorus(idRedPhosphorus);
-                logHistory.setRedPhosphorus(idRedPhosphorus);
-            }
-
-            if(spec != null && msds != null && rohs != null) {
-                material.setStatus("UPDATE_MATERIAL_DOCUMENT_FULL");
-                logHistory.setStatus("UPDATE_MATERIAL_DOCUMENT_FULL");
-                logHistory.setActionTYpe("User update material attach document full");
+            if(currentSpecFile.equals("no")) {
+                if(spec != null) {
+                    Long idSpec = saveFile(spec.getBytes(), spec.getOriginalFilename(), spec.getContentType());
+                    material.setSpec(idSpec);
+                    logHistory.setSpec(idSpec);
+                } else {
+                    material.setSpec(null);
+                }
             } else {
-                material.setStatus("UPDATE_MATERIAL_DOCUMENT_NOT_FULL");
-                logHistory.setStatus("UPDATE_MATERIAL_DOCUMENT_NOT_FULL");
-                logHistory.setActionTYpe("User update material attach document not full");
-                logHistory.setRemark("User update material attach document not full");
+                logHistory.setSpec(material.getSpec());
             }
+
+            if(currentRoshFile.equals("no")) {
+                if(rohs != null) {
+                    Long idRohs = saveFile(rohs.getBytes(), rohs.getOriginalFilename(), rohs.getContentType());
+                    material.setRosh(idRohs);
+                    logHistory.setRosh(idRohs);
+
+                    Date date = df.parse(dateRohs);
+                    material.setRohsDateTest(date);
+                    cal.setTime(date);
+                    cal.add(Calendar.YEAR, 1);
+                    material.setRohsEndDateTest(cal.getTime());
+                    cal.add(Calendar.MONTH, -3);
+                    material.setRohsAlertDateTest(cal.getTime());
+                } else {
+                    material.setRosh(null);
+                    material.setRohsDateTest(null);
+                    material.setRohsAlertDateTest(null);
+                    material.setRohsEndDateTest(null);
+                }
+            } else {
+                logHistory.setRosh(material.getRosh());
+            }
+
+            if(currentMsdsFile.equals("no")) {
+                if(msds != null) {
+                    Long idMsds = saveFile(msds.getBytes(), msds.getOriginalFilename(), msds.getContentType());
+                    material.setMsds(idMsds);
+                    logHistory.setMsds(idMsds);
+                } else {
+                    material.setMsds(null);
+                }
+            } else {
+                logHistory.setMsds(material.getMsds());
+            }
+
+            if(currentHalogenFile.equals("no")) {
+                if(halogen != null) {
+                    Long idHalogen = saveFile(halogen.getBytes(), halogen.getOriginalFilename(), halogen.getContentType());
+                    material.setHalogen(idHalogen);
+                    logHistory.setHalogen(idHalogen);
+
+                    Date date = df.parse(dateHalogen);
+                    material.setHalogenDateTest(date);
+                    cal.setTime(date);
+                    cal.add(Calendar.YEAR, 1);
+                    material.setHalogenEndDateTest(cal.getTime());
+                    cal.add(Calendar.MONTH, -3);
+                    material.setHalogenAlertDateTest(cal.getTime());
+                } else {
+                    material.setHalogen(null);
+                    material.setHalogenDateTest(null);
+                    material.setHalogenAlertDateTest(null);
+                    material.setHalogenEndDateTest(null);
+                }
+            } else {
+                logHistory.setHalogen(material.getHalogen());
+            }
+
+            if(currentGuaruntreeLetterFile.equals("no")) {
+                if(guaranteeLetter != null) {
+                    Long idGuaranteeLetter = saveFile(guaranteeLetter.getBytes(), guaranteeLetter.getOriginalFilename(), guaranteeLetter.getContentType());
+                    material.setGuaranteeLetter(idGuaranteeLetter);
+                    logHistory.setGuaranteeLetter(idGuaranteeLetter);
+                } else {
+                    material.setGuaranteeLetter(null);
+                }
+            } else {
+                logHistory.setGuaranteeLetter(material.getGuaranteeLetter());
+            }
+
+            if(currentRedPhosphorusFile.equals("no")) {
+                if(redPhosphorus != null) {
+                    Long idRedPhosphorus = saveFile(redPhosphorus.getBytes(), redPhosphorus.getOriginalFilename(), redPhosphorus.getContentType());
+                    material.setRedPhosphorus(idRedPhosphorus);
+                    logHistory.setRedPhosphorus(idRedPhosphorus);
+                } else {
+                    material.setRedPhosphorus(null);
+                }
+            } else {
+                logHistory.setRedPhosphorus(material.getRedPhosphorus());
+            }
+
+            material.setStatus("UPDATE_MATERIAL_DOCUMENT_FULL");
+            logHistory.setStatus("UPDATE_MATERIAL_DOCUMENT_FULL");
+            logHistory.setActionTYpe("User update material attach document full");
 
 
             if(appUser != null) {
