@@ -110,6 +110,8 @@ public class Material implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "material", orphanRemoval = true)
     private Set<LogHistory> logHistories = new HashSet<LogHistory>();
 
+    private int numberDateExpired;
+
     public Long getId() {
         return id;
     }
@@ -308,5 +310,13 @@ public class Material implements Serializable {
 
     public void setLogHistories(Set<LogHistory> logHistories) {
         this.logHistories = logHistories;
+    }
+
+    public int getNumberDateExpired() {
+        return numberDateExpired;
+    }
+
+    public void setNumberDateExpired(int numberDateExpired) {
+        this.numberDateExpired = numberDateExpired;
     }
 }
