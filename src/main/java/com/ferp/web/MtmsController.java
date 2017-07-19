@@ -1,8 +1,10 @@
 package com.ferp.web;
 
 import com.ferp.dao.AppUserDao;
+import com.ferp.dao.MaterialDao;
 import com.ferp.domain.AppUser;
 import com.ferp.domain.FileData;
+import com.ferp.domain.Material;
 import com.ferp.service.DownloadFileServiec;
 import com.ferp.service.ViewService;
 import org.apache.commons.io.IOUtils;
@@ -19,6 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by apichat on 11/1/2016 AD.
@@ -33,6 +39,9 @@ public class MtmsController {
 
     @Autowired
     private AppUserDao appUserDao;
+
+    @Autowired
+    private MaterialDao materialDao;
 
     @Autowired
     private DownloadFileServiec downloadFileServiec;
@@ -192,7 +201,37 @@ public class MtmsController {
         } catch (Exception e) {
             viewService.addLogin(model);
         }
-        viewService.addMaterialsExpired(model);
+
+        List<Material> materials = materialDao.findAllMaterialGe(new Date());
+        List<Material> materialsNew = new ArrayList<>();
+        for(Material m : materials) {
+            Calendar c = Calendar.getInstance();
+
+            c.setTime(new Date());
+            if(m.getRohsEndDateTest().after(c.getTime())) {
+                m.setNumberDateExpired(1);
+            }
+
+            c.setTime(new Date());
+            c.add(Calendar.MONTH, 1);
+            if(m.getRohsEndDateTest().after(c.getTime())) {
+                m.setNumberDateExpired(2);
+            }
+
+            c.setTime(new Date());
+            c.add(Calendar.MONTH, 2);
+            if(m.getRohsEndDateTest().after(c.getTime())) {
+                m.setNumberDateExpired(3);
+            }
+
+            c.setTime(new Date());
+            if(m.getRohsEndDateTest().before(c.getTime())) {
+                m.setNumberDateExpired(1);
+            }
+            materialsNew.add(m);
+        }
+
+        model.addObject("materialsExpiredList",materialsNew);
         model.setViewName("MTMS/materialExpiredList");
         return model;
     }

@@ -9,7 +9,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <div class="panel panel-danger">
+            <div class="panel panel-info">
                 <div class="panel-heading" align="center">
                     <h3 class="panel-title">Material Expired</h3>
                 </div>
@@ -34,7 +34,15 @@
                                 <tbody>
                                 <c:forEach var="material" items="${materialsExpiredList}" varStatus="loop">
                                     <c:set var="materialType" value="${material.materialType}"/>
-                                    <tr>
+                                    <c:if test="${material.numberDateExpired eq 1}">
+                                        <tr class="danger">
+                                    </c:if>
+                                    <c:if test="${material.numberDateExpired eq 2}">
+                                        <tr class="warning">
+                                    </c:if>
+                                    <c:if test="${material.numberDateExpired eq 3}">
+                                        <tr class="success">
+                                    </c:if>
                                         <td>${loop.index + 1}</td>
                                         <td>${materialType.typeName}</td>
                                         <td>${material.materialName}</td>
