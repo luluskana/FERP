@@ -517,8 +517,8 @@ public class FamsService {
         }
         if(file2 != null) {
             Long idInsert = saveFile(file2.getBytes(), file2.getOriginalFilename(), file2.getContentType());
-            faRequest.setFileData1(idInsert);
-            logHistory.setFileData1(idInsert);
+            faRequest.setFileData2(idInsert);
+            logHistory.setFileData2(idInsert);
         }
 
         faRequest.setStatus("QA_APPROVE_FINAL_FA_REQUEST");
