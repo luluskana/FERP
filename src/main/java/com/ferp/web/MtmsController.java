@@ -205,30 +205,32 @@ public class MtmsController {
         List<Material> materials = materialDao.findAllMaterialGe(new Date());
         List<Material> materialsNew = new ArrayList<>();
         for(Material m : materials) {
-            Calendar c = Calendar.getInstance();
+            if (m.getRohsEndDateTest() != null) {
+                Calendar c = Calendar.getInstance();
 
-            c.setTime(new Date());
-            if(m.getRohsEndDateTest().after(c.getTime())) {
-                m.setNumberDateExpired(1);
-            }
+                c.setTime(new Date());
+                if(m.getRohsEndDateTest().after(c.getTime())) {
+                    m.setNumberDateExpired(1);
+                }
 
-            c.setTime(new Date());
-            c.add(Calendar.MONTH, 1);
-            if(m.getRohsEndDateTest().after(c.getTime())) {
-                m.setNumberDateExpired(2);
-            }
+                c.setTime(new Date());
+                c.add(Calendar.MONTH, 1);
+                if(m.getRohsEndDateTest().after(c.getTime())) {
+                    m.setNumberDateExpired(2);
+                }
 
-            c.setTime(new Date());
-            c.add(Calendar.MONTH, 2);
-            if(m.getRohsEndDateTest().after(c.getTime())) {
-                m.setNumberDateExpired(3);
-            }
+                c.setTime(new Date());
+                c.add(Calendar.MONTH, 2);
+                if(m.getRohsEndDateTest().after(c.getTime())) {
+                    m.setNumberDateExpired(3);
+                }
 
-            c.setTime(new Date());
-            if(m.getRohsEndDateTest().before(c.getTime())) {
-                m.setNumberDateExpired(1);
+                c.setTime(new Date());
+                if(m.getRohsEndDateTest().before(c.getTime())) {
+                    m.setNumberDateExpired(1);
+                }
+                materialsNew.add(m);
             }
-            materialsNew.add(m);
         }
 
         model.addObject("materialsExpiredList",materialsNew);
