@@ -225,6 +225,14 @@
                             </div>
                         </div>
                     </c:if>
+                    <div class="form-group form-inline">
+                        <label class="col-sm-4 control-label">Print :</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static">
+                                <a class="btn btn-primary" href="${home}fams/createreport/${faRequest.id}" target="_blank" role="button"><span class="glyphicon glyphicon glyphicon-print" aria-hidden="true"></span></a>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
