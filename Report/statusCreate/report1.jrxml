@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c5e8e28f-5058-45e3-b022-23162128d314">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="303"/>
+	<parameter name="faNumber" class="java.lang.String"/>
+	<parameter name="customer" class="java.lang.String"/>
+	<parameter name="partNo" class="java.lang.String"/>
+	<parameter name="revision" class="java.lang.String"/>
+	<parameter name="partName" class="java.lang.String"/>
+	<parameter name="qwsNo" class="java.lang.String"/>
+	<parameter name="apqaNo" class="java.lang.String"/>
+	<parameter name="needDate" class="java.lang.String"/>
+	<parameter name="faApprove" class="java.lang.String"/>
+	<parameter name="faForSell" class="java.lang.String"/>
+	<parameter name="sampleTest" class="java.lang.String"/>
+	<parameter name="samplePCC" class="java.lang.String"/>
+	<parameter name="material1" class="java.lang.String"/>
+	<parameter name="material2" class="java.lang.String"/>
+	<parameter name="material3" class="java.lang.String"/>
+	<parameter name="material4" class="java.lang.String"/>
+	<parameter name="material5" class="java.lang.String"/>
+	<parameter name="documentRequest" class="java.lang.String"/>
+	<parameter name="tools" class="java.lang.String"/>
+	<parameter name="remark1" class="java.lang.String"/>
+	<parameter name="saleOut" class="java.lang.String"/>
+	<parameter name="requestBy" class="java.lang.String"/>
+	<parameter name="requestDate" class="java.lang.String"/>
+	<parameter name="remark2" class="java.lang.String"/>
+	<parameter name="remark3" class="java.lang.String"/>
+	<parameter name="remark4" class="java.lang.String"/>
+	<parameter name="remark5" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="152" y="46" width="265" height="33" uuid="561a548c-15d7-4fee-a02d-6e4358f9cd10"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="28" isBold="true"/>
+				</textElement>
+				<text><![CDATA[First Article Request]]></text>
+			</staticText>
+			<image>
+				<reportElement x="1" y="0" width="140" height="64" uuid="b050b052-ce79-4114-95ca-f204643d9e23"/>
+				<imageExpression><![CDATA["Report/foamtec.bmp"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="34" width="555" height="1" uuid="a5eb481d-ce5c-4c62-b640-bc4c15fc64ad"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="599" splitType="Stretch">
+			<staticText>
+				<reportElement x="20" y="10" width="100" height="20" uuid="e0951662-dcde-4e92-8495-04a1d8268f8c"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[FA Number : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="141" y="10" width="132" height="20" uuid="0a492ca8-5c42-47d1-a4b0-8b3466c4c75e"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{faNumber}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="291" y="10" width="82" height="20" uuid="84ecbb2c-e446-4277-926b-5b5b5eab4983"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Customer :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="388" y="10" width="156" height="20" uuid="f86f146f-5ac5-4574-969d-f7ef1987f95e"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customer}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="30" width="100" height="20" uuid="2cd3e78f-6ea8-4e62-a840-b93708f065d1"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Part Number :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="141" y="30" width="132" height="20" uuid="56609382-ee26-4d39-a753-5a28249b971b"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{partNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="38" y="50" width="82" height="20" uuid="55d1a2c1-5d45-4309-8f0a-6eb2068281b1"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Revision :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="141" y="50" width="132" height="20" uuid="bbd61624-2189-402a-a218-bf74a94ddb3e"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{revision}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="291" y="30" width="82" height="20" uuid="3f195b69-983a-46cf-a2a6-62a458ff0460"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Part Name :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="388" y="30" width="156" height="20" uuid="845b6a67-5cf1-4efb-ae82-217cca316753"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{partName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="291" y="50" width="82" height="20" uuid="a31f6331-1b29-49cc-ad58-b41fc0fc5618"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[QWS No. :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="388" y="50" width="156" height="20" uuid="c219e79c-e6c0-4f1f-a170-c871a304d236"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{qwsNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="21" y="70" width="100" height="20" uuid="f3495651-7f87-4cc8-af10-165292e63558"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[APQP No. :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="141" y="70" width="132" height="20" uuid="d29c0fd3-8982-4422-bd1c-53efd1ccfd4d"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{apqaNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="291" y="70" width="82" height="20" uuid="81032c5b-b210-4f4c-a620-27819bb21f98"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Need Date :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="388" y="70" width="156" height="20" uuid="2111bcf0-d21d-4266-9329-d11d171fac1d"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{needDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="21" y="90" width="100" height="20" uuid="4abd8e2a-c339-45d2-ab94-416de69bf2de"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[FA Approve :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="141" y="90" width="57" height="20" uuid="152c7df2-c2ba-4da1-97cd-7854757f603c"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{faApprove}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="198" y="90" width="57" height="20" uuid="77ac237f-370b-40a3-92f0-9386672f15f7"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[PCS.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="110" width="100" height="20" uuid="26814648-c8e6-472c-9c9d-3ce66f58215c"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[FA For Sell :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="141" y="112" width="57" height="20" uuid="2d4bcc4c-561c-45b7-80b9-c6c6c282187f"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{faForSell}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="198" y="112" width="57" height="20" uuid="2e487ad3-2c2e-400a-9241-eb4cb57df5a0"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[PCS.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="273" y="92" width="100" height="20" uuid="cd876cf0-29ce-409c-8212-4edc0a2f958d"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Sample Test:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="445" y="92" width="57" height="20" uuid="a7bbdcc9-6dc1-4d23-b182-3174abd245e7"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[PCS.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="388" y="90" width="57" height="20" uuid="f85536db-e22c-4b20-bb7c-edcd3bbe4359"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{sampleTest}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="273" y="112" width="100" height="20" uuid="4384b432-c4ac-430b-ba6c-9d4069795a07"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Sample PCC:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="388" y="112" width="57" height="20" uuid="e25bf61c-d00b-438e-8ca2-5b6539342c6e"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{samplePCC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="445" y="112" width="57" height="20" uuid="6d24bb22-e7ad-4cc7-8c00-10e3c5e09fdd"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[PCS.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="189" width="100" height="20" uuid="01b9762b-7a02-4283-bb44-cb685b53706a">
+					<printWhenExpression><![CDATA[!$P{material1}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Material1 :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="141" y="189" width="247" height="20" uuid="a22dd1ad-7f06-4cd4-89ac-9e7d40c864a3">
+					<printWhenExpression><![CDATA[!$P{material1}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{material1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="210" width="100" height="20" uuid="f5c52ac2-846a-4d07-ace7-ebdb3316405c">
+					<printWhenExpression><![CDATA[!$P{material2}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Material2 :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="230" width="100" height="20" uuid="26315fce-660e-4d59-9e36-ae5bf2735505">
+					<printWhenExpression><![CDATA[!$P{material3}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Material3 :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="250" width="100" height="20" uuid="5e7cb746-7e56-4f68-aaa8-9adb52b1a8ce">
+					<printWhenExpression><![CDATA[!$P{material4}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Material4 :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="270" width="100" height="20" uuid="a405788b-e4d9-4bac-8c9d-91ba5754833a">
+					<printWhenExpression><![CDATA[!$P{material5}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Material5 :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="141" y="209" width="247" height="20" uuid="70b96edb-6581-4d3f-8a43-446e0807b543">
+					<printWhenExpression><![CDATA[!$P{material2}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{material2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="141" y="230" width="247" height="20" uuid="87f57a87-6176-46c7-a398-163e52834697">
+					<printWhenExpression><![CDATA[!$P{material3}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{material3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="141" y="250" width="247" height="20" uuid="0c222a73-9ec9-4299-9f03-9e53706f7f69">
+					<printWhenExpression><![CDATA[!$P{material4}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{material4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="141" y="270" width="247" height="20" uuid="c56d1016-ee89-481f-a196-2581a700ee6f">
+					<printWhenExpression><![CDATA[!$P{material5}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{material5}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="554" y="0" width="2" height="598" uuid="1bf382f6-1874-4819-8cdb-46445edda9aa"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="598" uuid="6e189a70-524b-4510-833d-45b1006a89ea"/>
+			</line>
+			<staticText>
+				<reportElement x="38" y="472" width="126" height="20" uuid="27b55f55-e814-4752-ac43-c23d1223bbf6"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Document Request :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="597" width="555" height="1" uuid="8133468a-2311-4ced-a699-a595746bf055"/>
+			</line>
+			<textField>
+				<reportElement x="181" y="472" width="207" height="20" uuid="ff3e5bb9-d554-40d0-9ad4-4cac02362aba"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{documentRequest}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="64" y="492" width="100" height="20" uuid="d723e7d6-5126-4649-a659-8c5bef7e1156"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Tools :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="181" y="492" width="207" height="20" uuid="cf768e30-23a0-41e2-add2-30712bd20717"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tools}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="24" y="332" width="100" height="20" uuid="5b786cc1-20f0-48f8-a865-c7402f4ac405"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Remark :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="181" y="512" width="207" height="20" uuid="9de797db-5c00-469b-8333-629ee50d9a6e"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{saleOut}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="64" y="512" width="100" height="20" uuid="d4264246-e5e8-40e1-b4a9-61163a694ab1"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Sale Out :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="64" y="532" width="100" height="20" uuid="ddd58a8f-5b6c-4824-8399-f75a8dd8f078"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Request By :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="181" y="532" width="207" height="20" uuid="ab10ba76-79f1-41e2-8349-799636bedcb2"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{requestBy}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="53" y="552" width="111" height="20" uuid="131cbf11-40b0-4ab4-9247-c285298d61bb"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Request Date :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="181" y="552" width="207" height="20" uuid="31f24175-827c-444a-807d-300668ad0eb6"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{requestDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="141" y="352" width="378" height="21" uuid="efbc1335-6bad-48db-938a-6beff4f1549a">
+					<printWhenExpression><![CDATA[!$P{remark2}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{remark2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="373" width="379" height="20" uuid="99584bda-7db2-44bb-a0aa-3405ccd6a8bc">
+					<printWhenExpression><![CDATA[!$P{remark3}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{remark3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="393" width="378" height="20" uuid="1cb84d58-4bb5-418b-8f0d-cec6ded57607">
+					<printWhenExpression><![CDATA[!$P{remark4}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{remark4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="141" y="332" width="377" height="20" uuid="4007c2fc-a7a3-40e9-bf52-0e8558343a62"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{remark1}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="161" width="553" height="1" uuid="98b720a2-a9be-4951-89af-ad257db16c82"/>
+			</line>
+			<line>
+				<reportElement x="0" y="317" width="553" height="1" uuid="ccf39b9e-a2ec-4f04-80d2-19ca859c3871"/>
+			</line>
+			<textField>
+				<reportElement x="141" y="413" width="377" height="20" uuid="2ee04026-dc14-48e4-aa2a-a728ec6d49ad">
+					<printWhenExpression><![CDATA[!$P{remark5}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{remark5}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="453" width="555" height="1" uuid="bae5457b-0367-46f8-ab00-5ee23002412f"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="30" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="18" splitType="Stretch"/>
+	</summary>
+</jasperReport>

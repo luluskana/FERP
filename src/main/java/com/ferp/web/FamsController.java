@@ -3,18 +3,31 @@ package com.ferp.web;
 import com.ferp.dao.AppUserDao;
 import com.ferp.dao.FaRequestDao;
 import com.ferp.domain.AppUser;
+import com.ferp.domain.FaRequest;
 import com.ferp.domain.FileData;
 import com.ferp.service.FamsService;
 import com.ferp.service.ViewService;
+import net.sf.jasperreports.engine.JasperExportManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRCsvDataSource;
+import net.sf.jasperreports.view.JasperViewer;
+
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by apichat on 11/16/2016 AD.
@@ -413,6 +426,54 @@ public class FamsController {
             response.setContentType(fileData.getContentType());
             response.setHeader("Content-Disposition", "attachment;filename=" + fileData.getFileName());
             response.getOutputStream().write(fileData.getDataFile());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "/fams/createreport/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public void downloadReport(@PathVariable("id") Long id, HttpServletResponse response) {
+        try {
+            FaRequest faRequest = faRequestDao.findById(id);
+            JRCsvDataSource ds = new JRCsvDataSource(new File("Report/data.csv"));
+            ds.setColumnNames(new String[] {"id", "name", "salary"});
+            String fileName = "Report/statusCreate/report1.jasper";
+
+            Map map = new HashMap();
+            map.put("faNumber", faRequest.getFaNumber());
+            map.put("customer", faRequest.getCustomer());
+            map.put("partNo", faRequest.getPartNo());
+            map.put("partName", faRequest.getPartName());
+            map.put("revision", faRequest.getRevision());
+            map.put("qwsNo", faRequest.getQwsNo());
+            map.put("apqpNo", faRequest.getApqpNo());
+            map.put("needDate", faRequest.getNeedDate());
+            map.put("faApprove", faRequest.getFaApproveQty());
+            map.put("faForSell", faRequest.getFaForSellQty());
+            map.put("sampleTest", faRequest.getSamplTestQty());
+            map.put("samplePCC", faRequest.getSamplePccQty());
+            map.put("samplePCC", faRequest.getSamplePccQty());
+            map.put("material1", faRequest.getMaterial1());
+            map.put("material2", faRequest.getMaterial2());
+            map.put("material3", faRequest.getMaterial3());
+            map.put("material4", faRequest.getMaterial4());
+            map.put("material5", faRequest.getMaterial5());
+            map.put("documentRequest", faRequest.getDocumentRequest());
+            map.put("tools", faRequest.getTool());
+            String[] str = faRequest.getRemark().split("\n");
+            int i = 1;
+            for(String s : str) {
+                map.put("remark" + i, s);
+                i++;
+            }
+            map.put("saleOut", faRequest.getSaleOut());
+            map.put("requestBy", faRequest.getCreateBy().getName());
+            map.put("requestDate", faRequest.getCreateDate());
+            JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, map, ds);
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "inline;filename=" + faRequest.getFaNumber() + ".pdf");
+            JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
         } catch (Exception e) {
             e.printStackTrace();
         }
