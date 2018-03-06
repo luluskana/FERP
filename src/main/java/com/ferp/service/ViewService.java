@@ -177,6 +177,22 @@ public class ViewService {
         }
     }
 
+    public void addFaByUserListAndStatusForUpdate(ModelAndView model, AppUser appUser) {
+        try {
+            model.addObject("faByUserList", faRequestDao.findByCreateByAndStatusIn(appUser, new String[]{"CREATE_FA_REQUEST", "UPDATE_FA_REQUEST", "ENGINEER_REJECT_FA_REQUEST", "ENGINEER_CANCEL_FA_REQUEST"}));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addFaByUserListReferSubmit(ModelAndView model, AppUser appUser) {
+        try {
+            model.addObject("faByUserList", faRequestDao.findByCreateByAndStatusIn(appUser, new String[] {"SALE_OUT_RESUBMIT_FA_REQUEST"}));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addGraphSummary(ModelAndView model) {
 
         model.addObject("january", faRequestDao.findByStartDateAndEndDate(getDate("start", 0), getDate("end", 0)).size());

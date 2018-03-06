@@ -140,9 +140,16 @@ public class FaRequest implements Serializable {
     @Column(name="invoice")
     private String invoice;
 
+    @Column(name = "fileCustomerApprove")
+    private Long fileCustomerApprove;
+
     @OrderBy("createDate")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "faRequest")
     private Set<LogHistory> logHistories = new HashSet<LogHistory>();
+
+    @OrderBy("createDate")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "faRequest")
+    private Set<ReferenceFa> referenceFas = new HashSet<ReferenceFa>();
 
     public Long getId() {
         return id;
@@ -444,7 +451,23 @@ public class FaRequest implements Serializable {
         return invoice;
     }
 
+    public Long getFileCustomerApprove() {
+        return fileCustomerApprove;
+    }
+
+    public void setFileCustomerApprove(Long fileCustomerApprove) {
+        this.fileCustomerApprove = fileCustomerApprove;
+    }
+
     public void setInvoice(String invoice) {
         this.invoice = invoice;
+    }
+
+    public Set<ReferenceFa> getReferenceFas() {
+        return referenceFas;
+    }
+
+    public void setReferenceFas(Set<ReferenceFa> referenceFas) {
+        this.referenceFas = referenceFas;
     }
 }

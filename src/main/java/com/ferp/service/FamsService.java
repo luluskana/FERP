@@ -3,6 +3,7 @@ package com.ferp.service;
 import com.ferp.dao.AppUserDao;
 import com.ferp.dao.FaRequestDao;
 import com.ferp.dao.LogHistoryDao;
+import com.ferp.dao.ReferenceFaDao;
 import com.ferp.domain.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -46,6 +47,9 @@ public class FamsService {
     @Autowired
     private LogHistoryDao logHistoryDao;
 
+    @Autowired
+    private ReferenceFaDao referenceFaDao;
+
     public void createFa(MultipartHttpServletRequest multipartHttpServletRequest) {
         try {
             String customer = validateString(multipartHttpServletRequest.getParameter("customer"));
@@ -82,6 +86,143 @@ public class FamsService {
 
             faRequest.setFaNumber("FA" + String.format("%06d", faRequest.getId()));
             faRequest.setCreateDate(new Date());
+
+            logHistory.setCreateDate(new Date());
+            if(appUser != null) {
+                faRequest.setCreateBy(appUser);
+                logHistory.setCreateBy(appUser);
+            }
+            faRequest.setCustomer(customer);
+            faRequest.setPartNo(partNo);
+            faRequest.setPartName(partName);
+            faRequest.setRevision(revision);
+            faRequest.setSaleOut(saleOut);
+            faRequest.setQwsNo(qwsNo);
+            faRequest.setApqpNo(apqaNo);
+            faRequest.setNeedDate(convertToDate(needDate));
+
+            if(faApproveQty.length() > 0) {
+                faRequest.setFaApproveQty(Integer.parseInt(faApproveQty));
+            } else {
+                faRequest.setFaApproveQty(0);
+            }
+            if(faForSellQty.length() > 0) {
+                faRequest.setFaForSellQty(Integer.parseInt(faForSellQty));
+            } else {
+                faRequest.setFaForSellQty(0);
+            }
+            if(sampleTestQty.length() > 0) {
+                faRequest.setSamplTestQty(Integer.parseInt(sampleTestQty));
+            } else {
+                faRequest.setSamplTestQty(0);
+            }
+            if(samplePccQty.length() > 0) {
+                faRequest.setSamplePccQty(Integer.parseInt(samplePccQty));
+            } else {
+                faRequest.setSamplePccQty(0);
+            }
+
+            faRequest.setMaterial1(material1);
+            faRequest.setMaterial2(material2);
+            faRequest.setMaterial3(material3);
+            faRequest.setMaterial4(material4);
+            faRequest.setMaterial5(material5);
+            faRequest.setMaterial6(material6);
+            faRequest.setDocumentRequest(documentRequest);
+            faRequest.setTool(tools);
+            faRequest.setRemark(remark);
+            faRequest.setStatus("CREATE_FA_REQUEST");
+
+            if(drawingFile != null) {
+                Long idInsert = saveFile(drawingFile.getBytes(), drawingFile.getOriginalFilename(), drawingFile.getContentType());
+                faRequest.setDrawingFile(idInsert);
+                logHistory.setDrawingFile(idInsert);
+            }
+
+            if(otherFile != null) {
+                Long idInsert = saveFile(otherFile.getBytes(), otherFile.getOriginalFilename(), otherFile.getContentType());
+                faRequest.setOtherFile(idInsert);
+                logHistory.setOtherFile(idInsert);
+            }
+
+            logHistory.setStatus("CREATE_FA_REQUEST");
+            logHistory.setFaRequest(faRequest);
+            logHistories.add(logHistory);
+            faRequest.setLogHistories(logHistories);
+            faRequestDao.update(faRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createReferFa(MultipartHttpServletRequest multipartHttpServletRequest) {
+        try {
+            String id = validateString(multipartHttpServletRequest.getParameter("id"));
+            String customer = validateString(multipartHttpServletRequest.getParameter("customer"));
+            String partNo = validateString(multipartHttpServletRequest.getParameter("partNo"));
+            String partName = validateString(multipartHttpServletRequest.getParameter("partName"));
+            String revision = validateString(multipartHttpServletRequest.getParameter("revision"));
+            String saleOut = validateString(multipartHttpServletRequest.getParameter("saleOut"));
+            String qwsNo = validateString(multipartHttpServletRequest.getParameter("qwsNo"));
+            String apqaNo = validateString(multipartHttpServletRequest.getParameter("apqaNo"));
+            String needDate = validateString(multipartHttpServletRequest.getParameter("needDate"));
+            String faApproveQty = multipartHttpServletRequest.getParameter("faApproveQty");
+            String faForSellQty = multipartHttpServletRequest.getParameter("faForSellQty");
+            String sampleTestQty = multipartHttpServletRequest.getParameter("sampleTestQty");
+            String samplePccQty =  multipartHttpServletRequest.getParameter("samplePccQty");
+            String material1 = validateString(multipartHttpServletRequest.getParameter("material1"));
+            String material2 = validateString(multipartHttpServletRequest.getParameter("material2"));
+            String material3 = validateString(multipartHttpServletRequest.getParameter("material3"));
+            String material4 = validateString(multipartHttpServletRequest.getParameter("material4"));
+            String material5 = validateString(multipartHttpServletRequest.getParameter("material5"));
+            String material6 = validateString(multipartHttpServletRequest.getParameter("material6"));
+            String documentRequest = validateString(multipartHttpServletRequest.getParameter("documentRequest"));
+            String tools = validateString(multipartHttpServletRequest.getParameter("tools"));
+            String remark = validateString(multipartHttpServletRequest.getParameter("remark"));
+            MultipartFile drawingFile = multipartHttpServletRequest.getFile("drawingFile");
+            MultipartFile otherFile = multipartHttpServletRequest.getFile("otherFile");
+            Principal principal = multipartHttpServletRequest.getUserPrincipal();
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+
+            FaRequest faRequest = new FaRequest();
+            Set<LogHistory> logHistories = faRequest.getLogHistories();
+            LogHistory logHistory = logHistoryDao.getNewLogHistory();
+
+            faRequestDao.create(faRequest);
+
+            faRequest.setFaNumber("FA" + String.format("%06d", faRequest.getId()));
+            faRequest.setCreateDate(new Date());
+
+            FaRequest faRequestRefer = faRequestDao.findById(Long.parseLong(id));
+            Set<ReferenceFa> fas = faRequest.getReferenceFas();
+
+            Set<ReferenceFa> fasOld = faRequestRefer.getReferenceFas();
+            for(ReferenceFa f : fasOld) {
+                ReferenceFa referenceFaInfor = referenceFaDao.getReferenceFa();
+                referenceFaInfor.setCreateDate(new Date());
+                referenceFaInfor.setFaRequestRefer(faRequestDao.findById(f.getFaRequestRefer().getId()));
+                referenceFaInfor.setFaRequest(faRequest);
+                fas.add(referenceFaInfor);
+                faRequest.setReferenceFas(fas);
+                faRequestDao.update(faRequest);
+            }
+            ReferenceFa referenceFa = referenceFaDao.getReferenceFa();
+            referenceFa.setCreateDate(new Date());
+            referenceFa.setFaRequestRefer(faRequestRefer);
+            referenceFa.setFaRequest(faRequest);
+            fas.add(referenceFa);
+            faRequest.setReferenceFas(fas);
+
+            Set<LogHistory> logHistoriesFarefer = faRequestRefer.getLogHistories();
+            LogHistory logHistoryFaRefer = logHistoryDao.getNewLogHistory();
+            logHistoryFaRefer.setCreateDate(new Date());
+            logHistoryFaRefer.setCreateBy(appUser);
+            logHistoryFaRefer.setStatus("CREATE_FA_REQUEST_REFER");
+            logHistoryFaRefer.setFaRequest(faRequest);
+            logHistoriesFarefer.add(logHistoryFaRefer);
+            faRequestRefer.setStatus("CREATE_FA_REQUEST_REFER");
+            faRequestRefer.setLogHistories(logHistoriesFarefer);
+            faRequestDao.update(faRequestRefer);
 
             logHistory.setCreateDate(new Date());
             if(appUser != null) {
@@ -642,17 +783,23 @@ public class FamsService {
         faRequestDao.update(faRequest);
     }
 
-    public void saleOutApproveFa(MultipartHttpServletRequest multipartHttpServletRequest) {
+    public void saleOutApproveFa(MultipartHttpServletRequest multipartHttpServletRequest) throws IOException {
         String id = multipartHttpServletRequest.getParameter("id");
         Principal principal = multipartHttpServletRequest.getUserPrincipal();
         AppUser appUser = appUserDao.findByUsername(principal.getName());
         FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
+        MultipartFile file = multipartHttpServletRequest.getFile("inputFile1");
         Set<LogHistory> logHistories = faRequest.getLogHistories();
         LogHistory logHistory = logHistoryDao.getNewLogHistory();
         logHistory.setCreateDate(new Date());
         if(appUser != null) {
             faRequest.setUpdateBy(appUser);
             logHistory.setCreateBy(appUser);
+        }
+        if(file != null) {
+            Long idInsert = saveFile(file.getBytes(), file.getOriginalFilename(), file.getContentType());
+            faRequest.setFileCustomerApprove(idInsert);
+            logHistory.setFileCustomerApprove(idInsert);
         }
         faRequest.setStatus("SALE_OUT_APPROVE_FA_REQUEST");
         logHistory.setStatus("SALE_OUT_APPROVE_FA_REQUEST");
@@ -677,6 +824,28 @@ public class FamsService {
         }
         faRequest.setStatus("SALE_OUT_REJECT_FA_REQUEST");
         logHistory.setStatus("SALE_OUT_REJECT_FA_REQUEST");
+        logHistory.setRemark(reason);
+        logHistory.setFaRequest(faRequest);
+        logHistories.add(logHistory);
+        faRequest.setLogHistories(logHistories);
+        faRequestDao.update(faRequest);
+    }
+
+    public void saleOutResubmitFa(MultipartHttpServletRequest multipartHttpServletRequest) {
+        String id = multipartHttpServletRequest.getParameter("id");
+        String reason = multipartHttpServletRequest.getParameter("reason");
+        Principal principal = multipartHttpServletRequest.getUserPrincipal();
+        AppUser appUser = appUserDao.findByUsername(principal.getName());
+        FaRequest faRequest = faRequestDao.findById(Long.parseLong(id));
+        Set<LogHistory> logHistories = faRequest.getLogHistories();
+        LogHistory logHistory = logHistoryDao.getNewLogHistory();
+        logHistory.setCreateDate(new Date());
+        if(appUser != null) {
+            faRequest.setUpdateBy(appUser);
+            logHistory.setCreateBy(appUser);
+        }
+        faRequest.setStatus("SALE_OUT_RESUBMIT_FA_REQUEST");
+        logHistory.setStatus("SALE_OUT_RESUBMIT_FA_REQUEST");
         logHistory.setRemark(reason);
         logHistory.setFaRequest(faRequest);
         logHistories.add(logHistory);

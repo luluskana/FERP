@@ -133,7 +133,7 @@ public class FamsController {
         viewService.addMenuAndName(model, principal);
         try {
             AppUser appUser = appUserDao.findByUsername(principal.getName());
-            viewService.addFaByUserList(model, appUser);
+            viewService.addFaByUserListAndStatusForUpdate(model, appUser);
             if(appUser.getRoleName().equals("saleCo") || appUser.getRoleName().equals("saleOut") || appUser.getRoleName().equals("admin")) {
                 model.setViewName("FAMS/listSale");
             } else {
@@ -141,6 +141,23 @@ public class FamsController {
             }
         } catch (Exception e) {
             model.setViewName("FAMS/listSale");
+        }
+        return model;
+    }
+
+    @RequestMapping(value = "/fams/listReferSubmit", method = RequestMethod.GET)
+    public ModelAndView listForReferSubmit(ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            viewService.addFaByUserListReferSubmit(model, appUser);
+            if(appUser.getRoleName().equals("saleCo") || appUser.getRoleName().equals("saleOut") || appUser.getRoleName().equals("admin")) {
+                model.setViewName("FAMS/listForResubmit");
+            } else {
+                model.setViewName("404");
+            }
+        } catch (Exception e) {
+            model.setViewName("FAMS/listForResubmit");
         }
         return model;
     }
@@ -159,6 +176,24 @@ public class FamsController {
         } catch (Exception e) {
             model.addObject("faRequest", faRequestDao.findById(id));
             model.setViewName("FAMS/update");
+        }
+        return model;
+    }
+
+    @RequestMapping(value = "/fams/reference/{id}", method = RequestMethod.GET)
+    public ModelAndView createReferFarequest(@PathVariable("id") Long id, ModelAndView model, Principal principal) {
+        viewService.addMenuAndName(model, principal);
+        try {
+            AppUser appUser = appUserDao.findByUsername(principal.getName());
+            if(appUser.getRoleName().equals("saleCo") || appUser.getRoleName().equals("saleOut") || appUser.getRoleName().equals("admin")) {
+                model.addObject("faRequest", faRequestDao.findByIdAndCreateBy(id, appUser));
+                model.setViewName("FAMS/referSubmitCreate");
+            } else {
+                model.setViewName("404");
+            }
+        } catch (Exception e) {
+            model.addObject("faRequest", faRequestDao.findById(id));
+            model.setViewName("FAMS/referSubmitCreate");
         }
         return model;
     }
