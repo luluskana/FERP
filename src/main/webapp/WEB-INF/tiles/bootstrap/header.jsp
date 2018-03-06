@@ -26,6 +26,7 @@
                         <c:if test="${roleName eq 'admin' or roleName eq 'saleCo' or roleName eq 'saleOut' or roleName eq 'user'}">
                             <li><a href="${home}fams/request">Request FA</a></li>
                             <li><a href="${home}fams/listSale">List For Update</a></li>
+                            <li><a href="${home}fams/listReferSubmit">List For Refer</a></li>
                             <li><a href="${home}fams/listSaleCoFollow">List Sale Co Follow</a></li>
                         </c:if>
                         <c:if test="${roleName eq 'admin' or roleName eq 'saleOut' or roleName eq 'user'}">

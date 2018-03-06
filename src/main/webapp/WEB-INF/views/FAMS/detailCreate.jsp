@@ -233,6 +233,29 @@
                             </p>
                         </div>
                     </div>
+                    <c:if test="${not empty faRequest.referenceFas}">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Refer FA :</label>
+                            <div class="col-sm-9 form-inline">
+                                <ul>
+                                    <c:forEach var="referFa" items="${faRequest.referenceFas}" varStatus="loop">
+                                        <c:set var="faRequestRefer" value="${referFa.faRequestRefer}"/>
+                                        <li><a href="${home}fams/detail/create/${faRequestRefer.id}" target="_blank">${faRequestRefer.faNumber}</a></li>
+                                    </c:forEach>
+                                </ul>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty faRequest.fileCustomerApprove}">
+                        <div class="form-group form-inline">
+                            <label class="col-sm-4 control-label">Customer Approve :</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-static">
+                                    <a class="btn btn-info" href="${home}mtms/file/${faRequest.fileCustomerApprove}" target="_blank" role="button"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+                                </p>
+                            </div>
+                        </div>
+                    </c:if>
                 </div>
             </form>
         </div>
@@ -315,6 +338,9 @@
                                     </c:if>
                                     <c:if test="${documentHistory.status eq 'SALE_OUT_REJECT_FA_REQUEST'}">
                                         <span class="label label-danger">customer reject</span>
+                                    </c:if>
+                                    <c:if test="${documentHistory.status eq 'SALE_OUT_RESUBMIT_FA_REQUEST'}">
+                                        <span class="label label-warning">request refer</span>
                                     </c:if>
                                 </td>
                                 <td>${documentHistory.remark}</td>

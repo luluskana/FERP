@@ -90,4 +90,12 @@
     <definition name="FAMS/faSummary" extends="layout.bootstrap">
         <put-attribute name="body" value="/WEB-INF/views/FAMS/faSummary.jsp" />
     </definition>
+
+    <definition name="FAMS/listForResubmit" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/FAMS/listForResubmit.jsp" />
+    </definition>
+
+    <definition name="FAMS/referSubmitCreate" extends="layout.bootstrap">
+        <put-attribute name="body" value="/WEB-INF/views/FAMS/referSubmitCreate.jsp" />
+    </definition>
 </tiles-definitions>

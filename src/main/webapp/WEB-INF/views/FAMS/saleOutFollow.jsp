@@ -189,6 +189,27 @@
                             </div>
                         </div>
                     </c:if>
+                    <div class="form-group form-inline">
+                        <label class="col-sm-4 control-label">Print :</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static">
+                                <a class="btn btn-primary" href="${home}fams/createreport/${faRequest.id}" target="_blank" role="button"><span class="glyphicon glyphicon glyphicon-print" aria-hidden="true"></span></a>
+                            </p>
+                        </div>
+                    </div>
+                    <c:if test="${not empty faRequest.referenceFas}">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Refer FA :</label>
+                            <div class="col-sm-8 form-inline">
+                                <ul>
+                                    <c:forEach var="referFa" items="${faRequest.referenceFas}" varStatus="loop">
+                                        <c:set var="faRequestRefer" value="${referFa.faRequestRefer}"/>
+                                        <li><a href="${home}fams/detail/create/${faRequestRefer.id}" target="_blank">${faRequestRefer.faNumber}</a></li>
+                                    </c:forEach>
+                                </ul>
+                            </div>
+                        </div>
+                    </c:if>
                     <c:if test="${not empty faRequest.fileData1}">
                         <div class="form-group form-inline">
                             <label class="col-sm-4 control-label">File Data 1 :</label>
@@ -233,8 +254,9 @@
         <div class="col-sm-12">
             <form class="form-horizontal">
                 <div class="form-group">
-                    <div class="col-sm-offset-4 col-sm-4" align="center">
+                    <div class="col-sm-offset-3 col-sm-5" align="center">
                         <button type="button" id="btnApprove" class="btn btn-success">Customer Approve</button>
+                        <button type="button" id="btnResubmit" class="btn btn-warning">Refer Submit</button>
                         <button type="button" id="btnReject" class="btn btn-danger">Customer Reject</button>
                     </div>
                 </div>
@@ -339,15 +361,39 @@
 <div class="modal fade" id="alertApproveModal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
+            <form id="customerApproveForm" method="post" action="">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <h4 class="modal-title">Approve</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputFile1" class="col-sm-4 control-label">Document File :</label>
+                        <div class="col-sm-8 form-inline">
+                            <span class="btn btn-file"><input type="file" id="inputFile1" required></span>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" id="btnApproveReason">confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="alertReferModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title">Approve</h4>
+                <h4 class="modal-title">Reference Reason</h4>
             </div>
             <div class="modal-body">
-                Confirm save
+                <textarea class="form-control" rows="3" id="inputRefer"><jsp:text/></textarea>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="btnApproveReason">confirm</button>
+                <button type="button" class="btn btn-warning" id="btnReferReason">Reference confirm</button>
             </div>
         </div>
     </div>
@@ -375,10 +421,11 @@
             $("#alertApproveModal").modal({show:true});
         });
 
-        $("#btnApproveReason").click(function() {
+        $("#customerApproveForm").submit(function() {
             var formData = new FormData();
             formData.append("id", "${faRequest.id}");
-
+            formData.append("inputFile1", $("#inputFile1")[0].files[0]);
+            console.log("${faRequest.id}");
             $.ajax({
                 type: "POST",
                 headers: {
@@ -387,6 +434,38 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 url: "${home}fams/saleOut/approve",
+                processData: false,
+                contentType: false,
+                data: formData,
+                async: false,
+                success: function(data){
+                    window.location.href = "${home}fams/listSaleOutFollow";
+                },
+                error: function(data){
+                    alert("Error");
+                    return false;
+                }
+            });
+            return false;
+        });
+
+        $("#btnResubmit").click(function() {
+            $("#alertReferModal").modal({show:true});
+        });
+
+        $("#btnReferReason").click(function() {
+            var formData = new FormData();
+            formData.append("id", "${faRequest.id}");
+            formData.append("reason", $("#inputRefer").val());
+
+            $.ajax({
+                type: "POST",
+                headers: {
+                    Accept: "application/json",
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "${home}fams/saleOut/resubmit",
                 processData: false,
                 contentType: false,
                 data: formData,

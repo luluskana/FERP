@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-sm-12">
             <form class="form-horizontal well" id="faForm" action="" method="POST">
-                <legend>FA Request</legend>
+                <legend>FA Reference Submit</legend>
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -231,124 +231,39 @@
                                 <span class="btn btn-file"><input type="file" id="inputFile2"></span>
                             </div>
                         </div>
+                        <c:if test="${empty faRequest.referenceFas}">
+                            <div class="form-group">
+                                <label for="inputFile2" class="col-sm-3 control-label">Refer FA :</label>
+                                <div class="col-sm-9 form-inline">
+                                    <ul>
+                                        <li><a href="${home}fams/detail/create/${faRequest.id}" target="_blank">${faRequest.faNumber}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </c:if>
                         <c:if test="${not empty faRequest.referenceFas}">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Refer FA :</label>
+                                <label for="inputFile2" class="col-sm-3 control-label">Refer FA :</label>
                                 <div class="col-sm-9 form-inline">
                                     <ul>
                                         <c:forEach var="referFa" items="${faRequest.referenceFas}" varStatus="loop">
                                             <c:set var="faRequestRefer" value="${referFa.faRequestRefer}"/>
                                             <li><a href="${home}fams/detail/create/${faRequestRefer.id}" target="_blank">${faRequestRefer.faNumber}</a></li>
                                         </c:forEach>
+                                        <li><a href="${home}fams/detail/create/${faRequest.id}" target="_blank">${faRequest.faNumber}</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </c:if>
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
-                                <c:if test="${faRequest.status eq 'CREATE_FA_REQUEST' or faRequest.status eq 'UPDATE_FA_REQUEST' or faRequest.status eq 'ENGINEER_REJECT_FA_REQUEST' or faRequest.status eq 'ENGINEER_CANCEL_FA_REQUEST'}">
-                                    <button type="submit" id="submit" class="btn btn-primary">Update</button>
-                                    <button type="button" id="cancel" class="btn btn-danger">Cancel</button>
-                                </c:if>
+                                <button type="submit" id="submit" class="btn btn-primary">Create Refer</button>
+                                <button type="button" id="cancel" class="btn btn-danger">Cancel</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading" align="center">History</div>
-                <div class="panel-body table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Update Date</th>
-                            <th>Status</th>
-                            <th>Remark</th>
-                            <th>Tooling No</th>
-                            <th>Qty</th>
-                            <th>Pick slip</th>
-                            <th>Update By</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:set var="documentHistorys" value="${faRequest.logHistories}"/>
-                        <c:forEach var="documentHistory" items="${documentHistorys}" varStatus="loop">
-                            <tr>
-                                <td>${loop.index + 1}</td>
-                                <td><fmt:formatDate pattern="dd/MM/yyyy [hh:mm]"  value="${documentHistory.createDate}" /></td>
-                                <td>
-                                    <c:if test="${documentHistory.status eq 'CREATE_FA_REQUEST'}">
-                                        <span class="label label-primary">create</span>
-                                    </c:if>
-                                    <c:if test="${documentHistory.status eq 'UPDATE_FA_REQUEST'}">
-                                        <span class="label label-primary">update</span>
-                                    </c:if>
-                                    <c:if test="${documentHistory.status eq 'ENGINEER_APPROVE_FA_REQUEST'}">
-                                        <span class="label label-success">engineer approve</span>
-                                     </c:if>
-                                    <c:if test="${documentHistory.status eq 'ENGINEER_WAITING_FA_REQUEST'}">
-                                        <span class="label label-warning">engineer waiting</span>
-                                    </c:if>
-                                    <c:if test="${documentHistory.status eq 'ENGINEER_REJECT_FA_REQUEST'}">
-                                        <span class="label label-danger">engineer reject</span>
-                                    </c:if>
-                                    <c:if test="${documentHistory.status eq 'ENGINEER_SEND_FIRST_FA_REQUEST'}">
-                                        <span class="label label-success">first shot</span>
-                                    </c:if>
-                                    <c:if test="${documentHistory.status eq 'ENGINEER_CANCEL_FA_REQUEST'}">
-                                        <span class="label label-danger">engineer cancel</span>
-                                    </c:if>
-                                    <c:if test="${documentHistory.status eq 'QA_APPROVE_FIRST_FA_REQUEST'}">
-                                        <span class="label label-success">qa approve first</span>
-                                    </c:if>
-                                    <c:if test="${documentHistory.status eq 'QA_REJECT_FIRST_FA_REQUEST'}">
-                                        <span class="label label-danger">qa reject first</span>
-                                    </c:if>
-                                    <c:if test="${documentHistory.status eq 'ENGINEER_SEND_FINAL_FA_REQUEST'}">
-                                        <span class="label label-success">engineer send final</span>
-                                    </c:if>
-                                    <c:if test="${documentHistory.status eq 'QA_APPROVE_FINAL_FA_REQUEST'}">
-                                        <span class="label label-success">qa approve final</span>
-                                    </c:if>
-                                    <c:if test="${documentHistory.status eq 'QA_REJECT_FINAL_FA_REQUEST'}">
-                                        <span class="label label-danger">qa reject final</span>
-                                    </c:if>
-                                    <c:if test="${documentHistory.status eq 'QA_WAITING_FINAL_FA_REQUEST'}">
-                                        <span class="label label-warning">qa waiting</span>
-                                    </c:if>
-                                    <c:if test="${documentHistory.status eq 'QA_REJECT_DOCUMENT_FA_REQUEST'}">
-                                        <span class="label label-danger">qa reject document</span>
-                                    </c:if>
-                                    <c:if test="${documentHistory.status eq 'QA_APPROVE_DOCUMENT_FA_REQUEST'}">
-                                        <span class="label label-success">qa approve document</span>
-                                    </c:if>
-                                    <c:if test="${documentHistory.status eq 'SALE_CO_FOLLOW_UP_FA_REQUEST'}">
-                                        <span class="label label-success">sale follow</span>
-                                    </c:if>
-                                    <c:if test="${documentHistory.status eq 'SALE_OUT_APPROVE_FA_REQUEST'}">
-                                        <span class="label label-success">customer approve</span>
-                                    </c:if>
-                                    <c:if test="${documentHistory.status eq 'SALE_OUT_REJECT_FA_REQUEST'}">
-                                        <span class="label label-danger">customer reject</span>
-                                    </c:if>
-                                </td>
-                                <td>${documentHistory.remark}</td>
-                                <td>${documentHistory.methodFirst}</td>
-                                <td>${documentHistory.qtyFirst}</td>
-                                <td>${documentHistory.slipMatNo}</td>
-                                <c:set var="createBy" value="${documentHistory.createBy}"/>
-                                <td>${createBy.name}</td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -460,13 +375,13 @@
                 },
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                url: "${home}fams/update/fa",
+                url: "${home}fams/create/referfa",
                 processData: false,
                 contentType: false,
                 data: formData,
                 async: false,
                 success: function(data){
-                    window.location.href = "${home}fams/listSale";
+                    window.location.href = "${home}fams/listReferSubmit";
                 },
                 error: function(data){
                     alert("Error");

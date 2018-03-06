@@ -189,6 +189,27 @@
                             </div>
                         </div>
                     </c:if>
+                    <div class="form-group form-inline">
+                        <label class="col-sm-4 control-label">Print :</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static">
+                                <a class="btn btn-primary" href="${home}fams/createreport/${faRequest.id}" target="_blank" role="button"><span class="glyphicon glyphicon glyphicon-print" aria-hidden="true"></span></a>
+                            </p>
+                        </div>
+                    </div>
+                    <c:if test="${not empty faRequest.referenceFas}">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Refer FA :</label>
+                            <div class="col-sm-9 form-inline">
+                                <ul>
+                                    <c:forEach var="referFa" items="${faRequest.referenceFas}" varStatus="loop">
+                                        <c:set var="faRequestRefer" value="${referFa.faRequestRefer}"/>
+                                        <li><a href="${home}fams/detail/create/${faRequestRefer.id}" target="_blank">${faRequestRefer.faNumber}</a></li>
+                                    </c:forEach>
+                                </ul>
+                            </div>
+                        </div>
+                    </c:if>
                     <c:if test="${not empty faRequest.fileData1}">
                         <div class="form-group form-inline">
                             <label class="col-sm-4 control-label">File Data 1 :</label>

@@ -73,6 +73,9 @@ public class LogHistory implements Serializable {
     @Column(name = "fileData2")
     private Long fileData2;
 
+    @Column(name = "fileCustomerApprove")
+    private Long fileCustomerApprove;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "appUser")
     private AppUser appUser;
@@ -279,5 +282,13 @@ public class LogHistory implements Serializable {
 
     public void setFileData2(Long fileData2) {
         this.fileData2 = fileData2;
+    }
+
+    public Long getFileCustomerApprove() {
+        return fileCustomerApprove;
+    }
+
+    public void setFileCustomerApprove(Long fileCustomerApprove) {
+        this.fileCustomerApprove = fileCustomerApprove;
     }
 }

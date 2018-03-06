@@ -69,6 +69,16 @@ public class FaRequestDao {
         return c.list();
     }
 
+    public List<FaRequest> findByCreateByAndStatusIn(AppUser appUser,String[] status) {
+        Criteria c = ((Session) entityManager.getDelegate()).createCriteria(FaRequest.class);
+        Criterion case1 = Restrictions.in("status", status);
+        Criterion case2 = Restrictions.eq("createBy", appUser);
+        Criterion case3 = Restrictions.and(case1, case2);
+        c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        c.add(case3);
+        return c.list();
+    }
+
     public FaRequest findByIdAndCreateBy(Long id, AppUser appUser) {
         Criteria c = ((Session) entityManager.getDelegate()).createCriteria(FaRequest.class);
         Criterion case1 = Restrictions.eq("id", id);
